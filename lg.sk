@@ -3,7 +3,7 @@
 options:
 	
 	lg_prefix: &d&lLG &6&l»
-	lg_prefix_2: &6&l» &d&lLoup-garou
+	lg_prefix_2: &6&l» &d&lLoup-Garou
 
 	lg_permission: lg.admin
 	lg_permission_message: &cVous n'avez pas accès à cette commande.
@@ -16,7 +16,7 @@ options:
 	lg_message_forcestart_error: &cLa partie est déjà en cours.
 
 	lg_message_forcestop: &eVous avez correctement arrêté la partie de force.
-	lg_message_forcestop_error: &cLa partie à déjà été arrêté
+	lg_message_forcestop_error: &cLa partie a déjà été arrêtée
 
 	lg_message_debug_on: &eVous avez correctement &aactivé &ele mode debug.
 	lg_message_debug_off: &eVous avez correctement &cdésactivé &ele mode debug.
@@ -26,22 +26,22 @@ options:
 
 	lg_message_error_setup: &cVous devez effectué la commande &4/lg-admin setup &cavant.
 	lg_message_error_start: &cLa partie est déjà en cours.
-	lg_message_error_stop: &cLa partie est déjà arrêté.
+	lg_message_error_stop: &cLa partie est déjà arrêtée.
 
 
 
 	lg_description_role_lg_alpha: Chaque nuit, vous devez voter pour l'élimination d'un joueur." and "&7Votre but est d'éliminer tous les villageois. Votre vote &ecompte double&7.
 	lg_description_role_lg: Chaque nuit, vous devez &evoter pour l'élimination d'un joueur&7." and "&7Votre but est d'éliminer tous les villageois.
-	lg_description_role_vm: Vous êtes un villageois normal, vous n'avez rien à faire." and "&7En revanche, si les Loup-Garous vous tue, vous &edevenez Loup-garou&7.
-	lg_description_role_villager: Vous n'avez aucun action spécifique, vous n'avez &eaucune faculté&7.
-	lg_description_role_cupidon: Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant" and "toute la partie. &7Si l'un des deux meurt, l'autre meurt également.
+	lg_description_role_vm: Vous êtes un villageois normal, vous n'avez rien à faire." and "&7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7.
+	lg_description_role_villager: Vous n'avez aucune action spécifique, vous n'avez &eaucune faculté&7.
+	lg_description_role_cupidon: Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant" and "toute la partie. &7Si l'un des deux meurt, l'autre mourra également.
 	lg_description_role_vovo: Chaque nuit, vous avez la possiblité de &econnaître le rôle d'un joueur&7.
 	lg_description_role_vovo_aura: Chaque nuit, vous avez la possiblité de &econnaître l'aura d'un joueur&7." and "&7L'aura peut être ""Claire"", ""Obscure"" ou bien ""Inconnue"".
-	lg_description_role_fou: Vous devez essayer de convaincre le &evillage de vous tuer&7." and "&7Si vous y arrivez, vous gagnez la partie, mais pensez à être malin ;)
-	lg_description_role_tireur: Vous commencez la partie avec &edeux balles&7." and "&7Vous avez la possiblité de tuer n'importe qui.
-	lg_description_role_cdt: Au début de la partie, un joueur est choisi aléatoirement." and "&7Si ce joueur est &etué par le village&7, vous gagnez la partie.
-	lg_description_role_doc: Vous avez la possiblité chaque nuit de &eprotéger une personne" and "&7pour ne pas qu'il soit tué par les loup-garous.
-	lg_description_role_soso: Vous possédez &edeux potions&7. L'un permet de récussité un joueur," and "&7l'autre permet de tuer un joueur. Vous ne pouvez les utilisers qu'une fois.
+	lg_description_role_fou: Vous devez essayer de convaincre le &evillage de vous tuer&7." and "&7Si vous y arrivez, vous gagnerzz la partie, mais pensez à être malin ;)
+	lg_description_role_tireur: Vous commencez la partie avec &edeux balles&7." and "&7Vous aurez la possiblité de tuer n'importe qui.
+	lg_description_role_cdt: Au début de la partie, un joueur sera choisi aléatoirement." and "&7Si ce joueur est &etué par le village&7, il gagnera la partie.
+	lg_description_role_doc: Vous avez la possiblité chaque nuit de &eprotéger une personne" and "&7pour qu'il soit protégé des Loup-Garous.
+	lg_description_role_soso: Vous possédez &edeux potions&7. L'une permets de récussiter un joueur," and "&7l'autre permets de tuer un joueur. Vous ne pouvez les utiliser qu'une seule fois.
 
 	lg_skull_crazy: {SkullOwner:{Id:""7e18508f-feb6-445b-8020-2c7cb79ace7c"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0=""}]}}}
 	lg_skull_witch: {SkullOwner:{Id:""7f92b3d6-5ee0-4ab6-afae-2206b9514a63"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0=""}]}}}
