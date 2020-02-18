@@ -182,6 +182,36 @@ function lg_help(msg: text, p: player):
 	#send "  &f» &eTous les &6villagoies &esont mort" to {_p}
 	# Faire la liste help avec comme template juste au dessus
 
+
+function lg_scoreboard(p: player, t: text):	
+	if {_t} is "setup":	
+		create a new stylish scoreboard named "%{_p}%"	
+		set title of stylish scoreboard "%{_p}%" to yaml("PREFIX.TITLE", "message")	
+		create a new id based score "%{_p}%11" with text "&1" slot 11 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%10" with text "&6&l» &f&lPartie:" slot 10 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%9" with text "&2" slot 9 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%8" with text " &6● &eStatus &f» &e%{lg::partie::status}%" slot 8 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%7" with text " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%" slot 7 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%6" with text " &6● &eConfigura&etion &f» &e%lg_get_configuration(""sb"")%" slot 6 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%5" with text " &6● &eJour &f» &bn°%{lg::partie::day}%" slot 5 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%4" with text "&3" slot 4 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%3" with text "&6&l» &f&lJoueur:" slot 3 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%2" with text "&4" slot 2 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%1" with text " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%" slot 1 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%0" with text " &6● &eVotre équipe &f» &e%{lg::player::equipe::%{_p}%}%" slot 0 for stylish scoreboard "%{_p}%"	
+		set stylish scoreboard of {_p} to "%{_p}%"	
+		while {_p} is online:	
+			set the text of id "%{_p}%8" to " &6● &eStatus &f» &e%{lg::partie::status}%"	
+			set the text of id "%{_p}%7" to " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%"	
+			set the text of id "%{_p}%6" to " &6● &eConfigura&etion &f» &e%lg_get_configuration(""sb"")%"	
+			set the text of id "%{_p}%5" to " &6● &eJour &f» &bn°%{lg::partie::day}%"	
+			set the text of id "%{_p}%1" to " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%"	
+			set the text of id "%{_p}%0" to " &6● &eVotre équ&eipe &f» &e%{lg::player::equipe::%{_p}%}%"	
+			wait a second	
+	else:	
+		reset stylish scoreboard of {_p}	
+		delete stylish scoreboard named "%{_p}%"
+
 function lg_get_configuration(mode: text = "int") :: text:
 	set {_p} to size of {lg::player::joueurs::*}
 	if {_mode} is "sb":
