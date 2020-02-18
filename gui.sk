@@ -35,12 +35,12 @@ function lg_menu_deco(p: player, t: text, i: integer = 6):
 
 function lg_menu_informations(p: player):
 	lg_menu_deco({_p}, yaml("GUI.INFO", "messages"), 5)
-	make a gui slot 21 of {_p} with {_p}'s skull named yaml("MESSAGE.ROLELIST", "messages") to run:
+	make a gui slot 21 of {_p} with {_p}'s skull named msg("MESSAGE.ROLELIST") to run:
 		lg_menu_roles({_p})
-	make a gui slot 22 of {_p} with book named yaml("MESSAGE.RULES", "messages") to run:
+	make a gui slot 22 of {_p} with book named msg("MESSAGE.RULES") to run:
 		close {_p}'s inventory
 		lg_message_rules({_p})
-	make a gui slot 23 of {_p} with emerald named yaml("MESSAGE.VICTORY", "messages") to run:
+	make a gui slot 23 of {_p} with emerald named msg("MESSAGE.VICTORY") to run:
 		close {_p}'s inventory
 		lg_message_victory({_p})
 
