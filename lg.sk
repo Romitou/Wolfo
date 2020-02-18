@@ -296,14 +296,46 @@ function lg_draw(p: player, type: text):
 			drawImage file "arrow.png", center {_loc}, id "%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 
 
+import:
+    java.util.ArrayList
+    java.util.Collections
+    java.util.Map$Entry
+    ch.njol.skript.variables.Variables
+ 
+expression replace values %strings% with %strings% in %string%:
+    get:
+        set {_string} to expression-3
+        loop expressions-1:
+            add 1 to {_index}
+            replace all "%loop-value%" with "%{_index}th element of expressions-2%" in {_string}
+        return {_string}
+ 
+plural expression [the] (1¦(highest|top)|2¦(lowest|last)) %integer% values of %objects% [formatted] as %string%:
+    get:
+        set {_list} to new ArrayList(Variables.getVariable(raw expressions-2.getName().toString(event), event, raw expressions-2.isLocal()).entrySet())
+        {_list}.sort(Entry.comparingByValue())
+        if parse mark = 1:
+            Collections.reverse({_list})
+        loop ...{_list}:
+            "%loop-value.getValue()%" is not "0"
+            add 1 to {_index}
+            set {_sorted::%{_index}%} to replace values "@index" and "@value" with "%loop-value.getKey()%" and "%loop-value.getValue()%" in expression-3
+            {_index} = expression-1
+            stop loop
+        return {_sorted::*}
+
 function lg_most_voted() :: objects:
-    set {_most_voted::*} to sorted {lg::player::vote::*}
-    loop {_most_voted::*}:
-        set {_p} to loop-index
-        set {_vote} to loop-value
-        exit loop
-    return {_p} and {_vote}
-    # ne fonctionne pas correctement
+	set {_playerVotes::*} to the highest (size of {lg::player::vote::*}) values of {lg::player::vote::*} as "@index;@value"
+	loop {_playerVotes::*}:
+		set {_s::*} to loop-value split at ";"
+		add {_s::1} to {_players::*}
+		add {_s::2} to {_votes::*}
+	if {_votes::1} = {_votes::2}:
+		chance of 50%:                                     # Si les deux premiers joueurs on le même nombre de vote,
+			return {_players::1} and {_votes::1}       # 50/50 pour savoir qui va mourir.
+		else:
+			return {_players::2} and {_votes::2}
+	return {_players::1} and {_votes::1}
 
 
 function lg_join(p: player):
