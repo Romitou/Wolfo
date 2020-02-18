@@ -346,17 +346,21 @@ function lg_draw(p: player, type: text):
 			drawSphere style 1, particle "flame", center location of {_pos}, id "lg-sphere", rainbowMode false, radius {_r}, density 400, visibleRange 32, pulseDelay 1
 			add 0.1 to {_r}
 			wait a tick
-		wait 10 ticks
+		wait 8 ticks
+		hide {_p} to all players
+		strike lightning effect at location of {_p}
+		wait 2 ticks
 		stopEffect id "lg-rayon"
 		stopEffect id "lg-sphere"
-		strike lightning effect at location of {_p}
 	if {_type} is "spawn":
+		hide {_p} to all players
 		drawWarpRings style 2, particle "redstone", RGB 80, 255, 255, center location of {_p}, id "lg-%{_type}%", rainbowMode true, scan true, height 2, radius 1, ringCount 40, ringDensity 20, visibleRange 32, pulseDelay 1
 		wait 2 second
 		stopEffect id "lg-%{_type}%"
+		reveal {_p} to all players
 	if {_type} is "center":
 		drawAtom particle1 "redstone", particle2 "flame", center {lg::partie::center}, id "lg-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
-
+		
 
 function lg_most_voted() :: objects:
 	set {_playerVotes::*} to the highest (size of {lg::player::vote::*}) values of {lg::player::vote::*} as "@index;@value"
