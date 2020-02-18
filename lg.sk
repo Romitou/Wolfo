@@ -16,7 +16,7 @@ on script load:
 		set yaml value "MESSAGE.PERMISSION" from "messages" to "&cVous n'avez pas accès à cette commande."
 		set yaml value "MESSAGE.SETWAITROOM" from "messages" to "&eVous avez correctement défini la salle d'attente à votre position."
 		set yaml value "MESSAGE.ADDSPAWN" from "messages" to "&eVous avez correctement défini la position de spawn à votre position. "
-        set yaml value "MESSAGE.FORCESTART" from "messages" to "&eVous avez correctement démarré la partie de force."
+		set yaml value "MESSAGE.FORCESTART" from "messages" to "&eVous avez correctement démarré la partie de force."
 		set yaml value "MESSAGE.FORCESTOP" from "messages" to "&eVous avez correctement arrêté la partie de force."
 		set yaml value "MESSAGE.DEBUGON" from "messages" to "&eVous avez correctement &aactivé &ele mode debug."
 		set yaml value "MESSAGE.DEBUGOFF" from "messages" to "&eVous avez correctement &cdésactivé &ele mode debug."
@@ -27,7 +27,7 @@ on script load:
 		set yaml value "MESSAGE.ALREADYSETUP" from "messages" to "&cLa partie est déjà configurée."
 		set yaml value "MESSAGE.ENDGAME" from "messages" to "La partie est terminée."
 		set yaml value "MESSAGE.DEBUG" from "messages" to "&8[DEBUG]:&f Variable {_test}%%{_test}%%"
-        set yaml value "MESSAGE.ROLEDESC" from "messages" to "&eDescription de votre rôle :"
+		set yaml value "MESSAGE.ROLEDESC" from "messages" to "&eDescription de votre rôle :"
 		set yaml value "MESSAGE.MUTED" from "messages" to "Votre rôle ne vous permet pas parler durant la nuit."
 		set yaml value "MESSAGE.GOODLEFT" from "messages" to "Vous avez correctement quitté la partie."
 		set yaml value "MESSAGE.NOTENOUGH1" of "messages" to "&cIl manque "
@@ -41,8 +41,8 @@ on script load:
 		set yaml value "GUI.ROLELIST_TITLE" from "messages" to "&8➽ &6Liste des rôles"
 		set yaml value "GUI.RULES" from "messages" to "&8» &bRègles du jeu"
 		set yaml value "GUI.VICTORY" from "messages" to "&8» &aCondition de victoire"
-        set yaml value "ITEM.INFO" from "messages" to "&8➽ &dInformations &7(clic droit)"
-        set yaml value "ITEM.EXIT" from "messages" to "&8➽ &cQuitter la partie &7(clic droit)"
+		set yaml value "ITEM.INFO" from "messages" to "&8➽ &dInformations &7(clic droit)"
+		set yaml value "ITEM.EXIT" from "messages" to "&8➽ &cQuitter la partie &7(clic droit)"
 		set yaml value "TIME.HOUR" from "messages" to "heure(s)"
 		set yaml value "TIME.SECOND" from "messages" to "seconde(s)"
 
@@ -51,8 +51,8 @@ on script load:
 		
 		set {_prefix} to json("PREFIX.GENERAL", "messages")
 
-        add "", "%{_prefix}%&aCondition de victoire:", "  &f» &eTous les &6villagoies &esont mort", "  &f» &eTous les &6Loup-garou sont &emort", "  &f» &eLe &6Fou &eest tué par le village", "  &f» &eLa cible du &6chasseur de tête &eest tué par le village", "  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers survivant" and "" to {_victory::*}
-        set yaml list "MESSAGE.VICTORY" from "messages" to {_victory::*}
+		add "", "%{_prefix}%&aCondition de victoire:", "  &f» &eTous les &6villagoies &esont mort", "  &f» &eTous les &6Loup-garou sont &emort", "  &f» &eLe &6Fou &eest tué par le village", "  &f» &eLa cible du &6chasseur de tête &eest tué par le village", "  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers survivant" and "" to {_victory::*}
+		set yaml list "MESSAGE.VICTORY" from "messages" to {_victory::*}
 
 		add "", "%{_prefix}%&eCommandes admin:", "  &f» &e/lg-admin help", "  &f» &e/lg-admin setwait", "  &f» &e/lg-admin addSpawn", "  &f» &e/lg-admin forcestart", "  &f» &e/lg-admin forcestop", "  &f» &e/lg-admin settings" and "" to {_cmd::*}
 		set yaml list "MESSAGE.ADMIN" from "messages" to {_cmd::*}
@@ -63,7 +63,7 @@ on script load:
 
 		# Loup-Garou
 		set yaml value "LG.NAME" from "messages" to "&8» &cLoup-Garou"
-        set yaml value "LG.DESC" from "messages" to "&8➥ &7Chaque nuit, vous devez voter pour l'élimination d'un joueur. &7Votre but est d'éliminer tous les villageois."
+		set yaml value "LG.DESC" from "messages" to "&8➥ &7Chaque nuit, vous devez voter pour l'élimination d'un joueur. &7Votre but est d'éliminer tous les villageois."
 		set yaml value "LG.HEAD" from "messages" to "{SkullOwner:{Id:""9cd0e1fb-c1d6-4859-9392-13655a000118"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY4ZDQzMTI5MzliYjMxMTFmYWUyOGQ2NWQ5YTMxZTc3N2Y4ZjJjOWZjNDI3NTAxY2RhOGZmZTNiMzY3NjU4In19fQ==""}]}}}"
 		
 		# Loup-Garou Alpha
@@ -81,7 +81,7 @@ on script load:
 		
 		# Cupidon
 		set yaml value "CUPI.NAME" from "messages" to "&8» &dCupidon"
-        set yaml value "CUPI.DESC" from "messages" to "&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant toute la partie. Si l'un des deux meurt, l'autre mourra également."
+		set yaml value "CUPI.DESC" from "messages" to "&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant toute la partie. Si l'un des deux meurt, l'autre mourra également."
 		set yaml value "CUPI.HEAD" from "messages" to "{SkullOwner:{Id:""94c9b15f-f65a-427d-a699-ad0d4d5489f6"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRlYWY4OTQyOGEzNjQ5YzI2ZWRjMWY3MWNjMTlmMjYzZTlmNGViMzFlZDE4Yzk3Njg2YWFjODJmNzY0MjQyIn19fQ==""}]}}}"
 
 		# Voyante
@@ -90,29 +90,29 @@ on script load:
 		
 		# Voyante Aura
 		set yaml value "VOVO_AURA.NAME" from "messages" to "&8» &2Voyante Aura"
-        set yaml value "VOVO_AURA.DESC" from "messages" to "&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître l'aura d'un joueur&7. L'aura peut être ""Claire"", ""Obscure"" ou bien ""Inconnue""."
+		set yaml value "VOVO_AURA.DESC" from "messages" to "&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître l'aura d'un joueur&7. L'aura peut être ""Claire"", ""Obscure"" ou bien ""Inconnue""."
 
 		# Fou
 		set yaml value "FOU.NAME" from "messages" to "&8» &6Fou"
-        set yaml value "FOU.DESC" from "messages" to "&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7. Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin ;)"
+		set yaml value "FOU.DESC" from "messages" to "&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7. Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin ;)"
 		set yaml value "FOU.HEAD" from "messages" to "{SkullOwner:{Id:""7e18508f-feb6-445b-8020-2c7cb79ace7c"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0=""}]}}}"
 		
 		# Tireur
 		set yaml value "TIREUR.NAME" from "messages" to "&8» &eTireur"
-        set yaml value "TIREUR.DESC" from "messages" to "&8➥ &7Vous commencez la partie avec &edeux balles&7. Vous aurez la possiblité de tuer n'importe qui."
+		set yaml value "TIREUR.DESC" from "messages" to "&8➥ &7Vous commencez la partie avec &edeux balles&7. Vous aurez la possiblité de tuer n'importe qui."
 
 		# Chasseur de Tête
 		set yaml value "CDT.NAME" from "messages" to "&8» &9Chasseur de Tête"
-        set yaml value "CDT.DESC" from "messages" to "&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement. Si ce joueur est &etué par le village&7, il gagnera la partie."
+		set yaml value "CDT.DESC" from "messages" to "&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement. Si ce joueur est &etué par le village&7, il gagnera la partie."
 		set yaml value "CDT.HEAD" from "messages" to "{SkullOwner:{Id:""9d58f311-003b-4d1d-8ba8-b678e182bab3"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2MxZGYwZGI4ZDQ3NzNjYzI1NWE2M2I4ZjBiMGU0Y2RkN2Q3NGMzYjRjNjc1MzYyMTY4NDYwYmM2N2JiMzAyZSJ9fX0=""}]}}}"
 
 		# Docteur
 		set yaml value "DOCT.NAME" from "messages" to "&8» &bDocteur"
-        set yaml value "DOCT.DESC" from "messages" to "&8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre les Loup-Garous."
+		set yaml value "DOCT.DESC" from "messages" to "&8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre les Loup-Garous."
 
 		# Sorcière
 		set yaml value "SOSO.NAME" from "messages" to "&8» &5Sorcière"
-        set yaml value "SOSO.DESC" from "messages" to "&8➥ &7Vous possédez &edeux potions&7. L'une permets de récussiter un joueur, l'autre permets de tuer un joueur. Vous ne pouvez les utiliser qu'une seule fois."
+		set yaml value "SOSO.DESC" from "messages" to "&8➥ &7Vous possédez &edeux potions&7. L'une permets de récussiter un joueur, l'autre permets de tuer un joueur. Vous ne pouvez les utiliser qu'une seule fois."
 		set yaml value "SOSO.HEAD" from "messages" to "{SkullOwner:{Id:""7f92b3d6-5ee0-4ab6-afae-2206b9514a63"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0=""}]}}}"
 
 		# Équipes
@@ -120,12 +120,11 @@ on script load:
 		set yaml value "TEAM.VL" from "messages" to "&8➥ &7Votre équipe: &6Village"
 		set yaml value "TEAM.LG_VL" from "messages" to "&8➥ &7Votre équipe: &6Village &8| &cLoup-Garou"
 		set yaml value "TEAM.SOLO" from "messages" to "&8➥ &7Votre équipe: &aSolo"
-	    
-        save yaml "messages"
+		save yaml "messages"
     
 	if yaml value "GENERATED" from "config" is not set:
 		set yaml value "GENERATED" from "config" to "%now%" # Sauvegarde de la date de création
-        set yaml value "ANIMATION.SELECTION" from "config" to "ARROW"
+		set yaml value "ANIMATION.SELECTION" from "config" to "ARROW"
 
 function yaml(request: text, file: text) :: text: # POUR LES TEXTES (plus utilisé)
 	broadcast "&8[DEBUG (TEXT)]:&7 File:%{_file}%.yml   &f-   &7Request:%{_request}%"
