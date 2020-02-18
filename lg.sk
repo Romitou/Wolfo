@@ -43,6 +43,7 @@ on script load:
 		set yaml value "PERMISSION.ADMIN" from "messages" to "lg.admin"
 		set yaml value "MESSAGE.PERMISSION" from "messages" to "&cVous n'avez pas accès à cette commande."
 		set yaml value "MESSAGE.SETWAITROOM" from "messages" to "&eVous avez correctement défini la salle d'attente à votre position."
+		set yaml value "MESSAGE.SETCENTER" from "messages" to "&eVous avez correctement défini le centre de la map à votre position."
 		set yaml value "MESSAGE.ADDSPAWN" from "messages" to "&eVous avez correctement défini la position de spawn à votre position. "
 		set yaml value "MESSAGE.FORCESTART" from "messages" to "&eVous avez correctement démarré la partie de force."
 		set yaml value "MESSAGE.FORCESTOP" from "messages" to "&eVous avez correctement arrêté la partie de force."
@@ -81,7 +82,7 @@ on script load:
 		set yaml list "MESSAGE.VICTORY" from "messages" to {_victory::*}
 		set yaml value "MESSAGE.VICTORY_FIRST" from "messages" to "&aConditions de victoire :"
 
-		add "  &f» &e/lg-admin help", "  &f» &e/lg-admin setwait", "  &f» &e/lg-admin addSpawn", "  &f» &e/lg-admin forcestart", "  &f» &e/lg-admin forcestop", "  &f» &e/lg-admin settings" and "" to {_admin::*}
+		add "  &f» &e/lg-admin help", "  &f» &e/lg-admin setwait",  "  &f» &e/lg-admin setcenter", "  &f» &e/lg-admin addSpawn", "  &f» &e/lg-admin forcestart", "  &f» &e/lg-admin forcestop", "  &f» &e/lg-admin settings" and "" to {_admin::*}
 		set yaml list "MESSAGE.ADMIN" from "messages" to {_admin::*}
 		set yaml value "MESSAGE.ADMIN_FIRST" from "messages" to "&eCommandes admin :"
 
@@ -478,6 +479,14 @@ command /lg [<text>] [<text>] [<text>]:
 			else:
 				set {lg::partie::waitRoom} to location of player
 				send join msg("PREFIX.GENERAL") and ("MESSAGE.SETWAITROOM")
+		if arg 1 is "setcenter":
+			if {lg::partie::start} is set:
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTART")
+			else:
+				set {_loc} to location of player
+				add 1 to y-coordinate of {_loc}
+				set {lg::partie::center} to {_loc}
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.SETCENTER")
 		if arg 1 is "addSpawn":
 			if {lg::partie::start} is set:
 				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTART")
