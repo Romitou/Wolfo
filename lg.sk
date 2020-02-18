@@ -45,18 +45,17 @@ on script load:
 		set yaml value "ITEM.EXIT" from "messages" to "&8➽ &cQuitter la partie &7(clic droit)"
 		set yaml value "TIME.HOUR" from "messages" to "heure(s)"
 		set yaml value "TIME.SECOND" from "messages" to "seconde(s)"
-
-
 		#	----------------- Commandes (listes) -----------------
 		
-		set {_prefix} to yaml("PREFIX.GENERAL", "messages")
+		set {_prefix} to msg("PREFIX.GENERAL")
 
-		add "", "%{_prefix}%&aCondition de victoire:", "  &f» &eTous les &6villagoies &esont mort", "  &f» &eTous les &6Loup-garou sont &emort", "  &f» &eLe &6Fou &eest tué par le village", "  &f» &eLa cible du &6chasseur de tête &eest tué par le village", "  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers survivant" and "" to {_victory::*}
+		add "  &f» &eTous les &6villagoies &esont mort", "  &f» &eTous les &6Loup-garou sont &emort", "  &f» &eLe &6Fou &eest tué par le village", "  &f» &eLa cible du &6chasseur de tête &eest tué par le village", "  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers survivant" and "" to {_victory::*}
 		set yaml list "MESSAGE.VICTORY" from "messages" to {_victory::*}
+		set yaml value "MESSAGE.VICTORY_FIRST" from "messages" to "&aConditions de victoire :"
 
-		add "", "%{_prefix}%&eCommandes admin:", "  &f» &e/lg-admin help", "  &f» &e/lg-admin setwait", "  &f» &e/lg-admin addSpawn", "  &f» &e/lg-admin forcestart", "  &f» &e/lg-admin forcestop", "  &f» &e/lg-admin settings" and "" to {_cmd::*}
-		set yaml list "MESSAGE.ADMIN" from "messages" to {_cmd::*}
-
+		add "  &f» &e/lg-admin help", "  &f» &e/lg-admin setwait", "  &f» &e/lg-admin addSpawn", "  &f» &e/lg-admin forcestart", "  &f» &e/lg-admin forcestop", "  &f» &e/lg-admin settings" and "" to {_admin::*}
+		set yaml list "MESSAGE.ADMIN" from "messages" to {_admin::*}
+		set yaml value "MESSAGE.ADMIN_FIRST" from "messages" to "&eCommandes admin :"
 
 
         #	----------------- Rôles -----------------
@@ -116,7 +115,7 @@ on script load:
 		set yaml value "SOSO.HEAD" from "messages" to "{SkullOwner:{Id:""7f92b3d6-5ee0-4ab6-afae-2206b9514a63"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0=""}]}}}"
 
 		# Équipes
-		set yaml value "TEAM.LG" from "messages" to "&8➥ &7Votre équipe: &cLoup-Garou" # yaml("TEAM.LG", "messages")
+		set yaml value "TEAM.LG" from "messages" to "&8➥ &7Votre équipe: &cLoup-Garou" # msg("TEAM.LG")
 		set yaml value "TEAM.VL" from "messages" to "&8➥ &7Votre équipe: &6Village"
 		set yaml value "TEAM.LG_VL" from "messages" to "&8➥ &7Votre équipe: &6Village &8| &cLoup-Garou"
 		set yaml value "TEAM.SOLO" from "messages" to "&8➥ &7Votre équipe: &aSolo"
@@ -126,97 +125,31 @@ on script load:
 		set yaml value "GENERATED" from "config" to "%now%" # Sauvegarde de la date de création
 		set yaml value "ANIMATION.SELECTION" from "config" to "ARROW"
 
-function yaml(request: text, file: text) :: text: # POUR LES TEXTES (plus utilisé)
-	broadcast "&8[DEBUG (TEXT)]:&7 File:%{_file}%.yml   &f-   &7Request:%{_request}%"
-	return yaml value {_request} from {_file}
-	unload {_file}
+function msg(request: text) :: text: # POUR LES TEXTES (plus utilisé)
+	broadcast "&8[DEBUG &7[MSG]&8]: &7Request:%{_request}%  &f-  &7Type:TEXT"
+	return yaml value {_request} from "messages"
 
-function yamlB(request: text, file: text) :: boolean: # POUR LES BOOLEAN
-	broadcast "&8[DEBUG (BOOLEAN)]:&7 File:%{_file}%.yml   &f-   &7Request:%{_request}%"
-	return yaml value {_request} from {_file}
-	unload {_file}
+function msgB(request: text) :: boolean: # POUR LES BOOLEAN
+	broadcast "&8[DEBUG &7[MSG]&8]: &7Request:%{_request}%  &f-  &7Type:BOOLEAN"
+	return yaml value {_request} from "messages"
 
-function yamlO(request: text, file: text) :: objects: # POUR LES OBJECTS
-	broadcast "&8[DEBUG (OBJECTS)]:&7 File:%{_file}%.yml   &f-   &7Request:%{_request}%"
-	return yaml list {_request} from {_file}
-	unload {_file}
+function msgO(request: text) :: objects: # POUR LES OBJECTS
+	broadcast "&8[DEBUG &7[MSG]&8]: &7Request:%{_request}%  &f-  &7Type:OBJECTS"
+	return yaml list {_request} from "messages"
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------
 
 # Symboles:  ➥ ➽ ⚠ ● »
 
-options:
-	lg_description_role_lg_alpha: Chaque nuit, vous devez voter pour l'élimination d'un joueur." and "&7Votre but est d'éliminer tous les villageois. Votre vote &ecompte double&7.
-	lg_description_role_lg: Chaque nuit, vous devez &evoter pour l'élimination d'un joueur&7." and "&7Votre but est d'éliminer tous les villageois.
-	lg_description_role_vm: Vous êtes un villageois normal, vous n'avez rien à faire." and "&7En revanche, si les Loup-Garous vous tue, vous &edevenez Loup-garou&7.
-	lg_description_role_villager: Vous n'avez aucun action spécifique, vous n'avez &eaucune faculté&7.
-	lg_description_role_cupidon: Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant" and "toute la partie. &7Si l'un des deux meurt, l'autre meurt également.
-	lg_description_role_vovo: Chaque nuit, vous avez la possiblité de &econnaître le rôle d'un joueur&7.
-	lg_description_role_vovo_aura: Chaque nuit, vous avez la possiblité de &econnaître l'aura d'un joueur&7." and "&7L'aura peut être ""Claire"", ""Obscure"" ou bien ""Inconnue"".
-	lg_description_role_fou: Vous devez essayer de convaincre le &evillage de vous tuer&7." and "&7Si vous y arrivez, vous gagnez la partie, mais pensez à être malin ;)
-	lg_description_role_tireur: Vous commencez la partie avec &edeux balles&7." and "&7Vous avez la possiblité de tuer n'importe qui.
-	lg_description_role_cdt: Au début de la partie, un joueur est choisi aléatoirement." and "&7Si ce joueur est &etué par le village&7, vous gagnez la partie.
-	lg_description_role_doc: Vous avez la possiblité chaque nuit de &eprotéger une personne" and "&7pour ne pas qu'il soit tué par les loup-garous.
-	lg_description_role_soso: Vous possédez &edeux potions&7. L'un permet de récussité un joueur," and "&7l'autre permet de tuer un joueur. Vous ne pouvez les utilisers qu'une fois.
+function lg_help(msg: text, p: player):
+	send join msg("PREFIX.GENERAL") and msg("MESSAGE.%{_msg}%_FIRST") to {_p}
+	set {_%{_msg}%::*} to msgO("MESSAGE.%{_msg}%")
+	loop {_%{_msg}%::*}:
+		send colored loop-value to {_p}
 
-	lg_skull_crazy: {SkullOwner:{Id:""7e18508f-feb6-445b-8020-2c7cb79ace7c"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0=""}]}}}
-	lg_skull_witch: {SkullOwner:{Id:""7f92b3d6-5ee0-4ab6-afae-2206b9514a63"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0=""}]}}}
-	lg_skull_wolf: {SkullOwner:{Id:""9cd0e1fb-c1d6-4859-9392-13655a000118"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY4ZDQzMTI5MzliYjMxMTFmYWUyOGQ2NWQ5YTMxZTc3N2Y4ZjJjOWZjNDI3NTAxY2RhOGZmZTNiMzY3NjU4In19fQ==""}]}}}
-	lg_skull_wolf_alpha: {SkullOwner:{Id:""736e9be2-4984-4cbc-bbb6-9ab419bb55bc"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjgzYTJhYTlkMzczNGI5MTlhYzI0Yzk2NTllNWUwZjg2ZWNhZmJmNjRkNDc4OGNmYTQzM2JiZWMxODllOCJ9fX0=""}]}}}
-	lg_skull_heart: {SkullOwner:{Id:""94c9b15f-f65a-427d-a699-ad0d4d5489f6"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRlYWY4OTQyOGEzNjQ5YzI2ZWRjMWY3MWNjMTlmMjYzZTlmNGViMzFlZDE4Yzk3Njg2YWFjODJmNzY0MjQyIn19fQ==""}]}}}
-	lg_skull_target: {SkullOwner:{Id:""9d58f311-003b-4d1d-8ba8-b678e182bab3"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2MxZGYwZGI4ZDQ3NzNjYzI1NWE2M2I4ZjBiMGU0Y2RkN2Q3NGMzYjRjNjc1MzYyMTY4NDYwYmM2N2JiMzAyZSJ9fX0=""}]}}}
-
-
-function lg_menu_deco(p: player, t: text, i: integer = 6):
-	open virtual chest inventory with {_i} rows named "%{_t}%" to {_p}
-	if {_i} = 3:
-		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 19, 20, 21, 22, 23, 24 and 25 of {_p} with magenta stained glass pane
-		make a gui slot 0, 8, 18 and 26 of {_p} with purple stained glass pane
-	if {_i} = 5:
-		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 18, 26, 27, 28, 34, 35, 37, 38, 39, 40, 41, 42 and 43 of {_p} with magenta stained glass pane
-		make a gui slot 0, 8, 36 and 44 of {_p} with purple stained glass pane
-	if {_i} = 6:
-		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 18, 26, 27, 35, 36, 37, 43, 44, 45, 46, 47, 48, 49, 50, 51 and 52 of {_p} with magenta stained glass pane
-		make a gui slot 0, 8, 45 and 53 of {_p} with purple stained glass pane
-
-
-function lg_menu_informations(p: player):
-	lg_menu_deco({_p}, yaml("GUI.INFO", "messages"), 5)
-	make a gui slot 21 of {_p} with {_p}'s skull named yaml("MESSAGE.ROLELIST", "messages") to run:
-		lg_menu_roles({_p})
-	make a gui slot 22 of {_p} with book named yaml("MESSAGE.RULES", "messages") to run:
-		close {_p}'s inventory
-		lg_message_rules({_p})
-	make a gui slot 23 of {_p} with emerald named yaml("MESSAGE.VICTORY", "messages") to run:
-		close {_p}'s inventory
-		lg_message_victory({_p})
-
-function lg_menu_roles(p: player):
-	lg_menu_deco({_p}, yaml("GUI.ROLELIST_TITLE", "messages"), 6)
-	make a gui slot 19 of {_p} with {_p}'s skull with nbt "{@lg_skull_wolf_alpha}" named "&8» &4Loup-Garou Alpha" with lore "" and "&8➥ &7{@lg_description_role_lg_alpha}" and "" and "&8➥ &7Votre équipe: &cLoup-Garou"
-	make a gui slot 20 of {_p} with {_p}'s skull with nbt "{@lg_skull_wolf}" named "&8» &cLoup-Garou" with lore "" and "&8➥ &7{@lg_description_role_lg}" and "" and "&8➥ &7Votre équipe: &cLoup-Garou"
-	make a gui slot 21 of {_p} with skull of "MHF_Herobrine" parsed as offline player named "&8» &7Villageois &8Maudit" with lore "" and "&8➥ &7{@lg_description_role_vm}" and "" and "&8➥ &7Votre équipe: &6Village &8| &cLoup-Garou"
-	make a gui slot 22 of {_p} with skull of "MHF_Villager" parsed as offline player named "&8» &7Villageois" with lore "" and "&8➥ &7{@lg_description_role_villager}" and "" and "&8➥ &7Votre équipe: &6Village"
-	make a gui slot 23 of {_p} with {_p}'s skull with nbt "{@lg_skull_heart}" named "&8» &dCupidon" with lore "" and "&8➥ &7{@lg_description_role_cupidon}" and "" and "&8➥ &7Votre équipe: &6Village"
-	make a gui slot 24 of {_p} with eyes of ender named "&8» &aVoyante" with lore "" and "&8➥ &7{@lg_description_role_vovo}" and "" and "&8➥ &7Votre équipe: &6Village"
-	make a gui slot 25 of {_p} with ender pearl named "&8» &2Voyante Aura" with lore "" and "&8➥ &7{@lg_description_role_vovo_aura}" and "" and "&8➥ &7Votre équipe: &6Village"
-	make a gui slot 28 of {_p} with potion named "&8» &bDocteur" with lore "" and "&8➥ &7{@lg_description_role_doc}" and "" and "&8➥ &7Votre équipe: &6Village"
-	color slot 28 of current inventory of {_p} pink
-	make a gui slot 29 of {_p} with {_p}'s skull with nbt "{@lg_skull_witch}" named "&8» &5Sorcière" with lore "" and "&8➥ &7{@lg_description_role_soso}" and "" and "&8➥ &7Votre équipe: &6Village"
-	make a gui slot 30 of {_p} with bow named "&8» &eTireur" with lore "" and "&8➥ &7{@lg_description_role_tireur}" and "" and "&8➥ &7Votre équipe: &6Village"
-	make a gui slot 31 of {_p} with {_p}'s skull with nbt "{@lg_skull_crazy}" named "&8» &6Fou" with lore "" and "&8➥ &7{@lg_description_role_fou}" and "" and "&8➥ &7Votre équipe: &aSolo"
-	make a gui slot 32 of {_p} with {_p}'s skull with nbt "{@lg_skull_target}" named "&8» &9Chasseur de Tête" with lore "" and "&8➥ &7{@lg_description_role_cdt}" and "" and "&8➥ &7Votre équipe: &aSolo"
-	make a gui slot 49 of {_p} with skull of "MHF_ArrowLeft" parsed as offline player named "&8➥ &cRevenir en arrière" to run:
-		lg_menu_informations({_p})
-
-function lg_message_victory(p: player):
-    set {_victory::*} to yamlO("MESSAGE.VICTORY", "messages")
-    loop {_victory::*}:
-        send "%loop-value%" to {_p}
-
-function lg_message_rules(p: player):
-	send "" to {_p}
+#function lg_message_rules(p: player):
+	#send "" to {_p}
 	#send "{@lg_prefix} &aCondition de victoire:" to {_p}
 	#send "  &f» &eTous les &6villagoies &esont mort" to {_p}
 	# Faire la liste help avec comme template juste au dessus
@@ -252,10 +185,10 @@ function lg_get_roles_configuration() :: objects:
 
 	# - VERIFICATION
 	if {_config} is 0:
-		return join yaml("MESSAGE.NOTENOUGH1", "messages"), "&c%5 - {_p}%" and yaml("MESSAGE.NOTENOUGH2", "messages")
+		return join msg("MESSAGE.NOTENOUGH1"), "&c%5 - {_p}%" and msg("MESSAGE.NOTENOUGH2")
 		stop
 	if {_config} is 4:
-		return yaml("MESSAGE.TOOMANY", "messages")
+		return msg("MESSAGE.TOOMANY")
 		stop
 
 	# - REPARTITION ROLES DE BASE
@@ -286,33 +219,33 @@ function lg_give_roles():
 	broadcast "2 | %{_roles::*}%"
 	loop {lg::player::joueurs::*}:
 		set {lg::joueur::role::%loop-value%} to {_roles::%{_n}%}
-		send loop-value title yaml("PREFIX.TITLE", "messages") with subtitle join yaml("MESSAGE.REVEAL", "messages") and "&a%{_roles::%{_n}%}%" for 2 seconds
+		send loop-value title msg("PREFIX.TITLE") with subtitle join msg("MESSAGE.REVEAL") and "&a%{_roles::%{_n}%}%" for 2 seconds
 		send "" to loop-value
-		send join yaml("PREFIX.GENERAL", "messages") and yaml("MESSAGE.ROLEDESC", "messages") to loop-value
+		send join msg("PREFIX.GENERAL") and msg("MESSAGE.ROLEDESC") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Loup-garou":
-			send yaml("LG.DESC", "roles") and yaml("TEAM.LG", "messages") to loop-value
+			send msg("LG.DESC") and msg("TEAM.LG") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Loup-garou alpha":
-			send yaml("LG_ALPHA.DESC", "roles") and yaml("TEAM.LG", "messages") to loop-value
+			send msg("LG_ALPHA.DESC") and msg("TEAM.LG") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Voyante":
-			send yaml("VOVO.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("VOVO.DESC") and msg("TEAM.VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Voyante aura":
-			send yaml("VOVO_AURA.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("VOVO_AURA.DESC") and msg("TEAM.VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Docteur":
-			send yaml("DOC.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("DOC.DESC") and msg("TEAM.VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Tireur":
-			send yaml("TIR.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("TIR.DESC") and msg("TEAM.VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Villageois Maudit":
-			send yaml("VL_MAUDIT.DESC", "roles") and yaml("TEAM.LG_VL", "messages") to loop-value
+			send msg("VL_MAUDIT.DESC") and msg("TEAM.LG_VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Sorcière":
-			send yaml("SOSO.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("SOSO.DESC") and msg("TEAM.VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Chasseur de tête":
-			send yaml("CDT.DESC", "roles") and yaml("TEAM.SOLO", "messages") to loop-value
+			send msg("CDT.DESC") and msg("TEAM.SOLO") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Fou":
-			send yaml("FOU.DESC", "roles") and yaml("TEAM.SOLO", "messages") to loop-value
+			send msg("FOU.DESC") and msg("TEAM.SOLO") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Villageois":
-			send yaml("VL.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("VL.DESC") and msg("TEAM.VL") to loop-value
 		if {lg::joueur::role::%loop-value%} is "Cupidon":
-			send yaml("CUPI.DESC", "roles") and yaml("TEAM.VL", "messages") to loop-value
+			send msg("CUPI.DESC") and msg("TEAM.VL") to loop-value
 		send "" to {_p}
 
 		if {_roles::%{_n}%} contains "loup-garou":
@@ -353,8 +286,8 @@ function lg_join(p: player):
 	clear {_p}'s inventory
 	heal {_p}
 	set current hotbar slot of {_p} to 4
-	set slot 4 of {_p} to book named yaml("ITEM.INFO", "general")
-	set slot 8 of {_p} to orange bed named yaml("ITEM.EXIT", "general")
+	set slot 4 of {_p} to book named msg("ITEM.INFO")
+	set slot 8 of {_p} to orange bed named msg("ITEM.EXIT")
 	lg_scoreboard({_p}, "setup")
 	lg_setup()
 	lg_setup_player({_p})
@@ -376,26 +309,32 @@ function lg_setup():
 
 function lg_time(t: integer, p: player, mode: text):
 	
+	# Mise en place des variables, afin de ne pas faire de requêtes au fichier YML toutes les secondes
+	set {_second} to msg("TIME.SECOND")
+	set {_title} to msg("MESSAGE.TITLE")
+	set {_starting} to msg("MESSAGE.STARTING")
+	set {_start} to msg("MESSAGE.START")
+
 	loop ({_t} - 5) times:
 		if {_mode} = "start":
-			set action bar of {_p} to join yaml("MESSAGE.STARTING", "messages"), "&a%{_t}%" and yaml("TIME.SECOND", "messages")
+			set action bar of {_p} to join {_starting}, "&a%{_t}% " and {_second}
 		set {_p}'s level to {_t}
 		if mod({_t}, 10) = 0: 
 			if {_mode} = "start":
-				send {_p} title yaml("MESSAGE.TITLE", "messages") with subtitle join yaml("MESSAGE.STARTING", "messages"), "&a%{_t}%" and yaml("TIME.SECOND", "messages") for 2 seconds
+				send {_p} title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} for 2 seconds
 
 		remove 1 from {_t}
 		wait a second
 	loop 5 times:
 		if {_mode} = "start":
-			send {_p} title yaml("MESSAGE.TITLE", "messages") with subtitle join yaml("MESSAGE.STARTING", "messages"), "&a%{_t}%" and yaml("TIME.SECOND", "messages") for 2 seconds
-			set action bar of {_p} to join yaml("MESSAGE.STARTING", "messages"), "&a%{_t}%" and yaml("TIME.SECOND", "messages")
+			send {_p} title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} for 2 seconds
+			set action bar of {_p} to join {_starting}, "&a%{_t}% " and {_second}
 		set {_p}'s level to {_t}
 		remove 1 from {_t}
 		wait a second
 	if {_mode} = "start":
-		send {_p} title yaml("MESSAGE.TITLE", "messages") with subtitle yaml("MESSAGE.START", "messages") for a second
-		set action bar of {_p} to yaml("MESSAGE.START", "messages")
+		send {_p} title {_title} with subtitle {_start} for a second
+		set action bar of {_p} to {_start}
 	set {_p}'s level to 0
 
 
@@ -430,39 +369,11 @@ function lg_start():
 
 function lg_end():
 	loop {lg::player::joueurs::*}:
-		kick loop-value due to join yaml("PREFIX.GENERAL", "message") and yaml("MESSAGE.ENDGAME", "message")
+		kick loop-value due to join msg("PREFIX.GENERAL") and msg("MESSAGE.ENDGAME")
 	delete {lg::partie::start}
 	clear {lg::player::*}
 	lg_setup()
 
-function lg_scoreboard(p: player, t: text):
-	if {_t} is "setup":
-		create a new stylish scoreboard named "%{_p}%"
-		set title of stylish scoreboard "%{_p}%" to yaml("PREFIX.TITLE", "message")
-		create a new id based score "%{_p}%11" with text "&1" slot 11 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%10" with text "&6&l» &f&lPartie:" slot 10 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%9" with text "&2" slot 9 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%8" with text " &6● &eStatus &f» &e%{lg::partie::status}%" slot 8 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%7" with text " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%" slot 7 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%6" with text " &6● &eConfigura&etion &f» &e%lg_get_configuration(""sb"")%" slot 6 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%5" with text " &6● &eJour &f» &bn°%{lg::partie::day}%" slot 5 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%4" with text "&3" slot 4 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%3" with text "&6&l» &f&lJoueur:" slot 3 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%2" with text "&4" slot 2 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%1" with text " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%" slot 1 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%0" with text " &6● &eVotre équipe &f» &e%{lg::player::equipe::%{_p}%}%" slot 0 for stylish scoreboard "%{_p}%"
-		set stylish scoreboard of {_p} to "%{_p}%"
-		while {_p} is online:
-			set the text of id "%{_p}%8" to " &6● &eStatus &f» &e%{lg::partie::status}%"
-			set the text of id "%{_p}%7" to " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%"
-			set the text of id "%{_p}%6" to " &6● &eConfigura&etion &f» &e%lg_get_configuration(""sb"")%"
-			set the text of id "%{_p}%5" to " &6● &eJour &f» &bn°%{lg::partie::day}%"
-			set the text of id "%{_p}%1" to " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%"
-			set the text of id "%{_p}%0" to " &6● &eVotre équ&eipe &f» &e%{lg::player::equipe::%{_p}%}%"
-			wait a second
-	else:
-		reset stylish scoreboard of {_p}
-		delete stylish scoreboard named "%{_p}%"
 
 
 function lg_settings(p: player):
@@ -475,48 +386,52 @@ function lg_settings(p: player):
 
 
 # {lg::partie::status} -> "&6Attente" / "&eEn cours" / "&7Nuit" / "&fJour" / "&aTerminé"
- 
+
+command /reset:
+	trigger:
+		clear {lg::*}
+
 command /item:
 	trigger:
 		send "%player's tool%"
 		send "%{lg::player::joueurs::*}%"
 
-function lg_admin_help(p: player):
-	set {_help::*} to yamlO("MESSAGE.ADMIN", "messages")
-	loop {_help::*}:
-		send "%loop-value%" to {_p}
+#function lg_admin_help(p: player):
+#	set {_help::*} to msgO("MESSAGE.ADMIN")
+#	loop {_help::*}:
+#		send colored "%loop-value%" to {_p}
 
 
 command /lg [<text>] [<text>] [<text>]:
-	permission: yaml("PERMISSION.ADMIN", "message")
-	permission message: join yaml("PREFIX.GENERAL", "message") and yaml("MESSAGE.PERMISSION", "message")
+	permission: msg("PERMISSION.ADMIN")
+	permission message: join msg("PREFIX.GENERAL") and msg("MESSAGE.PERMISSION")
 	trigger:
 		if arg 1 isn't set:
-			lg_admin_help(player)
+			lg_help("ADMIN", player)
 		if arg 1 is "help":
-			lg_admin_help(player)
+			lg_help("ADMIN", player)
 		if arg 1 is "setwait":
 			if {lg::partie::start} is set:
-				send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.ALREADYSTART", "message")
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTART")
 			else:
 				set {lg::partie::waitRoom} to location of player
-				send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.SETWAITROOM", "message")
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.SETWAITROOM")
 		if arg 1 is "addSpawn":
 			if {lg::partie::start} is set:
-				send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.ALREADYSTART", "message")
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTART")
 			else:
 				set {_size} to (size of {lg::partie::spawnPosition::*}) + 1
 				set {lg::partie::spawnPosition::%{_size}%} to location of player
-				send join yaml("PREFIX.GENERAL", "message"), ("MESSAGE.ADDSPAWN", "message") and "&7(%size of {lg::partie::spawnPosition::*}%)"
+				send join msg("PREFIX.GENERAL"), ("MESSAGE.ADDSPAWN") and "&7(%size of {lg::partie::spawnPosition::*}%)"
 		if arg 1 is "forcestart":
 			if {lg::partie::start} is set:
-				send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.ALREADYSTART", "message")
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTART")
 			else:
 				set {lg::partie::start} to true
 				lg_check_start(true)
 		if arg 1 is "forcestop":
 			if {lg::partie::start} isn't set:
-				send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.ALREADYSTOP", "message")
+				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTOP")
 			else:
 				lg_end()
 		if arg 1 is "settings":
@@ -524,10 +439,10 @@ command /lg [<text>] [<text>] [<text>]:
 		#if arg 1 is "debug":
 		#	if {lg::partie::debug} isn't set:
 		#		set {lg::partie::debug} to true
-		#		send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.DEBUGON", "message")
+		#		send join msg("PREFIX.GENERAL") and ("MESSAGE.DEBUGON")
 		#	else:
 		#		delete {lg::partie::debug}
-		#		send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.DEBUGOFF", "message")
+		#		send join msg("PREFIX.GENERAL") and ("MESSAGE.DEBUGOFF")
 
 
 on chat:
@@ -539,17 +454,15 @@ on chat:
 				loop {lg::player::equipe::lg::*}:
 					send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value
 			else:
-				send join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.MUTED", "message")
+				send join msg("PREFIX.GENERAL") and msg("MESSAGE.MUTED")
 		else:
 			broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
 	else:
 		broadcast "&7%player% &8» &7%message%"
 
-
-
 on join:
 	if {lg::partie::start} is set:
-		kick player due to join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.ALREADYSTART", "message")
+		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.ALREADYSTART")
 	else:
 		set join message to "&a✔ %player% &7(%amount of all players% &8» %lg_get_configuration(""sb"")%&7)"
 		lg_join(player)
@@ -560,9 +473,9 @@ on quit:
 
 
 on right click:
-	if name of player's tool is yaml("ITEM.INFO", "general"):
-		kick player due to join yaml("PREFIX.GENERAL", "message") and ("MESSAGE.GOODLEFT", "message")
-	if name of player's tool is yaml("ITEM.EXIT", "general"):
+	if name of player's tool is msg("ITEM.EXIT"):
+		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.GOODLEFT")
+	if name of player's tool is msg("ITEM.INFO"):
 		lg_menu_informations(player)
 
 on inventory click:
