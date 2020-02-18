@@ -26,7 +26,6 @@ plural expression [the] (1¦(highest|top)|2¦(lowest|last)) %integer% values of 
             stop loop
         return {_sorted::*}
 
-
 on script load:
 	# Réunion des messages "general" et "roles" en un seul fichier, "messages"
 	# Création d'un fichier de configuration, pour la "main"
@@ -39,7 +38,7 @@ on script load:
 		#	----------------- Messages généraux -----------------
 
 		set yaml value "GENERATED" from "messages" to "%now%" # Sauvegarde de la date de création
-		set yaml value "PREFIX.GENERAL" from "messages" to "&d&lLG &6&l» "
+		set yaml value "PREFIX.GENERAL" from "messages" to "&d&lLG &6&l» &r"
 		set yaml value "PREFIX.TITLE" from "messages" to "&6&l» &d&lLoup-Garou"
 		set yaml value "PERMISSION.ADMIN" from "messages" to "lg.admin"
 		set yaml value "MESSAGE.PERMISSION" from "messages" to "&cVous n'avez pas accès à cette commande."
@@ -155,15 +154,15 @@ on script load:
 		set yaml value "ANIMATION.SELECTION" from "config" to "ARROW"
 
 function msg(request: text) :: text: # POUR LES TEXTES (plus utilisé)
-	broadcast "&8[DEBUG &7[MSG]&8]: &7Request:%{_request}%  &f-  &7Type:TEXT"
+	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {lg::partie::debug} is true
 	return yaml value {_request} from "messages"
 
 function msgB(request: text) :: boolean: # POUR LES BOOLEAN
-	broadcast "&8[DEBUG &7[MSG]&8]: &7Request:%{_request}%  &f-  &7Type:BOOLEAN"
+	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7BOOLEAN" if {lg::partie::debug} is true
 	return yaml value {_request} from "messages"
 
 function msgO(request: text) :: objects: # POUR LES OBJECTS
-	broadcast "&8[DEBUG &7[MSG]&8]: &7Request:%{_request}%  &f-  &7Type:OBJECTS"
+	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {lg::partie::debug} is true
 	return yaml list {_request} from "messages"
 
 
@@ -182,35 +181,6 @@ function lg_help(msg: text, p: player):
 	#send "{@lg_prefix} &aCondition de victoire:" to {_p}
 	#send "  &f» &eTous les &6villagoies &esont mort" to {_p}
 	# Faire la liste help avec comme template juste au dessus
-
-function lg_scoreboard(p: player, t: text):
-	if {_t} is "setup":
-		create a new stylish scoreboard named "%{_p}%"
-		set title of stylish scoreboard "%{_p}%" to yaml("PREFIX.TITLE", "message")
-		create a new id based score "%{_p}%11" with text "&1" slot 11 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%10" with text "&6&l» &f&lPartie:" slot 10 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%9" with text "&2" slot 9 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%8" with text " &6● &eStatus &f» &e%{lg::partie::status}%" slot 8 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%7" with text " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%" slot 7 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%6" with text " &6● &eConfigura&etion &f» &e%lg_get_configuration(""sb"")%" slot 6 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%5" with text " &6● &eJour &f» &bn°%{lg::partie::day}%" slot 5 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%4" with text "&3" slot 4 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%3" with text "&6&l» &f&lJoueur:" slot 3 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%2" with text "&4" slot 2 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%1" with text " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%" slot 1 for stylish scoreboard "%{_p}%"
-		create a new id based score "%{_p}%0" with text " &6● &eVotre équipe &f» &e%{lg::player::equipe::%{_p}%}%" slot 0 for stylish scoreboard "%{_p}%"
-		set stylish scoreboard of {_p} to "%{_p}%"
-		while {_p} is online:
-			set the text of id "%{_p}%8" to " &6● &eStatus &f» &e%{lg::partie::status}%"
-			set the text of id "%{_p}%7" to " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%"
-			set the text of id "%{_p}%6" to " &6● &eConfigura&etion &f» &e%lg_get_configuration(""sb"")%"
-			set the text of id "%{_p}%5" to " &6● &eJour &f» &bn°%{lg::partie::day}%"
-			set the text of id "%{_p}%1" to " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%"
-			set the text of id "%{_p}%0" to " &6● &eVotre équ&eipe &f» &e%{lg::player::equipe::%{_p}%}%"
-			wait a second
-	else:
-		reset stylish scoreboard of {_p}
-		delete stylish scoreboard named "%{_p}%"
 
 function lg_get_configuration(mode: text = "int") :: text:
 	set {_p} to size of {lg::player::joueurs::*}
@@ -484,27 +454,27 @@ command /lg [<text>] [<text>] [<text>]:
 			else:
 				set {_size} to (size of {lg::partie::spawnPosition::*}) + 1
 				set {lg::partie::spawnPosition::%{_size}%} to location of player
-				send join msg("PREFIX.GENERAL"), ("MESSAGE.ADDSPAWN") and "&7(%size of {lg::partie::spawnPosition::*}%)"
+				send join msg("PREFIX.GENERAL"), msg("MESSAGE.ADDSPAWN") and "&7(%size of {lg::partie::spawnPosition::*}%)"
 		if arg 1 is "forcestart":
 			if {lg::partie::start} is set:
-				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTART")
+				send join msg("PREFIX.GENERAL") and msg("MESSAGE.ALREADYSTART")
 			else:
 				set {lg::partie::start} to true
 				lg_check_start(true)
 		if arg 1 is "forcestop":
 			if {lg::partie::start} isn't set:
-				send join msg("PREFIX.GENERAL") and ("MESSAGE.ALREADYSTOP")
+				send join msg("PREFIX.GENERAL") and msg("MESSAGE.ALREADYSTOP")
 			else:
 				lg_end()
 		if arg 1 is "settings":
 			lg_settings(player)
-		#if arg 1 is "debug":
-		#	if {lg::partie::debug} isn't set:
-		#		set {lg::partie::debug} to true
-		#		send join msg("PREFIX.GENERAL") and ("MESSAGE.DEBUGON")
-		#	else:
-		#		delete {lg::partie::debug}
-		#		send join msg("PREFIX.GENERAL") and ("MESSAGE.DEBUGOFF")
+		if arg 1 is "debug":
+			if {lg::partie::debug} isn't set:
+				set {lg::partie::debug} to true
+				send join msg("PREFIX.GENERAL") and msg("MESSAGE.DEBUGON")
+			else:
+				delete {lg::partie::debug}
+				send join msg("PREFIX.GENERAL") and msg("MESSAGE.DEBUGOFF")
 
 
 on chat:
@@ -535,10 +505,10 @@ on quit:
 
 
 on right click:
-	if name of player's tool is msg("ITEM.EXIT"):
-		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.GOODLEFT")
 	if name of player's tool is msg("ITEM.INFO"):
 		lg_menu_informations(player)
+	else if name of player's tool is msg("ITEM.EXIT"):
+		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.GOODLEFT")
 
 on inventory click:
 	if player isn't op:
