@@ -14,7 +14,7 @@ expression replace values %strings% with %strings% in %string%:
  
 plural expression [the] (1¦(highest|top)|2¦(lowest|last)) %integer% values of %objects% [formatted] as %string%:
     get:
-        set {_list} to new ArrayList(Variables.getVariable(raw expressions-2.getName().toString(event), event, raw expressions-2.isLocal()).entrySet())
+        set {_list} to new ArrayList(Variables.getVariable(raw expressions-2.getName().toString(event), event and raw expressions-2.isLocal()).entrySet())
         {_list}.sort(Entry.comparingByValue())
         if parse mark = 1:
             Collections.reverse({_list})
@@ -248,13 +248,12 @@ command /testt:
 		lg_give_roles()
 
 function lg_give_roles():
-	set {_n} to 0
 	set {_input::*} to lg_get_roles_configuration() 
 	if lg_get_configuration(2) parsed as integer is 0 or 4:
 		broadcast join msg("PREFIX.GENERAL") and {_input::*} # Je ne sais pas s'il faut broadcast x)
 		stop
 	loop {lg::player::joueurs::*}:
-		set {lg::joueur::role::%loop-value%} to {_input::%loop-index%}
+		set {lg::player::role::%loop-value%} to {_input::%loop-index%}
 		send loop-value title "%msg(""PREFIX.TITLE"")%" with subtitle join msg("MESSAGE.REVEAL") and "&a%{_input::%loop-index%}%" for 2 seconds
 		send join msg("PREFIX.GENERAL"), msg("MESSAGE.REVEAL") and {_input::%loop-index%} to loop-value
 		if {_input::%loop-index%} is "Loup-garou":
@@ -283,8 +282,30 @@ function lg_give_roles():
 			send msg("CUPI.DESC") and msg("TEAM.VL") to loop-value
 		if {_input::%loop-index%} contains "loup-garou":
 			add {_p} to {lg::player::equipe::lg::*}
-		wait 4 ticks # 5 joueurs / seconde --> 5 secondes d'attente avec une partie complète
+		wait 3 ticks # 5 joueurs / seconde (si 4 ticks) --> 5 secondes d'attente avec une partie complète
 		# Attendre au maximum 5 secondes avant de lancer la partie, les rôles pourraient ne pas être encore distribués
+
+command /tes <integer>:
+	trigger:
+		send "%mod(arg-1, 2)%"
+function lg_round(type: integer):
+	if {_type} is 0:
+		set {lg::round} to 0
+		set {lg::partie::start} to true
+		set {lg::partie::status} to "&eEn cours"
+	else:
+		set {_mod} to mod({lg::round}, 2)
+	if {_type} is 1:
+		if 1 is 1:
+			add 1 to {lg::round}
+			if mod({lg::round}, 2) is 0:
+				set {lg::partie::status} to "&7Nuit"
+				broadcast "nuit"
+			else:
+				set {lg::partie::status} to "&6Jour"
+				broadcast "jour"
+		broadcast "Tour actuel: %{lg::round}%"
+
             
 function lg_draw(p: player, type: text):
 	if {_type} is "erase":
@@ -385,10 +406,11 @@ function lg_setup():
 function lg_time(t: integer, p: player, mode: text):
 	
 	# Mise en place des variables, afin de ne pas faire de requêtes au fichier YML toutes les secondes
-	set {_second} to msg("TIME.SECOND")
-	set {_title} to msg("MESSAGE.TITLE")
-	set {_starting} to msg("MESSAGE.STARTING")
-	set {_start} to msg("MESSAGE.START")
+	if {_mode} = "start":
+		set {_second} to msg("TIME.SECOND")
+		set {_title} to msg("MESSAGE.TITLE")
+		set {_starting} to msg("MESSAGE.STARTING")
+		set {_start} to msg("MESSAGE.START")
 
 	loop ({_t} - 5) times:
 		if {_mode} = "start":
@@ -431,21 +453,20 @@ function lg_check_start(force: boolean = false):
 	lg_start()
 
 function lg_start():
-	set {lg::partie::start} to true
-	set {lg::partie::status} to "&eEn cours"
 	set {_spawn} to 1
 	loop {lg::player::joueurs::*}:
 		teleport loop-value to {lg::partie::spawnPosition::%{_spawn}%}
 		add 1 to {_spawn}
 	lg_give_roles()
 	wait 5 seconds
-	set {lg::partie::status} to "&7Nuit"
+	lg_round(0)
 
 function lg_end():
 	loop {lg::player::joueurs::*}:
 		kick loop-value due to join msg("PREFIX.GENERAL") and msg("MESSAGE.ENDGAME")
 	delete {lg::partie::start}
 	clear {lg::player::*}
+	clear {lg::round}
 	lg_setup()
 
 function lg_settings(p: player):
