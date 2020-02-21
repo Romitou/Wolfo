@@ -37,7 +37,7 @@ function lg_yml():
 	load yaml "plugins/Loup-Garou/config.yml" as "config"
 
 	# Vérification de l'existence d'un fichier MESSAGES.YML
-	if yaml value "GENERATED" from "messages" is not true:
+	if yaml value "GENERATED" from "messages" is not set:
 
 		#	----------------- Messages généraux -----------------
 
@@ -137,7 +137,7 @@ function lg_yml():
 		set yaml value "TEAM.LG_VL" from "messages" to "&8➥ &7Votre équipe: &6Village &8| &cLoup-Garou"
 		set yaml value "TEAM.SOLO" from "messages" to "&8➥ &7Votre équipe: &aSolo"
 		save yaml "messages"
-	if yaml value "GENERATED" from "config" is not true:
+	if yaml value "GENERATED" from "config" is not set:
 		set yaml value "GENERATED" from "config" to true
 		set yaml value "ANIMATION.SELECTION" from "config" to "ARROW"
 		save yaml "config"
