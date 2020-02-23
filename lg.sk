@@ -29,7 +29,6 @@ plural expression [the] (1¦(highest|top)|2¦(lowest|last)) %integer% values of 
 on script load:
 	lg_yml()
 
-
 function lg_yml():
 	# Réunion des messages "general" et "roles" en un seul fichier, "messages"
 	# Création d'un fichier de configuration, pour la "main"
@@ -60,7 +59,6 @@ function lg_yml():
 		set yaml value "MESSAGE.ALREADYSTOP" from "messages" to "&cLa partie est déjà arrêtée."
 		set yaml value "MESSAGE.ALREADYSETUP" from "messages" to "&cLa partie est déjà configurée."
 		set yaml value "MESSAGE.ENDGAME" from "messages" to "La partie est terminée."
-		set yaml value "MESSAGE.DEBUG" from "messages" to "&8[DEBUG]:&f Variable {_test}%%{_test}%%"
 		set yaml value "MESSAGE.ROLEDESC" from "messages" to "&eDescription de votre rôle :"
 		set yaml value "MESSAGE.MUTED" from "messages" to "Votre rôle ne vous permet pas parler durant la nuit."
 		set yaml value "MESSAGE.GOODLEFT" from "messages" to "Vous avez correctement quitté la partie."
@@ -89,52 +87,52 @@ function lg_yml():
 		add "  &f» &e/lg-admin help", "  &f» &e/lg-admin setwait", "  &f» &e/lg-admin addSpawn", "  &f» &e/lg-admin forcestart", "  &f» &e/lg-admin forcestop", "  &f» &e/lg-admin settings" and "" to {_admin::*}
 		set yaml list "MESSAGE.ADMIN" from "messages" to {_admin::*}
 		# Loup-Garou
-		set yaml value "LG.NAME" from "messages" to "&8» &cLoup-Garou"
-		set yaml value "LG.DESC" from "messages" to "&8➥ &7Chaque nuit, vous devez voter pour l'élimination d'un joueur. &7Votre but est d'éliminer tous les villageois."
-		set yaml value "LG.HEAD" from "messages" to "{SkullOwner:{Id:""9cd0e1fb-c1d6-4859-9392-13655a000118"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY4ZDQzMTI5MzliYjMxMTFmYWUyOGQ2NWQ5YTMxZTc3N2Y4ZjJjOWZjNDI3NTAxY2RhOGZmZTNiMzY3NjU4In19fQ==""}]}}}"
+		set yaml value "WEREWOLF.NAME" from "messages" to "&8» &cLoup-Garou"
+		set yaml value "WEREWOLF.DESC" from "messages" to "&8➥ &7Chaque nuit, vous devez voter pour l'élimination d'un joueur. &7Votre but est d'éliminer tous les villageois."
+		set yaml value "WEREWOLF.HEAD" from "messages" to "{SkullOwner:{Id:""9cd0e1fb-c1d6-4859-9392-13655a000118"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY4ZDQzMTI5MzliYjMxMTFmYWUyOGQ2NWQ5YTMxZTc3N2Y4ZjJjOWZjNDI3NTAxY2RhOGZmZTNiMzY3NjU4In19fQ==""}]}}}"
 		# Loup-Garou Alpha
-		set yaml value "LG_ALPHA.NAME" from "messages" to "&8» &4Loup-Garou Alpha"
-		set yaml value "LG_ALPHA.DESC" from "messages" to "Votre vote &ecompte double&7."
-		set yaml value "LG_ALPHA.HEAD" from "messages" to "{SkullOwner:{Id:""736e9be2-4984-4cbc-bbb6-9ab419bb55bc"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjgzYTJhYTlkMzczNGI5MTlhYzI0Yzk2NTllNWUwZjg2ZWNhZmJmNjRkNDc4OGNmYTQzM2JiZWMxODllOCJ9fX0=""}]}}}"
+		set yaml value "WEREWOLF_ALPHA.NAME" from "messages" to "&8» &4Loup-Garou Alpha"
+		set yaml value "WEREWOLF_ALPHA.DESC" from "messages" to "Votre vote &ecompte double&7."
+		set yaml value "WEREWOLF_ALPHA.HEAD" from "messages" to "{SkullOwner:{Id:""736e9be2-4984-4cbc-bbb6-9ab419bb55bc"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjgzYTJhYTlkMzczNGI5MTlhYzI0Yzk2NTllNWUwZjg2ZWNhZmJmNjRkNDc4OGNmYTQzM2JiZWMxODllOCJ9fX0=""}]}}}"
 		# Villageois Maudit
-		set yaml value "VL_MAUDIT.NAME" from "messages" to "&8» &7Villageois &8Maudit"
-		set yaml value "VL_MAUDIT.DESC" from "messages" to "&8➥ &7Vous êtes un villageois normal, vous n'avez rien à faire. &7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7."
+		set yaml value "TOWNSFOLK_DAMN.NAME" from "messages" to "&8» &7Villageois &8Maudit"
+		set yaml value "TOWNSFOLK_DAMN.DESC" from "messages" to "&8➥ &7Vous êtes un villageois normal, vous n'avez rien à faire. &7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7."
 		# Villageois
-		set yaml value "VL.NAME" from "messages" to "&8» &7Villageois"
-		set yaml value "VL.DESC" from "messages" to "&8➥ &7Vous n'avez aucune action spécifique, vous n'avez &eaucune faculté&7."
+		set yaml value "TOWNSFOLK.NAME" from "messages" to "&8» &7Villageois"
+		set yaml value "TOWNSFOLK.DESC" from "messages" to "&8➥ &7Vous n'avez aucune action spécifique, vous n'avez &eaucune faculté&7."
 		# Cupidon
-		set yaml value "CUPI.NAME" from "messages" to "&8» &dCupidon"
-		set yaml value "CUPI.DESC" from "messages" to "&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant toute la partie. Si l'un des deux meurt, l'autre mourra également."
-		set yaml value "CUPI.HEAD" from "messages" to "{SkullOwner:{Id:""94c9b15f-f65a-427d-a699-ad0d4d5489f6"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRlYWY4OTQyOGEzNjQ5YzI2ZWRjMWY3MWNjMTlmMjYzZTlmNGViMzFlZDE4Yzk3Njg2YWFjODJmNzY0MjQyIn19fQ==""}]}}}"
+		set yaml value "CUPID.NAME" from "messages" to "&8» &dCupidon"
+		set yaml value "CUPID.DESC" from "messages" to "&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront &eamant &7durant toute la partie. Si l'un des deux meurt, l'autre mourra également."
+		set yaml value "CUPID.HEAD" from "messages" to "{SkullOwner:{Id:""94c9b15f-f65a-427d-a699-ad0d4d5489f6"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRlYWY4OTQyOGEzNjQ5YzI2ZWRjMWY3MWNjMTlmMjYzZTlmNGViMzFlZDE4Yzk3Njg2YWFjODJmNzY0MjQyIn19fQ==""}]}}}"
 		# Voyante
-		set yaml value "VOVO.NAME" from "messages" to "&8» &aVoyante"
-		set yaml value "VOVO.DESC" from "messages" to "&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître le rôle d'un joueur&7."
+		set yaml value "SEER.NAME" from "messages" to "&8» &aVoyante"
+		set yaml value "SEER.DESC" from "messages" to "&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître le rôle d'un joueur&7."
 		# Voyante Aura
-		set yaml value "VOVO_AURA.NAME" from "messages" to "&8» &2Voyante Aura"
-		set yaml value "VOVO_AURA.DESC" from "messages" to "&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître l'aura d'un joueur&7. L'aura peut être ""Claire"", ""Obscure"" ou bien ""Inconnue""."
+		set yaml value "SEER_AURA.NAME" from "messages" to "&8» &2Voyante Aura"
+		set yaml value "SEER_AURA.DESC" from "messages" to "&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître l'aura d'un joueur&7. L'aura peut être ""Claire"", ""Obscure"" ou bien ""Inconnue""."
 		# Fou
-		set yaml value "FOU.NAME" from "messages" to "&8» &6Fou"
-		set yaml value "FOU.DESC" from "messages" to "&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7. Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin ;)"
-		set yaml value "FOU.HEAD" from "messages" to "{SkullOwner:{Id:""7e18508f-feb6-445b-8020-2c7cb79ace7c"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0=""}]}}}"
+		set yaml value "CRAZY.NAME" from "messages" to "&8» &6Fou"
+		set yaml value "CRAZY.DESC" from "messages" to "&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7. Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin ;)"
+		set yaml value "CRAZY.HEAD" from "messages" to "{SkullOwner:{Id:""7e18508f-feb6-445b-8020-2c7cb79ace7c"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0=""}]}}}"
 		# Tireur
-		set yaml value "TIREUR.NAME" from "messages" to "&8» &eTireur"
-		set yaml value "TIREUR.DESC" from "messages" to "&8➥ &7Vous commencez la partie avec &edeux balles&7. Vous aurez la possiblité de tuer n'importe qui."
+		set yaml value "SHOOTER.NAME" from "messages" to "&8» &eTireur"
+		set yaml value "SHOOTER.DESC" from "messages" to "&8➥ &7Vous commencez la partie avec &edeux balles&7. Vous aurez la possiblité de tuer n'importe qui."
 
 		# Chasseur de Tête
-		set yaml value "CDT.NAME" from "messages" to "&8» &9Chasseur de Tête"
-		set yaml value "CDT.DESC" from "messages" to "&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement. Si ce joueur est &etué par le village&7, il gagnera la partie."
-		set yaml value "CDT.HEAD" from "messages" to "{SkullOwner:{Id:""9d58f311-003b-4d1d-8ba8-b678e182bab3"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2MxZGYwZGI4ZDQ3NzNjYzI1NWE2M2I4ZjBiMGU0Y2RkN2Q3NGMzYjRjNjc1MzYyMTY4NDYwYmM2N2JiMzAyZSJ9fX0=""}]}}}"
+		set yaml value "HEADHUNTER.NAME" from "messages" to "&8» &9Chasseur de Tête"
+		set yaml value "HEADHUNTER.DESC" from "messages" to "&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement. Si ce joueur est &etué par le village&7, il gagnera la partie."
+		set yaml value "HEADHUNTER.HEAD" from "messages" to "{SkullOwner:{Id:""9d58f311-003b-4d1d-8ba8-b678e182bab3"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2MxZGYwZGI4ZDQ3NzNjYzI1NWE2M2I4ZjBiMGU0Y2RkN2Q3NGMzYjRjNjc1MzYyMTY4NDYwYmM2N2JiMzAyZSJ9fX0=""}]}}}"
 		# Docteur
-		set yaml value "DOCT.NAME" from "messages" to "&8» &bDocteur"
-		set yaml value "DOCT.DESC" from "messages" to "&8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre les Loup-Garous."
+		set yaml value "DOCTOR.NAME" from "messages" to "&8» &bDocteur"
+		set yaml value "DOCTOR.DESC" from "messages" to "&8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre les Loup-Garous."
 		# Sorcière
-		set yaml value "SOSO.NAME" from "messages" to "&8» &5Sorcière"
-		set yaml value "SOSO.DESC" from "messages" to "&8➥ &7Vous possédez &edeux potions&7. L'une permets de récussiter un joueur, l'autre permets de tuer un joueur. Vous ne pouvez les utiliser qu'une seule fois."
-		set yaml value "SOSO.HEAD" from "messages" to "{SkullOwner:{Id:""7f92b3d6-5ee0-4ab6-afae-2206b9514a63"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0=""}]}}}"
-		# Camp (LG, VL, LG_VL, SOLO)
-		set yaml value "TEAM.LG" from "messages" to "&8➥ &7Votre équipe: &cLoup-Garou"
-		set yaml value "TEAM.VL" from "messages" to "&8➥ &7Votre équipe: &6Village"
-		set yaml value "TEAM.LG_VL" from "messages" to "&8➥ &7Votre équipe: &6Village &8| &cLoup-Garou"
+		set yaml value "WITCH.NAME" from "messages" to "&8» &5Sorcière"
+		set yaml value "WITCH.DESC" from "messages" to "&8➥ &7Vous possédez &edeux potions&7. L'une permets de récussiter un joueur, l'autre permets de tuer un joueur. Vous ne pouvez les utiliser qu'une seule fois."
+		set yaml value "WITCH.HEAD" from "messages" to "{SkullOwner:{Id:""7f92b3d6-5ee0-4ab6-afae-2206b9514a63"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0=""}]}}}"
+		# Camp (WEREWOLF, VL, WEREWOLF_VL, SOLO)
+		set yaml value "TEAM.WEREWOLF" from "messages" to "&8➥ &7Votre équipe: &cLoup-Garou"
+		set yaml value "TEAM.TOWNSFLOK" from "messages" to "&8➥ &7Votre équipe: &6Village"
+		set yaml value "TEAM.WW_TF" from "messages" to "&8➥ &7Votre équipe: &6Village &8| &cLoup-Garou"
 		set yaml value "TEAM.SOLO" from "messages" to "&8➥ &7Votre équipe: &aSolo"
 		save yaml "messages"
 	if yaml value "GENERATED" from "config" is not set:
@@ -162,10 +160,10 @@ function lg_help(msg: text, p: player):
 	loop {_%{_msg}%::*}:
 		send colored loop-value to {_p}
 
-function lg_scoreboard(p: player, t: text):	
-	if {_t} is "setup":	
+function lg_scoreboard(p: player, t: text):
+	if {_t} is "setup":
 		create a new stylish scoreboard named "%{_p}%"	
-		set title of stylish scoreboard "%{_p}%" to msg("PREFIX.TITLE")	
+		set title of stylish scoreboard "%{_p}%" to msg("PREFIX.TITLE")
 		create a new id based score "%{_p}%11" with text "&1" slot 11 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%10" with text "&6&l» &f&lPartie:" slot 10 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%9" with text "&2" slot 9 for stylish scoreboard "%{_p}%"	
@@ -178,30 +176,28 @@ function lg_scoreboard(p: player, t: text):
 		create a new id based score "%{_p}%2" with text "&4" slot 2 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%1" with text " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%" slot 1 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%0" with text " &6● &eVotre équipe &f» &e%{lg::player::equipe::%{_p}%}%" slot 0 for stylish scoreboard "%{_p}%"	
-		set stylish scoreboard of {_p} to "%{_p}%"	
-		while {_p} is online:	
+		set stylish scoreboard of {_p} to "%{_p}%"
+		while {_p} is online:
 			set the text of id "%{_p}%8" to " &6● &eStatus &f» &e%{lg::partie::status}%"	
 			set the text of id "%{_p}%7" to " &6● &eConnectés &f» &e%size of {lg::player::joueurs::*}%"	
 			set the text of id "%{_p}%6" to " &6● &eConfigura&etion &f» &e%lg_get_configuration(1)%"	
 			set the text of id "%{_p}%5" to " &6● &eJour &f» &bn°%{lg::partie::day}%"	
 			set the text of id "%{_p}%1" to " &6● &eVotre rôle &f» &e%{lg::player::role::%{_p}%}%"	
 			set the text of id "%{_p}%0" to " &6● &eVotre équ&eipe &f» &e%{lg::player::equipe::%{_p}%}%"	
-			wait a second	
+			wait a second
 	else:	
-		reset stylish scoreboard of {_p}	
+		reset stylish scoreboard of {_p}
 		delete stylish scoreboard named "%{_p}%"
 
 function lg_get_configuration(mode: integer) :: text:
 	set {_p} to size of {lg::player::joueurs::*}
 	if {_mode} is 1:
 		if {_p} is between 5 and 12:    # 5 à 12 donc |-3 +4
-			return "&6Restrinte &7~8 joueurs"
+			return "&6Mini" # ou Restreinte
 		if {_p} is between 13 and 17:    # 13 à 17 | -2 +2
-			return "&eClassique &7~15 joueurs"
+			return "&eClassique"
 		if {_p} is between 18 and 26:    # 18 à 26 | -4 +3
-			return "&aEtendu &7~22 joueurs"
-		if {_p} is greater than or equal to 27:
-			return "&cJoueurs trop nombreux"
+			return "&aMéga"
 		else:
 			return "&cJoueurs manquants"
 	else if {_mode} is 2:
@@ -223,90 +219,84 @@ function lg_get_roles_configuration() :: objects:
 	if {_config} is 0:
 		return join msg("MESSAGE.NOTENOUGH1"), "&c%5 - {_p}%" and msg("MESSAGE.NOTENOUGH2")
 		stop
-	if {_config} is 4:
-		return msg("MESSAGE.TOOMANY")
-		stop
 	# - REPARTITION ROLES DE BASE
-	add "Voyante", "Docteur" and "Tireur" to {_roles::*}    
+	add "SEER", "DOCTOR" and "SHOOTER" to {_roles::*}    
 	if {_config} is 1:
 		{_p} is not 5 # Obligation pour avoir 1 LG / 1 VILLAGEOIS
-		add "Fou" to {_roles::*}
+		add "CRAZY" to {_roles::*}
 	if {_config} is 2 or 3:
-		add "Voyante Aura", "Cupidon", "Loup-Garou Alpha", "Villageois Maudit", "Villageois Maudit", "Sorcière" and "Chasseur de tête" to {_roles::*}
+		add "SEER_AURA", "CUPID", "WEREWOLF_ALPHA", "TOWNSFOLK_DANM", "TOWNSFOLK_DANM", "WITCH" and "HEADHUNTER" to {_roles::*}
 	# - ATTRIBUTION LG/VILLAGEOIS
 	remove size of {_roles::*} from {_p}
 	while {_p} is greater than 0:
 		if mod({_p}, 2) is 0:
-			add "Loup-Garou" to {_roles::*}
+			add "WEREWOLF" to {_roles::*}
 		else:
-			add "Villageois" to {_roles::*} # Prioriser les villageois
+			add "TOWNSFOLK" to {_roles::*}
 		remove 1 from {_p}
 	return {_roles::*}
-
-command /testt:
-	trigger:
-		lg_give_roles()
 
 function lg_give_roles():
 	set {_input::*} to lg_get_roles_configuration() 
 	if lg_get_configuration(2) parsed as integer is 0 or 4:
-		broadcast join msg("PREFIX.GENERAL") and {_input::*} # Je ne sais pas s'il faut broadcast x)
+		broadcast join msg("PREFIX.GENERAL") and {_input::*}
 		stop
+	lg_round(0)
 	loop {lg::player::joueurs::*}:
 		set {lg::player::role::%loop-value%} to {_input::%loop-index%}
-		send loop-value title "%msg(""PREFIX.TITLE"")%" with subtitle join msg("MESSAGE.REVEAL") and "&a%{_input::%loop-index%}%" for 2 seconds
+		send title msg("PREFIX.TITLE") with subtitle join msg("MESSAGE.REVEAL") and "&a%{_input::%loop-index%}%" to loop-value for 2 seconds
 		send join msg("PREFIX.GENERAL"), msg("MESSAGE.REVEAL") and {_input::%loop-index%} to loop-value
-		if {_input::%loop-index%} is "Loup-garou":
-			send msg("LG.DESC") and msg("TEAM.LG") to loop-value
-		else if {_input::%loop-index%} is "Loup-garou alpha":
-			send msg("LG_ALPHA.DESC") and msg("TEAM.LG") to loop-value
-		else if {_input::%loop-index%} is "Voyante":
-			send msg("VOVO.DESC") and msg("TEAM.VL") to loop-value
-		else if {_input::%loop-index%} is "Voyante aura":
-			send msg("VOVO_AURA.DESC") and msg("TEAM.VL") to loop-value
-		else if {_input::%loop-index%} is "Docteur":
-			send msg("DOCT.DESC") and msg("TEAM.VL") to loop-value
-		else if {_input::%loop-index%} is "Tireur":
-			send msg("TIR.DESC") and msg("TEAM.VL") to loop-value
-		else if {_input::%loop-index%} is "Villageois Maudit":
-			send msg("VL_MAUDIT.DESC") and msg("TEAM.LG_VL") to loop-value
-		else if {_input::%loop-index%} is "Sorcière":
-			send msg("SOSO.DESC") and msg("TEAM.VL") to loop-value
-		else if {_input::%loop-index%} is "Chasseur de tête":
-			send msg("CDT.DESC") and msg("TEAM.SOLO") to loop-value
-		else if {_input::%loop-index%} is "Fou":
-			send msg("FOU.DESC") and msg("TEAM.SOLO") to loop-value
-		else if {_input::%loop-index%} is "Villageois":
-			send msg("VL.DESC") and msg("TEAM.VL") to loop-value
-		else if {_input::%loop-index%} is "Cupidon":
-			send msg("CUPI.DESC") and msg("TEAM.VL") to loop-value
-		if {_input::%loop-index%} contains "loup-garou":
+		send msg("%{_input::%loop-index%}%.DESC") to loop-value
+		if {_input::%loop-index%} contains "WEREWOLF":
 			add {_p} to {lg::player::equipe::lg::*}
-		wait 3 ticks # 5 joueurs / seconde (si 4 ticks) --> 5 secondes d'attente avec une partie complète
-		# Attendre au maximum 5 secondes avant de lancer la partie, les rôles pourraient ne pas être encore distribués
-
-command /tes <integer>:
-	trigger:
-		send "%mod(arg-1, 2)%"
+		wait 3 ticks # 5 joueurs / seconde (si 4 ticks) --> maximum 5 secondes d'attente avec une partie complète
+	lg_round(1)
+	
 function lg_round(type: integer):
 	if {_type} is 0:
-		set {lg::round} to 0
+		set {lg::partie::day} to 0
 		set {lg::partie::start} to true
-		set {lg::partie::status} to "&eEn cours"
-	else:
-		set {_mod} to mod({lg::round}, 2)
+		set {lg::partie::status} to "&6Jour"
 	if {_type} is 1:
-		if 1 is 1:
-			add 1 to {lg::round}
-			if mod({lg::round}, 2) is 0:
-				set {lg::partie::status} to "&7Nuit"
-				broadcast "nuit"
-			else:
-				set {lg::partie::status} to "&6Jour"
-				broadcast "jour"
-		broadcast "Tour actuel: %{lg::round}%"
+		{lg::partie::start} is true
+		if {lg::partie::status} is "&6Jour":
+			while "%time of ""world""%" isn't "0:00":
+				add 50 ticks to time of "world"
+				wait a tick
+			strike lightning at {lg::partie::center}
+			set {lg::partie::status} to "&7Nuit"
+			lg_vote(0)
+		else:
+			while "%time of ""world""%" isn't "12:00":
+				add 50 ticks to time of "world"
+				wait a tick
+			set {lg::partie::status} to "&6Jour"
+			add 1 to {lg::partie::day}
+			lg_vote(1)
 
-            
+function lg_vote(i: number):
+	if {_i} is 0:
+		if {lg::partie::day} is 0:
+			broadcast "&6[TEST]&f Vote de Cupidon ..."
+			wait 1 second
+		broadcast "&6[TEST]&f Vote des LG ..."
+		wait 1 second
+		broadcast "&6[TEST]&f Voyante, Voyante Aura, Docteur ..."
+		wait 1 second
+		broadcast "&6[TEST]&f Vote de la Sorcière ..."
+		wait 1 second
+		broadcast "&6[TEST]&f Fin des votes !"
+		broadcast "&6[TEST]&f XXX a été tué !"
+		wait 1 second
+	else:
+		broadcast "&6[TEST]&f Vote des joueurs ..."
+		wait 5 seconds
+	lg_round(1)
+
+command /test [<text>]:
+	trigger:
+		lg_draw(player, arg-1)
+
 function lg_draw(p: player, type: text):
 	if {_type} is "erase":
 		stopEffect id "lg-center"
@@ -329,8 +319,6 @@ function lg_draw(p: player, type: text):
 			drawImage file "arrow.png", center {_loc}, id "lg-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 
 		# AFFICHER UN HOLO AU DESSUS DE LA TETE DU JOUEUR AVEC SON NOMBRE DE VOTE -> {lg::player::vote::%{_p}%}
-
-
 	if {_type} is "kill":
 		set {_loc} to {lg::partie::center}
 		add 3 to y-coordinate of {_loc}
@@ -357,7 +345,6 @@ function lg_draw(p: player, type: text):
 		reveal {_p} to all players
 	if {_type} is "center":
 		drawAtom particle1 "redstone", particle2 "flame", center {lg::partie::center}, id "lg-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
-		
 
 function lg_most_voted() :: objects:
 	set {_playerVotes::*} to the highest (size of {lg::player::vote::*}) values of {lg::player::vote::*} as "@index;@value"
@@ -366,12 +353,11 @@ function lg_most_voted() :: objects:
 		add {_s::1} to {_players::*}
 		add {_s::2} to {_votes::*}
 	if {_votes::1} = {_votes::2}:
-		chance of 50%:                                     # Si les deux premiers joueurs on le même nombre de vote,
+		chance of 50%:                                 # Si les deux premiers joueurs on le même nombre de vote,
 			return {_players::1} and {_votes::1}       # 50/50 pour savoir qui va mourir.
 		else:
 			return {_players::2} and {_votes::2}
 	return {_players::1} and {_votes::1}
-
 
 function lg_join(p: player):
 	loop 200 times:
@@ -402,9 +388,7 @@ function lg_setup():
 	set {lg::partie::day} to 0
 	set {lg::partie::status} to "&6Attente" #| "&6Attente" / "&aEn cours" / "&cArrêté"
 
-
 function lg_time(t: integer, p: player, mode: text):
-	
 	# Mise en place des variables, afin de ne pas faire de requêtes au fichier YML toutes les secondes
 	if {_mode} = "start":
 		set {_second} to msg("TIME.SECOND")
@@ -414,26 +398,25 @@ function lg_time(t: integer, p: player, mode: text):
 
 	loop ({_t} - 5) times:
 		if {_mode} = "start":
-			set action bar of {_p} to join {_starting}, "&a%{_t}% " and {_second}
+			send action bar join {_starting}, "&a%{_t}% " and {_second} to {_p}
 		set {_p}'s level to {_t}
 		if mod({_t}, 10) = 0: 
 			if {_mode} = "start":
-				send {_p} title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} for 2 seconds
+				send title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} to {_p} for 2 seconds
 
 		remove 1 from {_t}
 		wait a second
 	loop 5 times:
 		if {_mode} = "start":
-			send {_p} title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} for 2 seconds
-			set action bar of {_p} to join {_starting}, "&a%{_t}% " and {_second}
+			send title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} to {_p} for 2 seconds
+			send action bar join {_starting}, "&a%{_t}% " and {_second} to {_p}
 		set {_p}'s level to {_t}
 		remove 1 from {_t}
 		wait a second
 	if {_mode} = "start":
-		send {_p} title {_title} with subtitle {_start} for a second
-		set action bar of {_p} to {_start}
+		send title {_title} with subtitle {_start} to {_p} for a second
+		send action bar {_start} to {_p}
 	set {_p}'s level to 0
-
 
 function lg_check_win():
 	if size of {lg::player::joueurs::*} = 0:
@@ -458,43 +441,19 @@ function lg_start():
 		teleport loop-value to {lg::partie::spawnPosition::%{_spawn}%}
 		add 1 to {_spawn}
 	lg_give_roles()
-	wait 5 seconds
-	lg_round(0)
 
 function lg_end():
 	loop {lg::player::joueurs::*}:
 		kick loop-value due to join msg("PREFIX.GENERAL") and msg("MESSAGE.ENDGAME")
-	delete {lg::partie::start}
+	clear {lg::partie::start}
 	clear {lg::player::*}
-	clear {lg::round}
+	clear {lg::partie::day}
 	lg_setup()
 
 function lg_settings(p: player):
 	lg_menu_deco({_p}, "&6➽ &eParamètres du LG", 3)
 	make a gui slot 11 of {_p} with painting named "&6» &eConfiguration de la partie" with lore "" and "&f➥ &d%lg_get_configuration(1)%" and "&7(Dépends du nombre de joueurs connectés sur le serveur)"
-
-
-# {lg::partie::*} -> paramètre de la partie
-# {lg::player::*} -> contient tous ce qui concerne les joueurs (rôles etc...)
-
-
-# {lg::partie::status} -> "&6Attente" / "&eEn cours" / "&7Nuit" / "&fJour" / "&aTerminé"
-
-command /reset:
-	trigger:
-		clear {lg::*}
-
-command /item:
-	trigger:
-		send "%player's tool%"
-		send "%{lg::player::joueurs::*}%"
-
-#function lg_admin_help(p: player):
-#	set {_help::*} to msgO("MESSAGE.ADMIN")
-#	loop {_help::*}:
-#		send colored "%loop-value%" to {_p}
-
-
+	
 command /lg [<text>] [<text>] [<text>]:
 	permission: msg("PERMISSION.ADMIN")
 	permission message: join msg("PREFIX.GENERAL") and msg("MESSAGE.PERMISSION")
@@ -551,11 +510,7 @@ command /lg [<text>] [<text>] [<text>]:
 				set yaml value "GENERATED" of "messages" to false
 				save yaml "messages"
 				lg_yml()
-
-command /addplayer:
-	trigger:
-		add "Romitou" parsed as player to {lg::player::joueurs::*}
-
+				
 on chat:
 	replace all "&" with "§" in message
 	cancel event
@@ -572,8 +527,10 @@ on chat:
 		broadcast "&7%player% &8» &7%message%"
 
 on join:
-	if {lg::partie::start} is set:
+	if {lg::partie::start} is not set:
 		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.ALREADYSTART")
+	else if size of {lg::player::joueurs::*} is greater than or equal to 27:
+		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.TOOMANY")
 	else:
 		set join message to "&a✔ %player% &7(%amount of all players% &8» %lg_get_configuration(1)%&7)"
 		lg_join(player)
