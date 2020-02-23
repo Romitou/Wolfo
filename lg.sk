@@ -95,8 +95,8 @@ function lg_yml():
 		set yaml value "WEREWOLF_ALPHA.DESC" from "messages" to "Votre vote &ecompte double&7."
 		set yaml value "WEREWOLF_ALPHA.HEAD" from "messages" to "{SkullOwner:{Id:""736e9be2-4984-4cbc-bbb6-9ab419bb55bc"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjgzYTJhYTlkMzczNGI5MTlhYzI0Yzk2NTllNWUwZjg2ZWNhZmJmNjRkNDc4OGNmYTQzM2JiZWMxODllOCJ9fX0=""}]}}}"
 		# Villageois Maudit
-		set yaml value "TOWNSFOLK_DAMN.NAME" from "messages" to "&8» &7Villageois &8Maudit"
-		set yaml value "TOWNSFOLK_DAMN.DESC" from "messages" to "&8➥ &7Vous êtes un villageois normal, vous n'avez rien à faire. &7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7."
+		set yaml value "TOWNSFOLK_CURSED.NAME" from "messages" to "&8» &7Villageois &8Maudit"
+		set yaml value "TOWNSFOLK_CURSED.DESC" from "messages" to "&8➥ &7Vous êtes un villageois normal, vous n'avez rien à faire. &7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7."
 		# Villageois
 		set yaml value "TOWNSFOLK.NAME" from "messages" to "&8» &7Villageois"
 		set yaml value "TOWNSFOLK.DESC" from "messages" to "&8➥ &7Vous n'avez aucune action spécifique, vous n'avez &eaucune faculté&7."
