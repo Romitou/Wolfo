@@ -1,9 +1,10 @@
 import:
-    java.util.ArrayList
-    java.util.Collections
-    java.util.Map$Entry
-    ch.njol.skript.variables.Variables
- 
+	java.util.ArrayList
+	java.util.Collections
+	java.util.Map$Entry
+	ch.njol.skript.variables.Variables
+	org.bukkit.entity.Player as Player
+
 expression replace values %strings% with %strings% in %string%:
     get:
         set {_string} to expression-3
@@ -34,15 +35,21 @@ function lg_initialize():
 	loop {_loop::*}:
 		load yaml "plugins/Skript/scripts/Wolfo/%loop-value%.yml" as "%loop-value%"
 		if yaml "%loop-value%" is empty:
-			broadcast "&4Oops! The file containing the %loop-value% could not be found."
-			broadcast "&7Please download it and add it to the Wolfo folder."
-			stop
-	if text from "https://files.romitou.fr/wolfo" is not yaml value "VERSION" from "config":
-		broadcast "&6Wow! It's been a while since you last updated Wolfo."
-		broadcast "&7To take advantage of the latest features, please update it."
-	broadcast "&2Nice! Wolfo has been successfully loaded on your server."
-	broadcast "&7If you have any problems, please let us know."
-	set {wolfo::initialize} to true
+			send "&4Oops! The file containing the %loop-value% could not be found." to console
+			send "&7Please download it and add it to the Wolfo folder." to console
+			add 1 to {_error}
+	set {_actual} to text from "https://files.romitou.fr/wolfo"
+	set {_current} to yaml value "VERSION" from "config"
+	if {_actual} is not {_current}:
+		send "&6Wow! It's been a while since you last updated Wolfo." to console
+		send "&7Version &eV%{_actual}%&7 is already out, you are in &eV%{_current}%&7!" to console
+		add 1 to {_error}
+	if {_error} is set:
+		broadcast "&6&lWolfo &7&l» &c%{_error}% errors were encountered while loading."
+		broadcast "&7Please consult the console for more information."
+		stop
+	broadcast join msg("PREFIX.GENERAL") and "&aThe game has been loaded, have fun! &7(V%{_current}%)"
+	lg_automsg()
 
 function msg(request: text) :: text: # POUR LES TEXTES (plus utilisé)
 	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::partie::debug::yml} is true
@@ -57,6 +64,17 @@ function msgO(request: text) :: objects: # POUR LES OBJECTS
 	return yaml list {_request} from "messages"
 
 # Symboles:  ➥ ➽ ⚠ ● »
+
+function lg_automsg():
+	set {_list::*} to msgO("MESSAGE.AUTO")
+	if {wolfo::partie::automsg} is not set:
+		set {wolfo::partie::automsg} to true
+		while {wolfo::partie::automsg} is true:
+			set {_random} to a random element out of {_list::*}
+			if {_random} is not {_last}:
+				set {_last} to {_random}
+				broadcast join msg("PREFIX.GENERAL") and {_random}
+				wait 10 seconds
 
 function lg_help(msg: text, p: player):
 	send join msg("PREFIX.GENERAL") and msg("MESSAGE.%{_msg}%_FIRST") to {_p}
@@ -302,15 +320,15 @@ function lg_time(t: integer, p: player, mode: text):
 		set {_title} to msg("MESSAGE.TITLE")
 		set {_starting} to msg("MESSAGE.STARTING")
 		set {_start} to msg("MESSAGE.START")
-
+	set {_time} to {_t}
 	loop ({_t} - 5) times:
 		if {_mode} = "start":
 			send action bar join {_starting}, "&a%{_t}% " and {_second} to {_p}
 		set {_p}'s level to {_t}
+		Player.setExp({_p} and {_t} / {_time})
 		if mod({_t}, 10) = 0: 
 			if {_mode} = "start":
 				send title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} to {_p} for 2 seconds
-
 		remove 1 from {_t}
 		wait a second
 	loop 5 times:
@@ -318,12 +336,16 @@ function lg_time(t: integer, p: player, mode: text):
 			send title {_title} with subtitle join {_starting}, "&a%{_t}% " and {_second} to {_p} for 2 seconds
 			send action bar join {_starting}, "&a%{_t}% " and {_second} to {_p}
 		set {_p}'s level to {_t}
+		Player.setExp({_p} and {_t} / {_time})
 		remove 1 from {_t}
 		wait a second
 	if {_mode} = "start":
 		send title {_title} with subtitle {_start} to {_p} for a second
 		send action bar {_start} to {_p}
 	set {_p}'s level to 0
+
+	# Player.setExp(player, 0.1)
+	# Utiliser ça pour mettre le level XP
 
 function lg_check_win():
 	if size of {wolfo::players::list::*} = 0:
@@ -343,18 +365,17 @@ function lg_check_start(force: boolean = false):
 	lg_start()
 
 function lg_start():
-	set {_spawn} to 1
 	loop {wolfo::players::list::*}:
-		teleport loop-value to {wolfo::partie::spawnPosition::%{_spawn}%}
-		add 1 to {_spawn}
+		teleport loop-value to {wolfo::spawn::%loop-index%}
 	lg_give_roles()
+	set {wolfo::partie::automsg} to false
 
 function lg_end():
 	loop {wolfo::players::list::*}:
 		kick loop-value due to join msg("PREFIX.GENERAL") and msg("MESSAGE.ENDGAME")
 	clear {wolfo::partie::start}
 	clear {wolfo::players::*}
-	clear {wolfo::partie::day}
+	clear {wolfo::partie::*}
 	lg_setup()
 
 function lg_settings(p: player):
@@ -388,14 +409,13 @@ command /lg [<text>] [<text>] [<text>]:
 			if {wolfo::partie::start} is set:
 				send join msg("PREFIX.GENERAL") and msg("MESSAGE.ALREADYSTART")
 			else:
-				set {_size} to (size of {wolfo::partie::spawnPosition::*}) + 1
-				set {wolfo::partie::spawnPosition::%{_size}%} to location of player
-				send join msg("PREFIX.GENERAL"), msg("MESSAGE.ADDSPAWN") and "&7(%size of {wolfo::partie::spawnPosition::*}%)"
+				set {_size} to (size of {wolfo::spawn::%{_size}%::*}) + 1
+				set {wolfo::spawn::%{_size}%::*} to location of player
+				send join msg("PREFIX.GENERAL"), msg("MESSAGE.ADDSPAWN") and "&7(%size of {wolfo::spawn::%{_size}%::*}%)"
 		if arg 1 is "forcestart":
 			if {wolfo::partie::start} is set:
 				send join msg("PREFIX.GENERAL") and msg("MESSAGE.ALREADYSTART")
 			else:
-				set {wolfo::partie::start} to true
 				lg_check_start(true)
 		if arg 1 is "forcestop":
 			if {wolfo::partie::start} isn't set:
@@ -462,6 +482,8 @@ on quit:
 
 
 on right click:
+	if player's tool is book enchanted:
+		lg_cosmetic()
 	if name of player's tool is msg("ITEM.INFO"):
 		lg_menu_informations(player)
 	else if name of player's tool is msg("ITEM.EXIT"):
