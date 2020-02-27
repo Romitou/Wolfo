@@ -1,31 +1,5 @@
 import:
-	java.util.ArrayList
-	java.util.Collections
-	java.util.Map$Entry
-	ch.njol.skript.variables.Variables
 	org.bukkit.entity.Player as Player
-
-expression replace values %strings% with %strings% in %string%:
-    get:
-        set {_string} to expression-3
-        loop expressions-1:
-            add 1 to {_index}
-            replace all "%loop-value%" with "%{_index}th element of expressions-2%" in {_string}
-        return {_string}
- 
-plural expression [the] (1¦(highest|top)|2¦(lowest|last)) %integer% values of %objects% [formatted] as %string%:
-    get:
-        set {_list} to new ArrayList(Variables.getVariable(raw expressions-2.getName().toString(event), event and raw expressions-2.isLocal()).entrySet())
-        {_list}.sort(Entry.comparingByValue())
-        if parse mark = 1:
-            Collections.reverse({_list})
-        loop ...{_list}:
-            "%loop-value.getValue()%" is not "0"
-            add 1 to {_index}
-            set {_sorted::%{_index}%} to replace values "@index" and "@value" with "%loop-value.getKey()%" and "%loop-value.getValue()%" in expression-3
-            {_index} = expression-1
-            stop loop
-        return {_sorted::*}
 
 on script load:
 	lg_initialize()
@@ -65,6 +39,69 @@ function msgO(request: text) :: objects: # POUR LES OBJECTS
 
 # Symboles:  ➥ ➽ ⚠ ● »
 
+function lg_menu_deco(p: player, t: text, i: integer = 6):
+	open virtual chest inventory with {_i} rows named "%{_t}%" to {_p}
+	if {_i} = 3:
+		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 19, 20, 21, 22, 23, 24 and 25 of {_p} with magenta stained glass pane
+		make a gui slot 0, 8, 18 and 26 of {_p} with purple stained glass pane
+	if {_i} = 5:
+		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 18, 26, 27, 28, 34, 35, 37, 38, 39, 40, 41, 42 and 43 of {_p} with magenta stained glass pane
+		make a gui slot 0, 8, 36 and 44 of {_p} with purple stained glass pane
+	if {_i} = 6:
+		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 18, 26, 27, 35, 36, 37, 43, 44, 45, 46, 47, 48, 49, 50, 51 and 52 of {_p} with magenta stained glass pane
+		make a gui slot 0, 8, 45 and 53 of {_p} with purple stained glass pane
+
+command /addplayer:
+    trigger:
+        add "Xamez" parsed as player to {wolfo::players::list::*}
+
+function lg_cosmetic(type: integer, p: player):
+    if {_type} is 1 or 2:
+        if {_type} is 1:
+            set {_title} to msg("GUI.EFFECT_SELECT")
+            add msgO("COSMETICS.EFFECT") to {_p::*}
+        else if {_type} is 2:
+            if {lg::cosmetic::%{_p}%::1} is "nyancat":  
+                lg_cosmetic(3, {_p})
+                stop
+            set {_title} to msg("GUI.PARTICLE_SELECT")
+            add msgO("COSMETICS.PARTICLE") to {_p::*}
+        lg_menu_deco({_p}, {_title}, 5)
+        set {_loop} to 11
+        loop {_p::*}:
+            while {_loop} is 16, 17, 18, 26, 27 or 28:
+                add 1 to {_loop}
+            set {_value} to "%loop-value%"
+            set {_value::*} to {_value} split at ";"
+            make a gui slot {_loop} of {_p} with {_value::2} parsed as material named colored {_value::3} to run:
+                set {lg::cosmetic::%{_p}%::%{_type}%} to {_value::1}
+                close {_p}'s inventory
+                add 1 to {_type}
+                lg_cosmetic({_type}, {_p})
+            add 1 to {_loop}
+    else if {_type} is 3:
+        set {_particle} to {lg::cosmetic::%{_p}%::2}
+        set {_type} to {lg::cosmetic::%{_p}%::1}
+        broadcast "&c%{_p}%'s cosmetic: %{_particle}% %{_type}%"
+        set {lg::cosmetic::%{_p}%::active} to true
+        if {_type} is "wings":
+            drawWings style 7, particle1 "%{_particle}%", particle2 "%{_particle}%", particle3 "%{_particle}%", center {_p}, id "ww-%{_p}%", angle 110, height 0, space 0.2, visibleRange 30, tps 0, second 1
+        if {_type} is "nyancat":
+            drawNyanCat center {_p}, id "ww-%{_p}%", visibleRange 30, tps 20, second 3
+        if {_type} is "rings":
+            drawRings particle "%{_particle}%", center {_p}, id "ww-%{_p}%", randomRotation true, animated true, radius 1, ringCount 3, ringDensity 1, visibleRange 30
+        if {_type} is "spiral":
+
+        set slot 0 of {_p} to a barrier named "&cStopper le truc qui fait des particules"
+    else if {_type} is 4:
+        clear {lg::cosmetic::%{_p}%::active}
+        stopEffect "ww-%{_p}%"
+        set slot 0 of {_p} to a enchanted book named "truc des particules"
+
+command /stoploop:
+    trigger:
+        clear {wolfo::partie::start}
+
 function lg_automsg():
 	set {_list::*} to msgO("MESSAGE.AUTO")
 	if {wolfo::partie::automsg} is not set:
@@ -74,7 +111,7 @@ function lg_automsg():
 			if {_random} is not {_last}:
 				set {_last} to {_random}
 				broadcast join msg("PREFIX.GENERAL") and {_random}
-				wait 10 seconds
+				wait 30 seconds
 
 function lg_help(msg: text, p: player):
 	send join msg("PREFIX.GENERAL") and msg("MESSAGE.%{_msg}%_FIRST") to {_p}
@@ -96,7 +133,7 @@ function lg_scoreboard(p: player, t: text):
 		create a new id based score "%{_p}%4" with text "&3" slot 4 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%3" with text "&6&l» &f&lJoueur:" slot 3 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%2" with text "&4" slot 2 for stylish scoreboard "%{_p}%"	
-		create a new id based score "%{_p}%1" with text " &6● &eVotre rôle &f» &e%{wolfo::players::role::%{_p}%}%" slot 1 for stylish scoreboard "%{_p}%"	
+		create a new id based score "%{_p}%1" with text " &6● &eVotre rôle &f» &e%{wolfo::players::role_name::%{_p}%}%" slot 1 for stylish scoreboard "%{_p}%"	
 		create a new id based score "%{_p}%0" with text " &6● &eVotre équipe &f» &e%{wolfo::players::equipe::%{_p}%}%" slot 0 for stylish scoreboard "%{_p}%"	
 		set stylish scoreboard of {_p} to "%{_p}%"
 		while {_p} is online:
@@ -166,10 +203,12 @@ function lg_give_roles():
 	lg_round(0)
 	loop {wolfo::players::list::*}:
 		set {_role} to msg("%{_input::%loop-index%}%.NAME")
+		set {_desc} to msg("%{_input::%loop-index%}%.DESC")
 		set {wolfo::players::role_name::%loop-value%} to {_role}
-		send title msg("PREFIX.TITLE") with subtitle join msg("MESSAGE.REVEAL") and {_role} to loop-value for 2 seconds
+        #set {wolfo::players::role_en::%loop-value%} to {_input::%loop-index%} 
+		send title {_role} with subtitle "test" to loop-value for 2 seconds
 		send join msg("PREFIX.GENERAL"), msg("MESSAGE.REVEAL") and {_role} to loop-value
-		send msg("%{_input::%loop-index%}%.DESC") to loop-value
+		send {_desc} to loop-value
 		if {_input::%loop-index%} contains "WEREWOLF" or "TOWNSFOLK":
 			add loop-value to {wolfo::players::role::%{_input::%loop-index%}%::*}
 		else:
@@ -221,16 +260,15 @@ function lg_manage(i: number):
 function lg_vote(type: text):
 	# To Do
 
-function lg_draw(p: player, type: text):
+function lg_draw(type: text, p: text):
 	if {_type} is "erase":
-		stopEffect id "lg-center"
-		stopEffect id "lg-selected"
-		stopEffect id "lg-rayon"
-		stopEffect id "lg-sphere"
-		stopEffect id "lg-spawn"
+		stopEffect id "WW-%{_p}%"
+	if {_type} is "img":
+		drawImage file "%{_p}%.png", center y-coordinate of {wolfo::partie::center} + 10, id "WW-%{_p}%", randomRotation true, "y", pixelStepX 5, pixelStepY 5, scale 20, visibleRange 300, tps 1, second 3
+	set {_p} to {_p} parsed as player
 	if {_type} is "selected":
-		stopEffect id "lg-%{_type}%"
-		set {_loc} to location at x-coordinate of {_p}, y-coordinate of {_p} + 2,  z-coordinate of {_p} in world "world"
+		stopEffect id "WW-%{_type}%"
+		set {_loc} to location at x-coordinate of {_p}, y-coordinate of {_p} + 2, z-coordinate of {_p} in world "world"
 		if {wolfo::players::spawn::%{_p}%} is 3 or 4 or 5 or 9 or 10 or 11 or 15 or 16 or 17 or 21 or 22 or 23:
 			set {_angle} to 45
 		if {wolfo::players::spawn::%{_p}%} is 6 or 7 or 8 or 18 or 19 or 20:
@@ -238,50 +276,49 @@ function lg_draw(p: player, type: text):
 		else:
 			set {_angle} to 0
 		if yaml value "ANIMATION.SELECTION" from "config" is "HAND":
-			drawImage file "hand.png", center {_loc}, id "lg-%{_type}%", pixelStepX 2, pixelStepY 2, scale 8, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
+			drawImage file "hand.png", center {_loc}, id "WW-%{_type}%", pixelStepX 2, pixelStepY 2, scale 8, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 		else: # Pour quand même afficher une flèche si la config est erronée
-			drawImage file "arrow.png", center {_loc}, id "lg-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
+			drawImage file "arrow.png", center {_loc}, id "WW-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 
 		# AFFICHER UN HOLO AU DESSUS DE LA TETE DU JOUEUR AVEC SON NOMBRE DE VOTE -> {wolfo::players::vote::%{_p}%}
-	if {_type} is "kill":
+	else if {_type} is "kill":
 		set {_loc} to {wolfo::partie::center}
 		add 3 to y-coordinate of {_loc}
 		set {_pos} to location of {_p}
 		add 1 to y-coordinate of {_pos}
-		drawArc particle "flame", center location of {_pos}, target location of {_loc}, id "lg-rayon", rainbowMode false, density 50, height 0, pitchMultiplier 0, visibleRange 30
+		drawArc particle "flame", center location of {_pos}, target location of {_loc}, id "WW-rayon", rainbowMode false, density 50, height 0, pitchMultiplier 0, visibleRange 30
 		set {_r} to 0
 		loop 20 times:
-			stopEffect id "lg-sphere"
-			drawSphere style 1, particle "flame", center location of {_pos}, id "lg-sphere", rainbowMode false, radius {_r}, density 400, visibleRange 32, pulseDelay 1
+			stopEffect id "WW-sphere"
+			drawSphere style 1, particle "flame", center location of {_pos}, id "WW-sphere", rainbowMode false, radius {_r}, density 400, visibleRange 32, pulseDelay 1
 			add 0.1 to {_r}
 			wait a tick
 		wait 8 ticks
-		hide {_p} to all players
+		chance of 50%:
+			play sound "entity.wither.death" with volume 10 and pitch 1 at {_p} for all players
+		else:
+			play sound "entity.wither.spawn" with volume 10 and pitch 1 at {_p} for all players
 		strike lightning effect at location of {_p}
+		lg_kill({_p})
 		wait 2 ticks
-		stopEffect id "lg-rayon"
-		stopEffect id "lg-sphere"
-	if {_type} is "spawn":
+		stopEffect id "WW-rayon"
+		stopEffect id "WW-sphere"
+	else if {_type} is "spawn":
 		hide {_p} to all players
-		drawWarpRings style 2, particle "redstone", RGB 80, 255, 255, center location of {_p}, id "lg-%{_type}%", rainbowMode true, scan true, height 2, radius 1, ringCount 40, ringDensity 20, visibleRange 32, pulseDelay 1
+		drawWarpRings style 2, particle "redstone", RGB 80, 255, 255, center location of {_p}, id "WW-%{_type}%", rainbowMode true, scan true, height 2, radius 1, ringCount 40, ringDensity 20, visibleRange 32, pulseDelay 1
 		wait 2 second
-		stopEffect id "lg-%{_type}%"
+		stopEffect id "WW-%{_type}%"
 		reveal {_p} to all players
-	if {_type} is "center":
-		drawAtom particle1 "redstone", particle2 "flame", center {wolfo::partie::center}, id "lg-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
+	else if {_type} is "center":
+		drawAtom particle1 "redstone", particle2 "flame", center {wolfo::partie::center}, id "WW-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
 
 function lg_most_voted() :: objects:
-	set {_playerVotes::*} to the highest (size of {wolfo::players::vote::*}) values of {wolfo::players::vote::*} as "@index;@value"
-	loop {_playerVotes::*}:
-		set {_s::*} to loop-value split at ";"
-		add {_s::1} to {_players::*}
-		add {_s::2} to {_votes::*}
-	if {_votes::1} = {_votes::2}:
-		chance of 50%:                                 # Si les deux premiers joueurs on le même nombre de vote,
-			return {_players::1} and {_votes::1}       # 50/50 pour savoir qui va mourir.
-		else:
-			return {_players::2} and {_votes::2}
-	return {_players::1} and {_votes::1}
+	set {_sorted::*} to sorted {_c::*}
+	set {_top} to last element out of {_sorted::*}
+	loop {_c::*}:
+		loop-value is {_top}
+		set {_p} to loop-index
+	return {_p} and {_top}
 
 function lg_join(p: player):
 	loop 200 times:
@@ -292,6 +329,7 @@ function lg_join(p: player):
 	clear {_p}'s inventory
 	heal {_p}
 	set current hotbar slot of {_p} to 4
+	set slot 0 of {_p} to enchanted book named msg("ITEM.COSM")
 	set slot 4 of {_p} to book named msg("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named msg("ITEM.EXIT")
 	lg_scoreboard({_p}, "setup")
@@ -305,7 +343,7 @@ function lg_quit(p: player):
 
 function lg_setup_player(p: player):
 	add {_p} to {wolfo::players::list::*}
-	set {wolfo::players::role_name::%{_p}%} to "&7Aucune"
+	set {wolfo::players::role_name::%{_p}%} to "&7Aucun"
 	set {wolfo::players::team::%{_p}%} to "&7Aucune"
 
 function lg_setup():
@@ -346,14 +384,64 @@ function lg_time(t: integer, p: player, mode: text):
 
 	# Player.setExp(player, 0.1)
 	# Utiliser ça pour mettre le level XP
+		
+
+function lg_kill(p: player):
+	broadcast "%{_p}% : hide"
+	hide {_p} to all players
+	wait 2 seconds
+	broadcast "%{_p}% : reveal"
+	reveal {_p} to all players
 
 function lg_check_win():
+
 	if size of {wolfo::players::list::*} = 0:
-		# reset de la partie
-		lg_end()
+		set {_mode} to 1 # PERSONNE WIN CAR TOUS LES JOUEURS ON LEAVE
 	if size of {wolfo::players::list::*} = 1:
-		# player a win
+		set {_mode} to 2 # DERNIER EN VIE A WIN
+	if size of {wolfo::players::role::WEREWOLF::*} = 0:
+		set {_mode} to 3 # VILLAGE A WIN / LG ON PERDU
+	loop {wolfo::players::list::*}:
+		if {wolfo::players::role_name::%loop-value%} is msg("TOWNSFOLK.NAME") or msg("SEER_AURA.NAME") or msg("CUPID.NAME") or msg("TOWNSFOLK_DANM.NAME") or msg("WITCH.NAME") or msg("DOCTOR.NAME") or msg("SHOOTER.NAME"):
+			add 1 to {_alive}
+	if {_alive} isn't set:
+		set {_mode} to 4 # LG ON WIN / VILLAGE A PERDU
+
+
+	broadcast "%{_mode}%"
+
+	if {_mode} is 1:
 		lg_end()
+
+	if {_mode} is 2:
+		loop {wolfo::players::list::*}:
+			send title "LOGO" with subtitle "VOUS AVEZ WIN" to loop-value for 2 seconds
+			broadcast "LOGO -> %loop-value% à win la game avec le rôle %{wolfo::players::role_name::%loop-value%}%"
+		#wait 5 seconds
+		#lg_end()
+
+	if {_mode} is 3:
+		loop {wolfo::players::list::*}:
+			broadcast "PLAYER: %loop-value% / ROLE: %{wolfo::players::role_name::%loop-value%}%"
+			if {wolfo::players::role_name::%loop-value%} is msg("WEREWOLF.NAME") or msg("WEREWOLF_ALPHA.NAME") or msg("CRAZY.NAME") or msg("HEADHUNTER.NAME"):
+				send title "LOGO" with subtitle "VOUS AVEZ PERDU" to loop-value for 2 seconds
+			else:
+				send title "LOGO" with subtitle "VOUS AVEZ WIN" to loop-value for 2 seconds
+		broadcast "LOGO -> LE VILLAGE A WIN"
+		#wait 5 seconds
+		#lg_end()
+
+	if {_mode} is 4:
+		loop {wolfo::players::list::*}:
+			#broadcast "PLAYER: %loop-value% / ROLE: %{wolfo::players::role_name::%loop-value%}%"
+			if {wolfo::players::role_name::%loop-value%} is msg("TOWNSFOLK.NAME") or msg("SEER_AURA.NAME") or msg("CUPID.NAME") or msg("TOWNSFOLK_DANM.NAME") or msg("WITCH.NAME") or msg("DOCTOR.NAME") or msg("SHOOTER.NAME") or msg("CRAZY.NAME") or msg("HEADHUNTER.NAME"):
+				send title "LOGO" with subtitle "VOUS AVEZ PERDU" to loop-value for 2 seconds
+			else:
+				send title "LOGO" with subtitle "VOUS AVEZ WIN" to loop-value for 2 seconds
+			broadcast "LOGO -> LES LG ONT WIN"
+			#wait 5 seconds
+			#lg_end()
+
 
 function lg_check_start(force: boolean = false):
 	if {_force} is false:
@@ -447,11 +535,6 @@ command /lg [<text>] [<text>] [<text>]:
 				save yaml "messages"
 				lg_initialize()
 
-command /addplayer:
-	trigger:
-		set {_p} to "Romitou" parsed as player
-		add {_p} to {wolfo::players::list::*}
-
 on chat:
 	replace all "&" with "§" in message
 	cancel event
@@ -482,9 +565,11 @@ on quit:
 
 
 on right click:
-	if player's tool is book enchanted:
-		lg_cosmetic()
-	if name of player's tool is msg("ITEM.INFO"):
+	if player's tool is enchanted book:
+		lg_cosmetic(1, player)
+	else if player's tool is barrier:  
+		lg_cosmetic(4, player)
+	else if name of player's tool is msg("ITEM.INFO"):
 		lg_menu_informations(player)
 	else if name of player's tool is msg("ITEM.EXIT"):
 		kick player due to join msg("PREFIX.GENERAL") and msg("MESSAGE.GOODLEFT")
