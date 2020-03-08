@@ -21,7 +21,7 @@ function wolfo_initialize():
 		broadcast "&6&lWolfo &7&l» &c%{_error}% errors were encountered while loading."
 		broadcast "&7Please consult the console for more information."
 		stop
-	broadcast join get("PREFIX.GENERAL") and "&aThe game has been loaded, have fun! &7(V%{_current}%)"
+	broadcast join get("PREFIX.GENERAL"), get("MESSAGE.SUCCESS_LOADING") and "&7(V%{_current}%)"
 	wolfo_automsg()
 
 # Messages YAML - Romitou
@@ -104,13 +104,13 @@ function wolfo_cosmetic(type: integer, p: player):
 			drawRings particle "%{_particle}%", center {_p}, id "ww-%{_p}%", randomRotation true, animated true, radius 1, ringCount 3, ringDensity 1, visibleRange 30
 		if {_type} is "spiral":
 			drawComplexSpiral particle "%{_particle}%", center {_p}, id "ww-%{_p}%", rainbowMode true, clockwise true, scan true, radius 1, density 50, height 6, effectMod .05, start 0, visibleRange 30
-		set slot 0 of {_p} to a barrier named "&6&lWolfo &7&l» &cDésactiver votre effet de particules"
-		send join get("PREFIX.GENERAL") and "&f%{_p}%, nous avons activé tes particules ! &7(%{_particle}% %{_type}%)" to {_p}
+		set slot 0 of {_p} to a barrier named get("ITEM.COSM_OFF")
+		send join get("PREFIX.GENERAL") and get("MESSAGE.COSM_ON") to {_p}
 	else if {_type} is 4:
 		clear {wolfo::cosmetic::%{_p}%::active}
 		stopEffect "ww-%{_p}%"
 		set slot 0 of {_p} to a enchanted book named get("ITEM.COSM")
-		send join get("PREFIX.GENERAL") and "&fDéjà ! Si tu ne peux plus t'en passer, fais &e/renew&f afin de les appliquer à nouveau. &7(e extra)" to {_p}
+		send join get("PREFIX.GENERAL") and get("MESSAGE.COSM_OFF") to {_p}
 
 # AutoMSG - Romitou
 function wolfo_automsg():
@@ -509,9 +509,9 @@ function wolfo_setup_player(p: player):
 	set {wolfo::players::role_text::%{_p}%} to "&7Aucun"
 	set {wolfo::players::death::%{_p}%} to "&aEn vie"
 	wait 1 second
-	send "&6&lWolfo &7&l» &fSalut, %{_p}% ! Si tu ne connais pas (encore !) les règles du jeu, rends-toi dans les informations afin d'en savoir plus." to {_p}
+	send join get("PREFIX.GENERAL") and get("MESSAGE.JOIN_INFO") to {_p}
 	wait 1 second
-	broadcast "&7%{_p}% &8» &7Bonjour !"
+	broadcast join "&7%{_p}% &8» " and get("MESSAGE.HELLO")
 
 function wolfo_setup():
 	set {wolfo::game::day} to 0
@@ -572,7 +572,7 @@ function wolfo_check_start(force: boolean = false):
 		if (size of {wolfo::players::list::*}) < 5:
 			stop
 	wolfo_time(30, {wolfo::players::list::*}, 0)
-	send "&6&lWolfo &7&l» &fPréparez vos stratégies, le jeu va commencer ..." to {wolfo::players::list::*}
+	send join get("PREFIX.GENERAL") and get("MESSAGE.START_PREPARE") to {wolfo::players::list::*}
 
 function wolfo_start():
 	loop {wolfo::players::list::*}:
@@ -580,7 +580,7 @@ function wolfo_start():
 		set loop-value's walk speed to 0
 	wolfo_give_roles()
 	set {wolfo::game::automsg} to false
-	send "&6&lWolfo &7&l» &fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?" to {wolfo::players::list::*}
+	send join get("PREFIX.GENERAL") and get("MESSAGE.START_ROLES") to {wolfo::players::list::*}
 
 function wolfo_end():
 	loop {wolfo::players::list::*}:
@@ -667,11 +667,11 @@ on chat:
 		broadcast "&7%player% &8» &7%message%"
 
 on join:
-	#if {wolfo::game::start} is not set:
-	#	kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
-	#else if size of {wolfo::players::list::*} is greater than or equal to 27:
-	#	kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.TOOMANY")
-	#else:
+	if {wolfo::game::start} is not set:
+		kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
+	else if size of {wolfo::players::list::*} is greater than or equal to 27:
+		kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.TOOMANY")
+	else:
 		set join message to "&a✔ %player% &7(%amount of all players% &8» %wolfo_get_configuration(1)%&7)"
 		wolfo_join(player)
 
@@ -681,10 +681,10 @@ on quit:
 
 
 on right click:
-	if player's tool is enchanted book:
+	if name of player's tool is get("ITEM.COSM"):
 		cancel event
 		wolfo_cosmetic(1, player)
-	else if player's tool is barrier:
+	else if name of player's tool is get("ITEM.COSM_OFF"):
 		cancel event
 		wolfo_cosmetic(4, player)
 	else if name of player's tool is get("ITEM.INFO"):

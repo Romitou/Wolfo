@@ -42,6 +42,13 @@ PERMISSION:
     ADMIN: lg.admin
 
 MESSAGE:
+    JOIN_INFO: '&fSi tu ne connais pas (encore !) les règles du jeu, rends-toi dans les informations afin d''en savoir plus.'
+    HELLO: '&7Bonjour !'
+    START_PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
+    START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'
+    COSM_ON: '&fNous avons activé tes particules, j''espère qu''elles te vont bien.'
+    COSM_OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
+    SUCCESS_LOADING: '&aThe game has been loaded, have fun! '
     PERMISSION: '&cVous n''avez pas accès à cette commande.'
     SETWAITROOM: '&eVous avez correctement défini la salle d''attente à votre position.'
     SETDEATHROOM: '&eVous avez correctement défini la zone des morts à votre position.'
@@ -102,6 +109,7 @@ GUI:
 
 ITEM:
     COSM: '&8➽ &bCosmétiques &7(clic-droit)'
+    COSM_OFF: '&8➽ &cDésactiver k''effet cosmétique &7(clic-droit)'
     INFO: '&8➽ &dInformations &7(clic-droit)'
     EXIT: '&8➽ &cQuitter la partie &7(clic-droit)'
 
