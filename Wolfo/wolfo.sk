@@ -4,16 +4,15 @@ import:
 # Initialisation du script - Romitou
 on script load:
 	wolfo_initialize()
+
 function wolfo_initialize():
-	add "messages" and "config" to {_loop::*}
-	loop {_loop::*}:
-		load yaml "plugins/Skript/scripts/Wolfo/%loop-value%.yml" as "%loop-value%"
-		if yaml "%loop-value%" is empty:
-			send "&4Oops! The file containing the %loop-value% could not be found." to console
-			send "&7Please download it and add it to the Wolfo folder." to console
-			add 1 to {_error}
+	load yaml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
+	if yaml "config" is empty:
+		send "&4Oops! The file containing the config could not be found." to console
+		send "&7Please download it and add it to the Wolfo folder." to console
+		add 1 to {_error}
 	set {_actual} to text from "https://files.romitou.fr/wolfo"
-	set {_current} to yaml value "VERSION" from "config"
+	set {_current} to get("VERSION")
 	if {_actual} is not {_current}:
 		send "&6Wow! It's been a while since you last updated Wolfo." to console
 		send "&7Version &eV%{_actual}%&7 is already out, you are in &eV%{_current}%&7!" to console
@@ -25,22 +24,18 @@ function wolfo_initialize():
 	broadcast join get("PREFIX.GENERAL") and "&aThe game has been loaded, have fun! &7(V%{_current}%)"
 	wolfo_automsg()
 
-
-
 # Messages YAML - Romitou
 function get(request: text) :: text: # POUR LES TEXTES (plus utilisé)
 	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug::yml} is true
-	return yaml value {_request} from "messages"
+	return yaml value {_request} from "config"
 
 function msgB(request: text) :: boolean: # POUR LES BOOLEAN
 	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7BOOLEAN" if {wolfo::game::debug::yml} is true
-	return yaml value {_request} from "messages"
+	return yaml value {_request} from "config"
 
 function getO(request: text) :: objects: # POUR LES OBJECTS
 	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::game::debug::yml} is true
-	return yaml list {_request} from "messages"
-
-
+	return yaml list {_request} from "config"
 
 # Menu - Xamez
 function wolfo_menu_deco(p: player, t: text, i: integer = 6):
@@ -70,8 +65,6 @@ function wolfo_menu_roles(p: player):
 	make a gui slot 30 of {_p} with bow named "&8» %get(""SHOOTER.NAME"")%" with lore "" and get("SHOOTER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
 	make a gui slot 31 of {_p} with {_p}'s skull with nbt get("CRAZY.HEAD") named "&8» %get(""CRAZY.NAME"")%" with lore "" and get("CRAZY.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.SOLO"")%"
 	make a gui slot 32 of {_p} with {_p}'s skull with nbt get("HEADHUNTER.HEAD") named "&8» %get(""HEADHUNTER.NAME"")%" with lore "" and get("HEADHUNTER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.SOLO"")%"
-
-
 
 # Cosmétiques - Romitou
 function wolfo_cosmetic(type: integer, p: player):
@@ -131,16 +124,12 @@ function wolfo_automsg():
 				broadcast join get("PREFIX.GENERAL"), "&7" and {_random}
 				wait 30 seconds
 
-
-
 # Pages d'aide - Romitou
 function wolfo_help(msg: text, p: player):
 	send join get("PREFIX.GENERAL") and get("MESSAGE.%{_msg}%_FIRST") to {_p}
 	set {_%{_msg}%::*} to getO("MESSAGE.%{_msg}%")
 	loop {_%{_msg}%::*}:
 		send colored loop-value to {_p}
-
-
 
 # Scoreboard - Xamez
 function wolfo_scoreboard(p: player, t: text):
@@ -653,13 +642,6 @@ command /wolfo [<text>] [<text>] [<text>]:
 				else:
 					delete {wolfo::game::debug}
 					send join get("PREFIX.GENERAL") and get("MESSAGE.DEBUGOFF")
-		else if arg 1 is "ymlreload": # ou autre x)
-			if arg 2 is not "confirm":
-				send join get("PREFIX.GENERAL") and get("MESSAGE.YMLRELOAD")
-			else:
-				set yaml value "GENERATED" of "messages" to false
-				save yaml "messages"
-				wolfo_initialize()
 		else:
 			wolfo_help("ADMIN", player)
 
