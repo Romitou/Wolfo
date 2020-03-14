@@ -1,0 +1,28 @@
+# Menu - Xamez
+function wolfo_menu_deco(p: player, t: text, i: integer = 6):
+	open virtual chest inventory with {_i} rows named "%{_t}%" to {_p}
+	if {_i} = 3:
+		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 19, 20, 21, 22, 23, 24 and 25 of {_p} with magenta stained glass pane
+		make a gui slot 0, 8, 18 and 26 of {_p} with purple stained glass pane
+	if {_i} = 5:
+		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 18, 26, 27, 28, 34, 35, 37, 38, 39, 40, 41, 42 and 43 of {_p} with magenta stained glass pane
+		make a gui slot 0, 8, 36 and 44 of {_p} with purple stained glass pane
+	if {_i} = 6:
+		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 18, 26, 27, 35, 36, 37, 43, 44, 45, 46, 47, 48, 49, 50, 51 and 52 of {_p} with magenta stained glass pane
+		make a gui slot 0, 8, 45 and 53 of {_p} with purple stained glass pane
+
+function wolfo_menu_roles(p: player):
+	wolfo_menu_deco({_p}, "&6Informations des rôles", 6)
+	make a gui slot 19 of {_p} with {_p}'s skull with nbt get("WEREWOLF_ALPHA.HEAD") named "&8» %get(""WEREWOLF_ALPHA.NAME"")%" with lore "" and get("WEREWOLF_ALPHA.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.WEREWOLF"")%"
+	make a gui slot 20 of {_p} with {_p}'s skull with nbt get("WEREWOLF.HEAD") named "&8» %get(""WEREWOLF.NAME"")%" with lore "" and get("WEREWOLF.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.WEREWOLF"")%"
+	make a gui slot 21 of {_p} with skull of "MHF_Herobrine" parsed as offline player named "&8» %get(""TOWNSFOLK_CURSED.NAME"")%" with lore "" and get("TOWNSFOLK_CURSED.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.WW_TF"")%"
+	make a gui slot 22 of {_p} with skull of "MHF_Villager" parsed as offline player named "&8» %get(""TOWNSFOLK.NAME"")%" with lore "" and get("TOWNSFOLK.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 23 of {_p} with {_p}'s skull with nbt get("CUPID.HEAD") named "&8» %get(""CUPID.NAME"")%" with lore "" and get("CUPID.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 24 of {_p} with eyes of ender named "&8» %get(""SERR.NAME"")%" with lore "" and get("SEER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 25 of {_p} with ender pearl named "&8» %get(""SEER_AURA.NAME"")%" with lore "" and get("SEER_AURA.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 28 of {_p} with potion named "&8» %get(""DOCTOR.NAME"")%"with lore "" and get("DOCTOR.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	color slot 28 of current inventory of {_p} pink
+	make a gui slot 29 of {_p} with {_p}'s skull with nbt get("WITCH.HEAD") named "&8» %get(""WITCH.NAME"")%" with lore "" and get("WITCH.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 30 of {_p} with bow named "&8» %get(""SHOOTER.NAME"")%" with lore "" and get("SHOOTER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 31 of {_p} with {_p}'s skull with nbt get("CRAZY.HEAD") named "&8» %get(""CRAZY.NAME"")%" with lore "" and get("CRAZY.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.SOLO"")%"
+	make a gui slot 32 of {_p} with {_p}'s skull with nbt get("HEADHUNTER.HEAD") named "&8» %get(""HEADHUNTER.NAME"")%" with lore "" and get("HEADHUNTER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.SOLO"")%"

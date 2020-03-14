@@ -1,0 +1,35 @@
+# Initialisation du script - Romitou
+on script load:
+	wolfo_initialize()
+
+function wolfo_initialize():
+	load yaml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
+	if yaml "config" is empty:
+		send "&4Oops! The file containing the config could not be found." to console
+		send "&7Please download it and add it to the Wolfo folder." to console
+		add 1 to {_error}
+	set {_actual} to text from "https://files.romitou.fr/wolfo"
+	set {_current} to get("VERSION")
+	if {_actual} is not {_current}:
+		send "&6Wow! It's been a while since you last updated Wolfo." to console
+		send "&7Version &eV%{_actual}%&7 is already out, you are in &eV%{_current}%&7!" to console
+		add 1 to {_error}
+	if {_error} is set:
+		broadcast "&6&lWolfo &7&l» &c%{_error}% errors were encountered while loading."
+		broadcast "&7Please consult the console for more information."
+		stop
+	broadcast join get("PREFIX.GENERAL"), get("MESSAGE.SUCCESS_LOADING") and "&7(V%{_current}%)"
+	wolfo_automsg()
+
+# Messages YAML - Romitou
+function get(request: text) :: text: # POUR LES TEXTES (plus utilisé)
+	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug::yml} is true
+	return yaml value {_request} from "config"
+
+function msgB(request: text) :: boolean: # POUR LES BOOLEAN
+	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7BOOLEAN" if {wolfo::game::debug::yml} is true
+	return yaml value {_request} from "config"
+
+function getO(request: text) :: objects: # POUR LES OBJECTS
+	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::game::debug::yml} is true
+	return yaml list {_request} from "config"
