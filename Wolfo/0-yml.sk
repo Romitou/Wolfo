@@ -1,8 +1,8 @@
 # Initialisation du script - Romitou
 on script load:
-	wolfo_initialize()
+	wolfoInitialize()
 
-function wolfo_initialize():
+function wolfoInitialize():
 	load yaml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
 	if yaml "config" is empty:
 		send "&4Oops! The file containing the config could not be found." to console
@@ -19,7 +19,7 @@ function wolfo_initialize():
 		broadcast "&7Please consult the console for more information."
 		stop
 	broadcast join get("PREFIX.GENERAL"), get("MESSAGE.SUCCESS_LOADING") and "&7(V%{_current}%)"
-	wolfo_automsg()
+	wolfoAutoMsg()
 
 # Messages YAML - Romitou
 function get(request: text) :: text: # POUR LES TEXTES (plus utilisé)

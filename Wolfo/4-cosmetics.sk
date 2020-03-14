@@ -1,16 +1,16 @@
 # Cosmétiques - Romitou
-function wolfo_cosmetic(type: integer, p: player):
+function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:
 		if {_type} is 1:
 			set {_title} to get("GUI.EFFECT_SELECT")
 			add getO("COSMETICS.EFFECT") to {_p::*}
 		else if {_type} is 2:
 			if {wolfo::cosmetic::%{_p}%::1} is "nyancat":  
-				wolfo_cosmetic(3, {_p})
+				wolfoCosmetic(3, {_p})
 				stop
 			set {_title} to get("GUI.PARTICLE_SELECT")
 			add getO("COSMETICS.PARTICLE") to {_p::*}
-		wolfo_menu_deco({_p}, {_title}, 5)
+		WolfoMenuDeco({_p}, {_title}, 5)
 		set {_loop} to 11
 		loop {_p::*}:
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
@@ -21,7 +21,7 @@ function wolfo_cosmetic(type: integer, p: player):
 				set {wolfo::cosmetic::%{_p}%::%{_type}%} to {_value::1}
 				close {_p}'s inventory
 				add 1 to {_type}
-				wolfo_cosmetic({_type}, {_p})
+				wolfoCosmetic({_type}, {_p})
 			add 1 to {_loop}
 	else if {_type} is 3:
 		set {_particle} to {wolfo::cosmetic::%{_p}%::2}
