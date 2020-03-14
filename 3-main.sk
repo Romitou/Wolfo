@@ -352,13 +352,13 @@ function wolfo_join(p: player):
 	set slot 0 of {_p} to enchanted book named get("ITEM.COSM")
 	set slot 4 of {_p} to book named get("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named get("ITEM.EXIT")
-	wolfo_scoreboard({_p}, "setup")
+	wolfo_scoreboard({_p}, 0)
 	wolfo_setup()
 	wolfo_setup_player({_p})
 	wolfo_check_start()
 
 function wolfo_quit(p: player):
-	wolfo_scoreboard({_p}, "remove")
+	wolfo_scoreboard({_p}, 2)
 	remove {_p} from {wolfo::players::list::*}
 
 function wolfo_setup_player(p: player):
