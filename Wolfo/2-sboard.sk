@@ -1,23 +1,23 @@
-function wolfo_scoreboard(p: player, i: integer):
+function wolfoSbPlayer(p: player, i: integer):
 	if {_i} is 0:
 		set title of {_p}'s scoreboard to get("PREFIX.TITLE")
-		set line 11 of {_p}'s scoreboard to "&1"
-		set line 10 of {_p}'s scoreboard to "&6&l» &f&lPartie:"
-		set line 9 of {_p}'s scoreboard to "&2"
-		set line 8 of {_p}'s scoreboard to " &6● &eStatus &f» &e%{wolfo::game::status}%"
-		set line 7 of {_p}'s scoreboard to " &6● &eConnectés &f» &e%size of {wolfo::players::list::*}%"
-		set line 6 of {_p}'s scoreboard to " &6● &eConfiguration &f» &e%wolfo_get_configuration(1)%"
-		set line 5 of {_p}'s scoreboard to " &6● &eJour &f» &bn°%{wolfo::game::day}%"
-		set line 4 of {_p}'s scoreboard to "&3"
-		set line 3 of {_p}'s scoreboard to "&6&l» &f&lJoueur:"
-		set line 2 of {_p}'s scoreboard to "&4"
-		set line 1 of {_p}'s scoreboard to " &6● &eVotre rôle &f» &e%{wolfo::players::role_text::%{_p}%}%"
-		set line 0 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::death::%{_p}%}%"
-		wolfo_scoreboard({_p}, 1)
+		set line 12 of {_p}'s scoreboard to "&1"
+		set line 11 of {_p}'s scoreboard to "&6&l» &f&lPartie:"
+		set line 10 of {_p}'s scoreboard to "&2"
+		set line 9 of {_p}'s scoreboard to " &6● &eStatus &f» &e%{wolfo::game::status}%"
+		set line 8 of {_p}'s scoreboard to " &6● &eConnectés &f» &e%size of {wolfo::players::list::*}%"
+		set line 7 of {_p}'s scoreboard to " &6● &eConfiguration &f» &e%wolfoGetConfig(1)%"
+		set line 6 of {_p}'s scoreboard to " &6● &eJour &f» &bn°%{wolfo::game::day}%"
+		set line 5 of {_p}'s scoreboard to "&3"
+		set line 4 of {_p}'s scoreboard to "&6&l» &f&lJoueur:"
+		set line 3 of {_p}'s scoreboard to "&4"
+		set line 2 of {_p}'s scoreboard to " &6● &eVotre rôle &f» &e%{wolfo::players::role_text::%{_p}%}%"
+		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::death::%{_p}%}%"
 	if {_i} is 1:
-		set line 8 of all player's scoreboard to " &6● &eStatus &f» &e%{wolfo::game::status}%"
-		set line 7 of all player's scoreboard to " &6● &eConnectés &f» &e%size of {wolfo::players::list::*}%"
-		set line 6 of all player's scoreboard to " &6● &eConfiguration &f» &e%wolfo_get_configuration(1)%"
-		set line 5 of all player's scoreboard to " &6● &eJour &f» &bn°%{wolfo::game::day}%"
-	if {_i} is 2:
 		clear scoreboard of {_p}
+
+function wolfoSbEveryone():
+	set line 9 of all players' scoreboard to " &6● &eStatus &f» &e%{wolfo::game::status}%"
+	set line 8 of all players' scoreboard to " &6● &eConnectés &f» &e%size of {wolfo::players::list::*}%"
+	set line 7 of all players' scoreboard to " &6● &eConfiguration &f» &e%wolfoGetConfig(1)%"
+	set line 6 of all players' scoreboard to " &6● &eJour &f» &bn°%{wolfo::game::day}%"
