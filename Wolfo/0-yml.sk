@@ -1,4 +1,6 @@
-# Initialisation du script - Romitou
+# Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
+# Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
+
 on script load:
 	wolfoInitialize()
 
@@ -21,7 +23,6 @@ function wolfoInitialize():
 	broadcast join get("PREFIX.GENERAL"), get("MESSAGE.SUCCESS_LOADING") and "&7(V%{_current}%)"
 	wolfoAutoMsg()
 
-# Messages YAML - Romitou
 function get(request: text) :: text: # POUR LES TEXTES (plus utilisé)
 	broadcast "&8[YAML &7MSG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug::yml} is true
 	return yaml value {_request} from "config"

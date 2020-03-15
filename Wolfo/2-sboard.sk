@@ -1,3 +1,6 @@
+# Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
+# Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
+
 function wolfoSbPlayer(p: player, i: integer):
 	if {_i} is 0:
 		set title of {_p}'s scoreboard to get("PREFIX.TITLE")
