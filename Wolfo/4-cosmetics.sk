@@ -2,14 +2,14 @@
 function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:
 		if {_type} is 1:
-			set {_title} to get("GUI.EFFECT_SELECT")
-			add getO("COSMETICS.EFFECT") to {_p::*}
+			set {_title} to wolfoGet("GUI.EFFECT_SELECT")
+			add wolfoGetO("COSMETICS.EFFECT") to {_p::*}
 		else if {_type} is 2:
 			if {wolfo::cosmetic::%{_p}%::1} is "nyancat":  
 				wolfoCosmetic(3, {_p})
 				stop
-			set {_title} to get("GUI.PARTICLE_SELECT")
-			add getO("COSMETICS.PARTICLE") to {_p::*}
+			set {_title} to wolfoGet("GUI.PARTICLE_SELECT")
+			add wolfoGetO("COSMETICS.PARTICLE") to {_p::*}
 		WolfoMenuDeco({_p}, {_title}, 5)
 		set {_loop} to 11
 		loop {_p::*}:
@@ -36,10 +36,10 @@ function wolfoCosmetic(type: integer, p: player):
 			drawRings particle "%{_particle}%", center {_p}, id "ww-%{_p}%", randomRotation true, animated true, radius 1, ringCount 3, ringDensity 1, visibleRange 30
 		if {_type} is "spiral":
 			drawComplexSpiral particle "%{_particle}%", center {_p}, id "ww-%{_p}%", rainbowMode true, clockwise true, scan true, radius 1, density 50, height 6, effectMod .05, start 0, visibleRange 30
-		set slot 0 of {_p} to a barrier named get("ITEM.COSM_OFF")
-		send join get("PREFIX.GENERAL") and get("MESSAGE.COSM_ON") to {_p}
+		set slot 0 of {_p} to a barrier named wolfoGet("ITEM.COSM_OFF")
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.COSM_ON") to {_p}
 	else if {_type} is 4:
 		clear {wolfo::cosmetic::%{_p}%::active}
 		stopEffect "ww-%{_p}%"
-		set slot 0 of {_p} to a enchanted book named get("ITEM.COSM")
-		send join get("PREFIX.GENERAL") and get("MESSAGE.COSM_OFF") to {_p}
+		set slot 0 of {_p} to a enchanted book named wolfoGet("ITEM.COSM")
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.COSM_OFF") to {_p}

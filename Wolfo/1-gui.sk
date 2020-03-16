@@ -15,16 +15,16 @@ function WolfoMenuDeco(p: player, t: text, i: integer = 6):
 
 function WolfoMenuRoles(p: player):
 	WolfoMenuDeco({_p}, "&6Informations des rôles", 6)
-	make a gui slot 19 of {_p} with {_p}'s skull with nbt get("WEREWOLF_ALPHA.HEAD") named "&8» %get(""WEREWOLF_ALPHA.NAME"")%" with lore "" and get("WEREWOLF_ALPHA.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.WEREWOLF"")%"
-	make a gui slot 20 of {_p} with {_p}'s skull with nbt get("WEREWOLF.HEAD") named "&8» %get(""WEREWOLF.NAME"")%" with lore "" and get("WEREWOLF.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.WEREWOLF"")%"
-	make a gui slot 21 of {_p} with skull of "MHF_Herobrine" parsed as offline player named "&8» %get(""TOWNSFOLK_CURSED.NAME"")%" with lore "" and get("TOWNSFOLK_CURSED.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.WW_TF"")%"
-	make a gui slot 22 of {_p} with skull of "MHF_Villager" parsed as offline player named "&8» %get(""TOWNSFOLK.NAME"")%" with lore "" and get("TOWNSFOLK.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
-	make a gui slot 23 of {_p} with {_p}'s skull with nbt get("CUPID.HEAD") named "&8» %get(""CUPID.NAME"")%" with lore "" and get("CUPID.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
-	make a gui slot 24 of {_p} with eyes of ender named "&8» %get(""SERR.NAME"")%" with lore "" and get("SEER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
-	make a gui slot 25 of {_p} with ender pearl named "&8» %get(""SEER_AURA.NAME"")%" with lore "" and get("SEER_AURA.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
-	make a gui slot 28 of {_p} with potion named "&8» %get(""DOCTOR.NAME"")%"with lore "" and get("DOCTOR.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 19 of {_p} with {_p}'s skull with nbt wolfoGet("WEREWOLF_ALPHA.HEAD") named "&8» %wolfoGet(""WEREWOLF_ALPHA.NAME"")%" with lore "" and wolfoGet("WEREWOLF_ALPHA.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.WEREWOLF"")%"
+	make a gui slot 20 of {_p} with {_p}'s skull with nbt wolfoGet("WEREWOLF.HEAD") named "&8» %wolfoGet(""WEREWOLF.NAME"")%" with lore "" and wolfoGet("WEREWOLF.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.WEREWOLF"")%"
+	make a gui slot 21 of {_p} with skull of "MHF_Herobrine" parsed as offline player named "&8» %wolfoGet(""TOWNSFOLK_CURSED.NAME"")%" with lore "" and wolfoGet("TOWNSFOLK_CURSED.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.WW_TF"")%"
+	make a gui slot 22 of {_p} with skull of "MHF_Villager" parsed as offline player named "&8» %wolfoGet(""TOWNSFOLK.NAME"")%" with lore "" and wolfoGet("TOWNSFOLK.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 23 of {_p} with {_p}'s skull with nbt wolfoGet("CUPID.HEAD") named "&8» %wolfoGet(""CUPID.NAME"")%" with lore "" and wolfoGet("CUPID.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 24 of {_p} with eyes of ender named "&8» %wolfoGet(""SERR.NAME"")%" with lore "" and wolfoGet("SEER.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 25 of {_p} with ender pearl named "&8» %wolfoGet(""SEER_AURA.NAME"")%" with lore "" and wolfoGet("SEER_AURA.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 28 of {_p} with potion named "&8» %wolfoGet(""DOCTOR.NAME"")%"with lore "" and wolfoGet("DOCTOR.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
 	color slot 28 of current inventory of {_p} pink
-	make a gui slot 29 of {_p} with {_p}'s skull with nbt get("WITCH.HEAD") named "&8» %get(""WITCH.NAME"")%" with lore "" and get("WITCH.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
-	make a gui slot 30 of {_p} with bow named "&8» %get(""SHOOTER.NAME"")%" with lore "" and get("SHOOTER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.TOWNSFOLK"")%"
-	make a gui slot 31 of {_p} with {_p}'s skull with nbt get("CRAZY.HEAD") named "&8» %get(""CRAZY.NAME"")%" with lore "" and get("CRAZY.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.SOLO"")%"
-	make a gui slot 32 of {_p} with {_p}'s skull with nbt get("HEADHUNTER.HEAD") named "&8» %get(""HEADHUNTER.NAME"")%" with lore "" and get("HEADHUNTER.DESC") and "" and "&8➥ &7Votre équipe: %get(""TEAM.SOLO"")%"
+	make a gui slot 29 of {_p} with {_p}'s skull with nbt wolfoGet("WITCH.HEAD") named "&8» %wolfoGet(""WITCH.NAME"")%" with lore "" and wolfoGet("WITCH.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 30 of {_p} with bow named "&8» %wolfoGet(""SHOOTER.NAME"")%" with lore "" and wolfoGet("SHOOTER.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.TOWNSFOLK"")%"
+	make a gui slot 31 of {_p} with {_p}'s skull with nbt wolfoGet("CRAZY.HEAD") named "&8» %wolfoGet(""CRAZY.NAME"")%" with lore "" and wolfoGet("CRAZY.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.SOLO"")%"
+	make a gui slot 32 of {_p} with {_p}'s skull with nbt wolfoGet("HEADHUNTER.HEAD") named "&8» %wolfoGet(""HEADHUNTER.NAME"")%" with lore "" and wolfoGet("HEADHUNTER.DESC") and "" and "&8➥ &7Votre équipe: %wolfoGet(""TEAM.SOLO"")%"
