@@ -1,3 +1,8 @@
+on script load:
+	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast ""
+	broadcast "&6&lWolfo &7&l» &7Reloading cosmetics ..."
+
 # Cosmétiques - Romitou
 function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:
@@ -10,7 +15,7 @@ function wolfoCosmetic(type: integer, p: player):
 				stop
 			set {_title} to wolfoGet("GUI.PARTICLE_SELECT")
 			add wolfoGetO("COSMETICS.PARTICLE") to {_p::*}
-		WolfoMenuDeco({_p}, {_title}, 5)
+		wolfoMenuDeco({_p}, {_title}, 5)
 		set {_loop} to 11
 		loop {_p::*}:
 			while {_loop} is 16, 17, 18, 26, 27 or 28:

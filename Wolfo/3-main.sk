@@ -1,6 +1,12 @@
 # Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
+on script load:
+	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast ""
+	broadcast "&6&lWolfo &7&l» &7Loading main ..."
+	set {wolfo::loading} to now
+
 function wolfoAutoMsg():
 	set {_list::*} to wolfoGetO("MESSAGE.AUTO")
 	if {wolfo::game::automsg} is not set:
@@ -158,7 +164,7 @@ function wolfoVoteMenu(p: objects):
 	{wolfo::game::start} is set
 	loop {_p::*}:
 		unformat all gui slots of loop-value-1
-		WolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
+		wolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
 		set {_loop} to 11
 		loop {wolfo::players::list::*}:
 			set {_player} to loop-value-2
@@ -244,7 +250,7 @@ function wolfoDraw(type: text, p: text):
 		stopEffect id "WW-%{_p}%"
 	if {_type} is "img":
 		set {_loc} to location at x-coordinate of {wolfo::loc::center}, y-coordinate of {wolfo::loc::center} + 10, z-coordinate of {wolfo::loc::center} in world "world"
-		drawImage file "%{_p}%.png", center {_loc}, id "WW-game", rotation true, plane y, auto face false, xy pixel step 5, 5, scale 1 / 20, visible range 300, pulse rate 3 ticks
+		drawImage file "%{_p}%.png", center {_loc}, id "WW-game", randomRotation true, "y", pixelStepX 5, pixelStepY 5, scale 20, visibleRange 300, tps 1, second 3
 	set {_p} to {_p} parsed as player
 	if {_type} is "selected":
 		stopEffect id "WW-%{_type}%"
@@ -255,10 +261,8 @@ function wolfoDraw(type: text, p: text):
 			set {_angle} to 90
 		else:
 			set {_angle} to 0
-		if yaml value "ANIMATION.SELECTION" from "config" is "HAND":
-			drawImage file "hand.png", center {_loc}, id "WW-%{_type}%", auto face false, xy pixel step 2, 2, scale 1 / 8, visible range 50, xyz rotation 0, {_angle}, 0, xyz displacement 0, 4, 0, pulse rate 2 ticks
-		else:
-			drawImage file "arrow.png", center {_loc}, id "WW-%{_type}%", auto face false, xy pixel step 2, 2, scale 1 / 12, visible range 50, xyz rotation 0, {_angle}, 0, xyz displacement 0, 4, 0, pulse rate 2 ticks
+		set {_name} to wolfoGet("ANIMATION.SELECTION")
+		drawImage file "%{_name}%.png", center {_loc}, id "WW-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 	else if {_type} is "kill":
 		set {_loc} to {wolfo::loc::center}
 		add 3 to y-coordinate of {_loc}
@@ -332,8 +336,19 @@ function wolfoSetupPlayer(p: player):
 	wait 1 second
 	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.JOIN_INFO") to {_p}
 
-function wolfoSetupGame():
-	# Work in progress ...
+function wolfoSetupGame(p: player):
+	wolfoMenuSetup({_p})
+
+command /wolfo [<text>] [<text>]:
+	trigger:
+		if arg 1 is "help":
+			wolfoHelp("COMMANDS", player)
+		else if arg 1 is "admin":
+			wolfoSetupGame(player)
+		else if arg 1 is "role":
+			send "To Do"
+		else:
+			wolfoHelp("ADMIN", player)
 
 function wolfoCheckWin():
 	if size of {wolfo::players::list::*} = 0:
@@ -396,60 +411,6 @@ function wolfoEnd():
 	clear {wolfo::game::*}
 	clear {wolfo::timer}
 	clear {wolfo::vote::*}
-	wolfoSetupGame()
-
-command /wolfo [<text>] [<text>] [<text>]:
-	permission: wolfoGet("PERMISSION.ADMIN")
-	permission message: join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PERMISSION")
-	trigger:
-		if arg 1 is "help":
-			wolfoHelp("ADMIN", player)
-		else if arg 1 is "setwait":
-			if {wolfo::game::start} is set:
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
-			else:
-				set {wolfo::loc::waitRoom} to location of player
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETWAITROOM")
-		else if arg 1 is "setdeath":
-			if {wolfo::game::start} is set:
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
-			else:
-				set {wolfo::partie::deathSpawn} to location of player
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETDEATHROOM")
-		else if arg 1 is "addSpawn":
-			if {wolfo::game::start} is set:
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
-			else:
-				set {_size} to (size of {wolfo::spawn::%{_size}%::*}) + 1
-				set {wolfo::spawn::%{_size}%::*} to location of player
-				send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.ADDSPAWN") and "&7(%size of {wolfo::spawn::%{_size}%::*}%)"
-		else if arg 1 is "forcestart":
-			if {wolfo::game::start} is set:
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
-			else:
-				wolfoCheckStart(true)
-		else if arg 1 is "forcestop":
-			if {wolfo::game::start} isn't set:
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTOP")
-			else:
-				wolfoEnd()
-		else if arg 1 is "debug":
-			if arg 2 is "yml":
-				if {wolfo::game::debug::yml} isn't set:
-					set {wolfo::game::debug::yml} to true
-					send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.YMLON")
-				else:
-					delete {wolfo::game::debug::yml}
-					send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.YMLOFF")
-			else if arg 2 is not set:
-				if {wolfo::game::debug} isn't set:
-					set {wolfo::game::debug} to true
-					send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.DEBUGON")
-				else:
-					delete {wolfo::game::debug}
-					send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.DEBUGOFF")
-		else:
-			wolfoHelp("ADMIN", player)
 
 on chat:
 	replace all "&" with "§" in message if player is op

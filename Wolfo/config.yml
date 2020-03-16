@@ -48,7 +48,7 @@ MESSAGE:
     START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'
     COSM_ON: '&fNous avons activé tes particules, j''espère qu''elles te vont bien.'
     COSM_OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
-    SUCCESS_LOADING: '&aThe game has been loaded, have fun! '
+    SUCCESS_LOADING: '&aThe config has been loaded without errors. '
     PERMISSION: '&cVous n''avez pas accès à cette commande.'
     SETWAITROOM: '&eVous avez correctement défini la salle d''attente à votre position.'
     SETDEATHROOM: '&eVous avez correctement défini la zone des morts à votre position.'
