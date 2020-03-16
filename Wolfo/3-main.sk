@@ -318,7 +318,6 @@ function wolfoJoin(p: player):
 	set slot 4 of {_p} to book named get("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named get("ITEM.EXIT")
 	wolfoSbPlayer({_p}, 0)
-	wolfoSetupGame()
 	wolfoSetupPlayer({_p})
 	wolfoCheckStart()
 
@@ -336,8 +335,7 @@ function wolfoSetupPlayer(p: player):
 	broadcast join "&7%{_p}% &8» " and get("MESSAGE.HELLO")
 
 function wolfoSetupGame():
-	set {wolfo::game::day} to 0
-	set {wolfo::game::status} to "&6Attente"
+	# Work in progress ...
 
 function wolfoCheckWin():
 	if size of {wolfo::players::list::*} = 0:
