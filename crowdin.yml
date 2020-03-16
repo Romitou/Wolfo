@@ -1,0 +1,3 @@
+files:
+  - source: Wolfo/config.yml
+    translation: '%original_file_name%'
