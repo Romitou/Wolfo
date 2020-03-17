@@ -455,7 +455,7 @@ on right click:
 		wolfoCosmetic(4, player)
 	else if name of player's tool is wolfoGet("ITEM.INFO"):
 		cancel event
-		WolfoMenuRoles(player)
+		wolfoMenuRoles(player)
 	else if name of player's tool is wolfoGet("ITEM.EXIT"):
 		cancel event
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.GOODLEFT")
