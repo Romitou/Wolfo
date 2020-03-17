@@ -1,22 +1,22 @@
-# LG
+# Wolfo
 
-The idea was found by Xamez who is developing it with Romitou.
-This script recreates a real part of a werewolf directly in Minecraft, with a lot of features (especially cosmetic)!
+🌐 Would you like to read this document in English? Please visit [this link](https://github.com/Romitou/Wolfo/blob/master/README_EN.md).
 
-## Dependencies
+L'idée a été trouvée par Xamez qui le développe avec Romitou.
+Ce script recrée une véritable partie d'un loup-garou directement dans Minecraft, avec de nombreuses fonctionnalités (notamment cosmétiques) !
 
-- Skript (tested with 2.5-alpha2) ;
+## Dépendances
 
-- skript-yaml (tested with 1.3.2) ;
+- Skript (pour le jeu - *testé avec* **2.5-alpha2**);
 
-- skript-mirror (tested with 2.0.0) ;
+- skript-yaml (pour la configuration - *testé avec* **1.3.2**);
 
-*Minor features rely on this addon, needs to be remplaced.*
+- TuSKe (pour l'interface graphique - *testé avec* **1.8.3**);
 
-- TuSKe (tested with 1.8.3) ;
+- SkDragon (pour les cosmétiques - *testé avec* **0.16**);
 
-*Minor features rely on this addon, needs to be remplaced.*
+- SkBee (pour le tableau de bord et NBT - *testé avec* **1.0.1**).
 
-- SkDragon (tested with 0.16) ;
+## Contribuer à Woflo
 
-- SkBee (tested with 1.0.1).
+Veuillez visiter [ce lien](https://github.com/Romitou/Wolfo/blob/master/CONTRIBUTING.md).

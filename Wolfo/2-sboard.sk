@@ -1,6 +1,15 @@
+# Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
+# Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
+
+on script load:
+	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast ""
+	broadcast "&6&lWolfo &7&l» &7Loading scoreboards ..."
+	set {wolfo::loading} to now
+
 function wolfoSbPlayer(p: player, i: integer):
 	if {_i} is 0:
-		set title of {_p}'s scoreboard to get("PREFIX.TITLE")
+		set title of {_p}'s scoreboard to wolfoGet("PREFIX.TITLE")
 		set line 12 of {_p}'s scoreboard to "&1"
 		set line 11 of {_p}'s scoreboard to "&6&l» &f&lPartie:"
 		set line 10 of {_p}'s scoreboard to "&2"

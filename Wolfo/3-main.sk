@@ -1,26 +1,29 @@
-import:
-	org.bukkit.entity.Player as Player
+# Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
+# Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
-# AutoMSG - Romitou
+on script load:
+	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast ""
+	broadcast "&6&lWolfo &7&l» &7Loading main ..."
+	set {wolfo::loading} to now
+
 function wolfoAutoMsg():
-	set {_list::*} to getO("MESSAGE.AUTO")
+	set {_list::*} to wolfoGetO("MESSAGE.AUTO")
 	if {wolfo::game::automsg} is not set:
 		set {wolfo::game::automsg} to true
 		while {wolfo::game::automsg} is true:
 			set {_random} to a random element out of {_list::*}
 			if {_random} is not {_last}:
 				set {_last} to {_random}
-				broadcast join get("PREFIX.GENERAL"), "&7" and {_random}
+				broadcast join wolfoGet("PREFIX.GENERAL"), "&7" and {_random}
 				wait 30 seconds
 
-# Pages d'aide - Romitou
 function wolfoHelp(msg: text, p: player):
-	send join get("PREFIX.GENERAL") and get("MESSAGE.%{_msg}%_FIRST") to {_p}
-	set {_%{_msg}%::*} to getO("MESSAGE.%{_msg}%")
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.%{_msg}%_FIRST") to {_p}
+	set {_%{_msg}%::*} to wolfoGetO("MESSAGE.%{_msg}%")
 	loop {_%{_msg}%::*}:
 		send colored loop-value to {_p}
 
-# Configuration - Xamez
 function wolfoGetConfig(mode: integer) :: text:
 	set {_p} to size of {wolfo::players::list::*}
 	if {_mode} is 1:
@@ -44,23 +47,18 @@ function wolfoGetConfig(mode: integer) :: text:
 		else:
 			return "0"
 
-
-# Calcul des rôles - Romitou
 function wolfoGetConfigRoles() :: objects:
 	set {_p} to size of {wolfo::players::list::*}
 	set {_config} to wolfoGetConfig(2) parsed as integer
-	# - VERIFICATION
 	if {_config} is 0:
-		return join get("MESSAGE.NOTENOUGH1"), "&c%5 - {_p}%" and get("MESSAGE.NOTENOUGH2")
+		return join wolfoGet("MESSAGE.NOTENOUGH1"), "&c%5 - {_p}%" and wolfoGet("MESSAGE.NOTENOUGH2")
 		stop
-	# - REPARTITION ROLES DE BASE
 	add "SEER", "DOCTOR" and "SHOOTER" to {_roles::*}    
 	if {_config} is 1:
-		{_p} is not 5 # Obligation pour avoir 1 wolfo / 1 VILLAGEOIS
+		{_p} is not 5
 		add "CRAZY" to {_roles::*}
 	if {_config} is 2 or 3:
 		add "SEER_AURA", "CUPID", "WEREWOLF_ALPHA", "TOWNSFOLK_CURSED", "TOWNSFOLK_CURSED", "WITCH" and "HEADHUNTER" to {_roles::*}
-	# - ATTRIBUTION wolfo/VILLAGEOIS
 	remove size of {_roles::*} from {_p}
 	while {_p} is greater than 0:
 		if mod({_p}, 2) is 0:
@@ -70,30 +68,24 @@ function wolfoGetConfigRoles() :: objects:
 		remove 1 from {_p}
 	return shuffled {_roles::*}
 
-
-
-# Répartition des rôles - Xamez/Romitou
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
 	if wolfoGetConfig(2) parsed as integer is 0 or 4:
-		broadcast join get("PREFIX.GENERAL") and {_input::*}
+		broadcast join wolfoGet("PREFIX.GENERAL") and {_input::*}
 		stop
 	wolfoRound(0)
 	loop {wolfo::players::list::*}:
-		set {_role} to get("%{_input::%loop-index%}%.NAME")
-		set {_desc} to get("%{_input::%loop-index%}%.DESC")
+		set {_role} to wolfoGet("%{_input::%loop-index%}%.NAME")
+		set {_desc} to wolfoGet("%{_input::%loop-index%}%.DESC")
 		set {wolfo::players::role_text::%loop-value%} to {_role}
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%} 
 		send title {_role} with subtitle "test" to loop-value for 2 seconds
-		send join get("PREFIX.GENERAL"), get("MESSAGE.REVEAL") and {_role} to loop-value
+		send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.REVEAL") and {_role} to loop-value
 		send {_desc} to loop-value
 		add loop-value to {wolfo::players::role::%{_input::%loop-index%}%::*}
-		wait 3 seconds # 5 joueurs / seconde (si 4 ticks) --> maximum 5 secondes d'attente avec une partie complète
+		wait 4 ticks
 	wolfoRound(1)
 
-
-
-# Gestion des tours - Romitou
 function wolfoRound(type: integer):
 	if {_type} is 0:
 		set {wolfo::game::day} to 0
@@ -118,9 +110,6 @@ function wolfoRound(type: integer):
 			add 1 to {wolfo::game::day}
 			wolfoManage(2)
 
-
-
-# Gestion de la partie - Romitou
 function wolfoManage(i: number):
 	{wolfo::game::start} is set
 	if {_i} is 1:
@@ -166,7 +155,6 @@ function wolfoManage(i: number):
 	else if {_i} is 3:
 		wolfoRound(1)
 
-# Votes des joueurs - Romitou
 function wolfoVote(roles: objects):
 	loop {_roles::*}:
 		wolfoVoteMenu({wolfo::players::role::%loop-value%::*})
@@ -176,13 +164,13 @@ function wolfoVoteMenu(p: objects):
 	{wolfo::game::start} is set
 	loop {_p::*}:
 		unformat all gui slots of loop-value-1
-		WolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
+		wolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
 		set {_loop} to 11
 		loop {wolfo::players::list::*}:
 			set {_player} to loop-value-2
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
-			if {wolfo::vote::round} is 0: # Vote destiné au CUPIDON
+			if {wolfo::vote::round} is 0:
 				if {wolfo::vote::cupidon::*} contains {_player}:
 					set {_heart} to "&c❤"
 				else:
@@ -194,7 +182,7 @@ function wolfoVoteMenu(p: objects):
 					else if {wolfo::vote::cupidon::*} do not contain {_player}:
 						add {_player} to {wolfo::vote::cupidon::*}
 						send "&6&lWolfo &7&l» &fSuper ! On espère que tu as fait le bon choix. Ton vote contre %{_player}% a été ajouté." to loop-value-1
-			else if {wolfo::vote::round} is 1: # Vote destiné aux LOUPS-GAROUS
+			else if {wolfo::vote::round} is 1:
 				if {wolfo::vote::list::%{_player}%::*} is not set:
 					set {_material} to {_player}'s skull named "&6%{_player}% &f- &7Aucun vote" with lore "" and "&7Personne n'a voté."
 				else:
@@ -218,18 +206,15 @@ function wolfoVoteMenu(p: objects):
 				wolfoVoteMenu({_p::*})
 			add 1 to {_loop}
 
-
-
-# Timer - Xamez
 function wolfoTime(t: integer, p: objects, mode: integer):
 	if {wolfo::timer} is set:
 		set {wolfo::timer} to {_t}
 		stop
 	if {_mode} is 0:
-		set {_second} to get("TIME.SECOND")
-		set {_title} to get("MESSAGE.TITLE")
-		set {_starting} to get("MESSAGE.STARTING")
-		set {_start} to get("MESSAGE.START")
+		set {_second} to wolfoGet("TIME.SECOND")
+		set {_title} to wolfoGet("MESSAGE.TITLE")
+		set {_starting} to wolfoGet("MESSAGE.STARTING")
+		set {_start} to wolfoGet("MESSAGE.START")
 	if {_mode} is 1:
 		set {_second} to "seconde(s)"
 		set {_title} to "test"
@@ -241,7 +226,6 @@ function wolfoTime(t: integer, p: objects, mode: integer):
 		loop ({wolfo::timer} - 5) times:
 			send action bar join {_starting}, "&a%{wolfo::timer}% " and {_second} to loop-value-1
 			set loop-value-1's level to {wolfo::timer}
-			Player.setExp(loop-value-1 and {wolfo::timer} / {_time})
 			if mod({wolfo::timer}, 10) = 0: 
 				send title {_title} with subtitle join {_starting}, "&a%{wolfo::timer}% " and {_second} to loop-value-1 for 2 seconds
 			remove 1 from {wolfo::timer}
@@ -250,27 +234,23 @@ function wolfoTime(t: integer, p: objects, mode: integer):
 			send title {_title} with subtitle join {_starting}, "&a%{wolfo::timer}% " and {_second} to loop-value-1 for 2 seconds
 			send action bar join {_starting}, "&a%{wolfo::timer}% " and {_second} to loop-value-1
 			set loop-value-1's level to {wolfo::timer}
-			Player.setExp(loop-value-1 and {wolfo::timer} / {_time})
 			remove 1 from {wolfo::timer}
 			wait 1 second
 		send title {_title} with subtitle {_start} to loop-value-1 for a second
 		send action bar {_start} to loop-value-1
 		set loop-value-1's level to 0
-		Player.setExp(loop-value-1 and 0)
 	clear {wolfo::timer}
 	if {_mode} is 0:
 		wolfoStart()
 	if {_mode} is 1 or 2:
 		wolfoManage({_mode})
 
-
-# Particules - Xamez/Romitou
 function wolfoDraw(type: text, p: text):
 	if {_type} is "erase":
 		stopEffect id "WW-%{_p}%"
 	if {_type} is "img":
 		set {_loc} to location at x-coordinate of {wolfo::loc::center}, y-coordinate of {wolfo::loc::center} + 10, z-coordinate of {wolfo::loc::center} in world "world"
-		drawImage file "%{_p}%.png", center {_loc}, id "WW-game", rotation true, plane y, auto face false, xy pixel step 5, 5, scale 1 / 20, visible range 300, pulse rate 3 ticks
+		drawImage file "%{_p}%.png", center {_loc}, id "WW-game", randomRotation true, "y", pixelStepX 5, pixelStepY 5, scale 20, visibleRange 300, tps 1, second 3
 	set {_p} to {_p} parsed as player
 	if {_type} is "selected":
 		stopEffect id "WW-%{_type}%"
@@ -281,12 +261,8 @@ function wolfoDraw(type: text, p: text):
 			set {_angle} to 90
 		else:
 			set {_angle} to 0
-		if yaml value "ANIMATION.SELECTION" from "config" is "HAND":
-			drawImage file "hand.png", center {_loc}, id "WW-%{_type}%", auto face false, xy pixel step 2, 2, scale 1 / 8, visible range 50, xyz rotation 0, {_angle}, 0, xyz displacement 0, 4, 0, pulse rate 2 ticks
-		else: # Pour quand même afficher une flèche si la config est erronée
-			drawImage file "arrow.png", center {_loc}, id "WW-%{_type}%", auto face false, xy pixel step 2, 2, scale 1 / 12, visible range 50, xyz rotation 0, {_angle}, 0, xyz displacement 0, 4, 0, pulse rate 2 ticks
-
-		# AFFICHER UN HOLO AU DESSUS DE LA TETE DU JOUEUR AVEC SON NOMBRE DE VOTE -> {wolfo::players::vote::%{_p}%}
+		set {_name} to wolfoGet("ANIMATION.SELECTION")
+		drawImage file "%{_name}%.png", center {_loc}, id "WW-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 	else if {_type} is "kill":
 		set {_loc} to {wolfo::loc::center}
 		add 3 to y-coordinate of {_loc}
@@ -318,16 +294,12 @@ function wolfoDraw(type: text, p: text):
 	else if {_type} is "center":
 		drawAtom particle1 "redstone", particle2 "flame", center {wolfo::loc::center}, id "WW-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
 
-
-# Mort - Xamez
 function wolfoKill(p: player):
 	hide {_p} to all players
-	set {wolfo::players::death::%{_p}%} to "&cMort"
+	set {wolfo::players::life::%{_p}%} to "&cMort"
 	teleport {_p} to {wolfo::loc::deathSpawn}
 	send title "&6&lWolfo &7&l»" with subtitle "&c Vous êtes mort !" to {_p} for 2 seconds
 
-
-# Joueur le plus voté - Xamez/Romitou
 function wolfoMostVoted(c: objects) :: objects:
 	set {_sorted::*} to sorted {_c::*}
 	set {_top} to last element out of {_sorted::*}
@@ -336,9 +308,6 @@ function wolfoMostVoted(c: objects) :: objects:
 		set {_p} to loop-index
 	return {_p} and {_top}
 
-
-
-# Gestion des joueurs - Xamez
 function wolfoJoin(p: player):
 	loop 200 times:
 		send "" to {_p}
@@ -349,11 +318,10 @@ function wolfoJoin(p: player):
 	heal {_p}
 	set {_p}'s walk speed to 0.2
 	set current hotbar slot of {_p} to 4
-	set slot 0 of {_p} to enchanted book named get("ITEM.COSM")
-	set slot 4 of {_p} to book named get("ITEM.INFO")
-	set slot 8 of {_p} to orange bed named get("ITEM.EXIT")
+	set slot 0 of {_p} to enchanted book named wolfoGet("ITEM.COSM")
+	set slot 4 of {_p} to book named wolfoGet("ITEM.INFO")
+	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")
 	wolfoSbPlayer({_p}, 0)
-	wolfoSetupGame()
 	wolfoSetupPlayer({_p})
 	wolfoCheckStart()
 
@@ -364,42 +332,44 @@ function wolfoLeave(p: player):
 function wolfoSetupPlayer(p: player):
 	add {_p} to {wolfo::players::list::*}
 	set {wolfo::players::role_text::%{_p}%} to "&7Aucun"
-	set {wolfo::players::death::%{_p}%} to "&aEn vie"
+	set {wolfo::players::life::%{_p}%} to "&aEn vie"
 	wait 1 second
-	send join get("PREFIX.GENERAL") and get("MESSAGE.JOIN_INFO") to {_p}
-	wait 1 second
-	broadcast join "&7%{_p}% &8» " and get("MESSAGE.HELLO")
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.JOIN_INFO") to {_p}
 
-function wolfoSetupGame():
-	set {wolfo::game::day} to 0
-	set {wolfo::game::status} to "&6Attente" #| "&6Attente" / "&aEn cours" / "&cArrêté"
+function wolfoSetupGame(p: player):
+	wolfoMenuSetup({_p})
 
+command /wolfo [<text>] [<text>]:
+	trigger:
+		if arg 1 is "help":
+			wolfoHelp("COMMANDS", player)
+		else if arg 1 is "admin":
+			wolfoSetupGame(player)
+		else if arg 1 is "role":
+			send "To Do"
+		else:
+			wolfoHelp("ADMIN", player)
 
-# Conditions de victoire - Xamez
 function wolfoCheckWin():
-
 	if size of {wolfo::players::list::*} = 0:
-		set {_mode} to 1 # PERSONNE WIN CAR TOUS LES JOUEURS ON LEAVE
+		set {_mode} to 1
 	if size of {wolfo::players::list::*} = 1:
-		set {_mode} to 2 # DERNIER EN VIE A WIN
+		set {_mode} to 2
 	if size of {wolfo::players::role::WEREWOLF::*} = 0:
-		set {_mode} to 3 # VILLAGE A WIN / wolfo ON PERDU
+		set {_mode} to 3
 	loop {wolfo::players::list::*}:
 		if {wolfo::players::role_name::%loop-value%} is "TOWNSFOLK", "SEER_AURA", "CUPID", "TOWNSFOLK_CURSED", "WITCH", "DOCTOR" or "SHOOTER":
 			add 1 to {_alive}
 	if {_alive} isn't set:
-		set {_mode} to 4 # LG ON WIN / VILLAGE A PERDU
-
+		set {_mode} to 4
 	if {_mode} is 1:
 		wolfoEnd()
-
 	if {_mode} is 2:
 		loop {wolfo::players::list::*}:
 			send title "&6&lWolfo &7&l»" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds
 			broadcast "&6&lWolfo &7&l» &a%loop-value% &fà win la game avec le rôle &b%{wolfo::players::role_name::%loop-value%}%"
 		wait 5 seconds
 		wolfoEnd()
-
 	if {_mode} is 3:
 		loop {wolfo::players::list::*}:
 			if {wolfo::players::role_name::%loop-value%} is "WEREWOLF", "WEREWOLF_ALPHA", "CRAZY" or "HEADHUNTER":
@@ -409,10 +379,8 @@ function wolfoCheckWin():
 		broadcast "&6&lWolfo &7&l» &fLe &avillage &fà gagné la partie !"
 		wait 5 seconds
 		wolfoEnd()
-
 	if {_mode} is 4:
 		loop {wolfo::players::list::*}:
-			#broadcast "PLAYER: %loop-value% / ROLE: %{wolfo::players::role_name::%loop-value%}%"
 			if {wolfo::players::role_name::%loop-value%} is "TOWNSFOLK", "SEER_AURA", "CUPID", "TOWNSFOLK_CURSED", "WITCH", "DOCTOR", "SHOOTER", "CRAZY" or "HEADHUNTER":
 				send title "&6&lWolfo &7&l»" with subtitle "&7Vous avez perdu !" to loop-value for 2 seconds
 			else:
@@ -421,15 +389,12 @@ function wolfoCheckWin():
 			wait 5 seconds
 			wolfoEnd()
 
-
-
-# Gestion début/fin de la partie - Xamez
 function wolfoCheckStart(force: boolean = false):
 	if {_force} is false:
 		if (size of {wolfo::players::list::*}) < 5:
 			stop
 	wolfoTime(30, {wolfo::players::list::*}, 0)
-	send join get("PREFIX.GENERAL") and get("MESSAGE.START_PREPARE") to {wolfo::players::list::*}
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START_PREPARE") to {wolfo::players::list::*}
 
 function wolfoStart():
 	loop {wolfo::players::list::*}:
@@ -437,78 +402,23 @@ function wolfoStart():
 		set loop-value's walk speed to 0
 	wolfoGiveRoles()
 	set {wolfo::game::automsg} to false
-	send join get("PREFIX.GENERAL") and get("MESSAGE.START_ROLES") to {wolfo::players::list::*}
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START_ROLES") to {wolfo::players::list::*}
 
 function wolfoEnd():
 	loop {wolfo::players::list::*}:
-		kick loop-value due to join get("PREFIX.GENERAL") and get("MESSAGE.ENDGAME")
+		kick loop-value due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ENDGAME")
 	clear {wolfo::players::*}
 	clear {wolfo::game::*}
 	clear {wolfo::timer}
 	clear {wolfo::vote::*}
-	wolfoSetupGame()
-
-# Commande.s - Xamez/Romitou
-command /wolfo [<text>] [<text>] [<text>]:
-	permission: get("PERMISSION.ADMIN")
-	permission message: join get("PREFIX.GENERAL") and get("MESSAGE.PERMISSION")
-	trigger:
-		if arg 1 is "help":
-			wolfoHelp("ADMIN", player)
-		else if arg 1 is "setwait":
-			if {wolfo::game::start} is set:
-				send join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
-			else:
-				set {wolfo::loc::waitRoom} to location of player
-				send join get("PREFIX.GENERAL") and get("MESSAGE.SETWAITROOM")
-		else if arg 1 is "setdeath":
-			if {wolfo::game::start} is set:
-				send join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
-			else:
-				set {wolfo::partie::deathSpawn} to location of player
-				send join get("PREFIX.GENERAL") and get("MESSAGE.SETDEATHROOM")
-		else if arg 1 is "addSpawn":
-			if {wolfo::game::start} is set:
-				send join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
-			else:
-				set {_size} to (size of {wolfo::spawn::%{_size}%::*}) + 1
-				set {wolfo::spawn::%{_size}%::*} to location of player
-				send join get("PREFIX.GENERAL"), get("MESSAGE.ADDSPAWN") and "&7(%size of {wolfo::spawn::%{_size}%::*}%)"
-		else if arg 1 is "forcestart":
-			if {wolfo::game::start} is set:
-				send join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
-			else:
-				wolfoCheckStart(true)
-		else if arg 1 is "forcestop":
-			if {wolfo::game::start} isn't set:
-				send join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTOP")
-			else:
-				wolfoEnd()
-		else if arg 1 is "debug":
-			if arg 2 is "yml":
-				if {wolfo::game::debug::yml} isn't set:
-					set {wolfo::game::debug::yml} to true
-					send join get("PREFIX.GENERAL") and get("MESSAGE.YMLON")
-				else:
-					delete {wolfo::game::debug::yml}
-					send join get("PREFIX.GENERAL") and get("MESSAGE.YMLOFF")
-			else if arg 2 is not set:
-				if {wolfo::game::debug} isn't set:
-					set {wolfo::game::debug} to true
-					send join get("PREFIX.GENERAL") and get("MESSAGE.DEBUGON")
-				else:
-					delete {wolfo::game::debug}
-					send join get("PREFIX.GENERAL") and get("MESSAGE.DEBUGOFF")
-		else:
-			wolfoHelp("ADMIN", player)
 
 on chat:
 	replace all "&" with "§" in message if player is op
 	cancel event
 	if {wolfo::game::start} is set:
-		if {wolfo::players::death::%player%} is "&cMort":
-			loop {wolfo::players::death::*}:
-				if {wolfo::players::death::%loop-value%} is "&cMort":
+		if {wolfo::players::life::%player%} is "&cMort":
+			loop {wolfo::players::life::*}:
+				if {wolfo::players::life::%loop-value%} is "&cMort":
 					send "&8[&7Mort&8] &7%player% &8» &7%message%" to loop-value
 					stop
 		else:
@@ -517,7 +427,7 @@ on chat:
 					loop {wolfo::players::role::WEREWOLF::*}:
 						send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value
 				else:
-					send join get("PREFIX.GENERAL") and get("MESSAGE.MUTED")
+					send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.MUTED")
 			else:
 				broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
 	else:
@@ -525,9 +435,9 @@ on chat:
 
 on join:
 	if {wolfo::game::start} is set:
-		kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.ALREADYSTART")
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
 	else if size of {wolfo::players::list::*} is greater than or equal to 27:
-		kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.TOOMANY")
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.TOOMANY")
 	else:
 		set join message to "&a✔ %player% &7(%amount of all players% &8» %wolfoGetConfig(1)%&7)"
 		wolfoJoin(player)
@@ -536,20 +446,19 @@ on quit:
 	set quit message to "&c✘ %player% &7(%amount of all players - 1% &8» %wolfoGetConfig(1)%&7)"
 	wolfoLeave(player)
 
-
 on right click:
-	if name of player's tool is get("ITEM.COSM"):
+	if name of player's tool is wolfoGet("ITEM.COSM"):
 		cancel event
 		wolfoCosmetic(1, player)
-	else if name of player's tool is get("ITEM.COSM_OFF"):
+	else if name of player's tool is wolfoGet("ITEM.COSM_OFF"):
 		cancel event
 		wolfoCosmetic(4, player)
-	else if name of player's tool is get("ITEM.INFO"):
+	else if name of player's tool is wolfoGet("ITEM.INFO"):
 		cancel event
-		WolfoMenuRoles(player)
-	else if name of player's tool is get("ITEM.EXIT"):
+		wolfoMenuRoles(player)
+	else if name of player's tool is wolfoGet("ITEM.EXIT"):
 		cancel event
-		kick player due to join get("PREFIX.GENERAL") and get("MESSAGE.GOODLEFT")
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.GOODLEFT")
 
 on jump:
 	if {wolfo::game::start} is set:
