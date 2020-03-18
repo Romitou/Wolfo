@@ -1,0 +1,12 @@
+on script load:
+	broadcast join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%."
+	broadcast ""
+	if {wolfo::loading::error} is set:
+		broadcast "&cOops! %{wolfo::loading::error}% errors were encountered while loading."
+		broadcast "&7Please consult the console for more information."
+	else:
+		set {_version} to wolfoGet("VERSION")
+		broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_version}%)"
+	broadcast "&8Note: If you encounter errors, please report them to us."
+	broadcast "&7Discord (37nvkpk)&8 - &7Romitou##9685&8 or &7Xamez##8497 &8or on the forum where you downloaded Wolfo."
+	delete {wolfo::loading::*}

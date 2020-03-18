@@ -6,20 +6,15 @@ on script load:
 	set {wolfo::loading} to now
 	load yaml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
 	if yaml "config" is empty:
-		send "&4Error! The file containing the config could not be found." to console
-		send "&7Please download it and add it to the Wolfo folder." to console
-		add 1 to {_error}
+		broadcast "&4Error! The file containing the config could not be found."
+		broadcast "&7Please download it and add it to the Wolfo folder."
+		add 1 to {wolfo::loading::error}
 	set {_actual} to "1.0"
 	set {_current} to wolfoGet("VERSION")
 	if {_actual} is not {_current}:
-		send "&6Wow! It's been a while since you last updated Wolfo." to console
-		send "&7Version &eV%{_actual}%&7 is already out, you are in &eV%{_current}%&7!" to console
-		add 1 to {_error}
-	if {_error} is set:
-		send "&cOops! %{_error}% errors were encountered while loading." to ops
-		send "&7Please consult the console for more information." to ops
-		stop
-	broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_current}%)"
+		broadcast "&6Wow! It's been a while since you last updated Wolfo."
+		broadcast "&7Version &eV%{_actual}%&7 is already out, you are in &eV%{_current}%&7!"
+		add 1 to {wolfo::loading::error}
 
 function wolfoGet(request: text) :: text: # POUR LES TEXTES (plus utilisé)
 	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug::yml} is true
