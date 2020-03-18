@@ -21,7 +21,7 @@ function wolfoSbPlayer(p: player, i: integer):
 		set line 4 of {_p}'s scoreboard to "&6&l» &f&lJoueur:"
 		set line 3 of {_p}'s scoreboard to "&4"
 		set line 2 of {_p}'s scoreboard to " &6● &eVotre rôle &f» &e%{wolfo::players::role_text::%{_p}%}%"
-		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::death::%{_p}%}%"
+		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::life::%{_p}%}%"
 	if {_i} is 1:
 		clear scoreboard of {_p}
 
