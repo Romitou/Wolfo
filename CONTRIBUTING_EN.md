@@ -1,6 +1,6 @@
 # Contribute to Woflo
 
-🌐 Vous souhaitez lire ce document en français ? Suivez [ce lien](https://github.com/Romitou/Wolfo/blob/master/README.md).
+🌐 Vous souhaitez lire ce document en français ? Suivez [ce lien](https://github.com/Romitou/Wolfo/blob/master/CONTRIBUTING.md).
 
 Welcome ! We are very happy for your interest in this project.
 Know that we are kind and we hope to receive your contribution.
