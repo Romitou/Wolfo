@@ -2,7 +2,7 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%."
 	broadcast ""
 	broadcast "&6&lWolfo &7&l» &7Loading GUI ..."
 	set {wolfo::loading} to now
@@ -22,3 +22,19 @@ function wolfoMenuDeco(p: player, t: text, i: integer = 6):
 function wolfoMenuSetup(p: player):
 	set {_progess} to {wolfo::setup::progess} / 4 * 100
 	wolfoMenuDeco({_p}, "test", 3)
+
+function wolfoMenuRoles(p: player):
+	wolfoMenuDeco({_p}, "test", 5)
+	set {_loop} to 11
+	loop yaml node list "ROLES" from "config":
+		broadcast "%loop-node%"
+		while {_loop} is 16, 17, 18, 26, 27 or 28:
+			add 1 to {_loop}
+		set {_item} to wolfoGet("%loop-node%.ITEM") parsed as material
+		if {_item} is a player head:
+			set {_nbt} to wolfoGet("%loop-node%.NBT")
+			add wolfoGet("%loop-node%.NBT") to nbt of {_item}
+		set {_lore::*} to wolfoGetO("%loop-node%.DESC")
+		make a gui slot {_loop} of {_p} with {_item} named colored wolfoGet("%loop-node%.NAME") with lore colored {_lore::*} to run:
+			send "test" to {_p}
+		add 1 to {_loop}
