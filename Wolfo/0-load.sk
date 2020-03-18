@@ -9,7 +9,7 @@ on script load:
 		send "&4Error! The file containing the config could not be found." to console
 		send "&7Please download it and add it to the Wolfo folder." to console
 		add 1 to {_error}
-	set {_actual} to text from "https://files.romitou.fr/wolfo"
+	set {_actual} to "1.0"
 	set {_current} to wolfoGet("VERSION")
 	if {_actual} is not {_current}:
 		send "&6Wow! It's been a while since you last updated Wolfo." to console

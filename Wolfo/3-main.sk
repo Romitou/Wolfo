@@ -2,7 +2,7 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%."
 	broadcast ""
 	broadcast "&6&lWolfo &7&l» &7Loading main ..."
 	set {wolfo::loading} to now
@@ -20,27 +20,27 @@ function wolfoAutoMsg():
 
 function wolfoHelp(msg: text, p: player):
 	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.%{_msg}%_FIRST") to {_p}
-	set {_%{_msg}%::*} to wolfoGetO("MESSAGE.%{_msg}%")
-	loop {_%{_msg}%::*}:
+	set {_help::%{_msg}%::*} to wolfoGetO("MESSAGE.%{_msg}%")
+	loop {_help::%{_msg}%::*}:
 		send colored loop-value to {_p}
 
 function wolfoGetConfig(mode: integer) :: text:
 	set {_p} to size of {wolfo::players::list::*}
 	if {_mode} is 1:
-		if {_p} is between 5 and 12:    # 5 à 12 donc |-3 +4
-			return "&6Mini" # ou Restreinte
-		if {_p} is between 13 and 17:    # 13 à 17 | -2 +2
+		if {_p} is between 5 and 12:
+			return "&6Mini"
+		if {_p} is between 13 and 17:
 			return "&eClassique"
-		if {_p} is between 18 and 26:    # 18 à 26 | -4 +3
+		if {_p} is between 18 and 26:
 			return "&aMéga"
 		else:
 			return "&cJoueurs manquants"
 	else if {_mode} is 2:
-		if {_p} is between 5 and 12:    # 5 à 12 donc |-3 +4
+		if {_p} is between 5 and 12:
 			return "1"
-		if {_p} is between 13 and 17:    # 13 à 17 | -2 +2
+		if {_p} is between 13 and 17:
 			return "2"
-		if {_p} is between 18 and 26:    # 18 à 26 | -4 +3
+		if {_p} is between 18 and 26:
 			return "3"
 		if {_p} is greater than or equal to 27:
 			return "4"
@@ -286,7 +286,7 @@ function wolfoDraw(type: text, p: text):
 		stopEffect id "WW-rayon"
 		stopEffect id "WW-sphere"
 	else if {_type} is "spawn":
-		hide {_p} to all players
+		hide {_p} from all players
 		drawWarpRings style 2, particle "redstone", RGB 80, 255, 255, center location of {_p}, id "WW-%{_type}%", rainbowMode true, scan true, height 2, radius 1, ringCount 40, ringDensity 20, visibleRange 32, pulseDelay 1
 		wait 2 second
 		stopEffect id "WW-%{_type}%"
@@ -295,7 +295,7 @@ function wolfoDraw(type: text, p: text):
 		drawAtom particle1 "redstone", particle2 "flame", center {wolfo::loc::center}, id "WW-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
 
 function wolfoKill(p: player):
-	hide {_p} to all players
+	hide {_p} from all players
 	set {wolfo::players::life::%{_p}%} to "&cMort"
 	teleport {_p} to {wolfo::loc::deathSpawn}
 	send title "&6&lWolfo &7&l»" with subtitle "&c Vous êtes mort !" to {_p} for 2 seconds
@@ -317,7 +317,7 @@ function wolfoJoin(p: player):
 	clear {_p}'s inventory
 	heal {_p}
 	set {_p}'s walk speed to 0.2
-	set current hotbar slot of {_p} to 4
+	set {_p}'s selected hotbar slot to slot 4 of {_p}
 	set slot 0 of {_p} to enchanted book named wolfoGet("ITEM.COSM")
 	set slot 4 of {_p} to book named wolfoGet("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")

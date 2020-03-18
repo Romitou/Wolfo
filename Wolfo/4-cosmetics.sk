@@ -1,5 +1,5 @@
 on script load:
-	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%."
 	broadcast ""
 	broadcast "&6&lWolfo &7&l» &7Reloading cosmetics ..."
 
@@ -33,7 +33,7 @@ function wolfoCosmetic(type: integer, p: player):
 		set {_type} to {wolfo::cosmetic::%{_p}%::1}
 		set {wolfo::cosmetic::%{_p}%::active} to true
 		if {_type} is "wings":
-			set {_r} to random integer between 1 and 7 # La personnalisation de l'effet des ailes sera ajoutée dans une version future.
+			set {_r} to random integer between 1 and 7
 			drawWings style {_r}, particle1 "%{_particle}%", particle2 "%{_particle}%", particle3 "%{_particle}%", center {_p}, id "ww-%{_p}%", angle 110, height 0, space 0.2, visibleRange 30, tps 0, second 1
 		if {_type} is "nyancat":
 			drawNyanCat center {_p}, id "ww-%{_p}%", visibleRange 30, tps 0, second 0

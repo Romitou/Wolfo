@@ -2,7 +2,7 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
+	broadcast join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%."
 	broadcast ""
 	broadcast "&6&lWolfo &7&l» &7Loading scoreboards ..."
 	set {wolfo::loading} to now
