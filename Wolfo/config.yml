@@ -43,7 +43,7 @@ MESSAGE:
     START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'
     COSM_ON: '&fNous avons activé tes particules, j''espère qu''elles te vont bien.'
     COSM_OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
-    SUCCESS_LOADING: '&aThe config has been loaded without errors. '
+    SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
     PERMISSION: '&cVous n''avez pas accès à cette commande.'
     SETWAITROOM: '&eVous avez correctement défini la salle d''attente à votre position.'
     SETDEATHROOM: '&eVous avez correctement défini la zone des morts à votre position.'
@@ -116,76 +116,112 @@ ROLES:
     WEREWOLF:
         NAME: '&cLoup-Garou'
         DESC: 
+        - ''
         - '&8➥ &7Chaque nuit, vous devez voter pour l''élimination d''un joueur.'
         - '&7Votre but est d''éliminer tous les villageois.'
+        - ''
+        - '&8➥ &7Votre équipe: &cLoup-Garou'
         ITEM: 'player head'
         NBT: '{SkullOwner:{Id:"9cd0e1fb-c1d6-4859-9392-13655a000118",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY4ZDQzMTI5MzliYjMxMTFmYWUyOGQ2NWQ5YTMxZTc3N2Y4ZjJjOWZjNDI3NTAxY2RhOGZmZTNiMzY3NjU4In19fQ=="}]}}}'
     WEREWOLF_ALPHA:
-        NAME: '&4Loup-Garou Alpha'
+        NAME: '&cLoup-Garou &4Alpha'
         DESC:
+        - ''
         - '&8➥ &7Chaque nuit, vous devez voter pour l''élimination d''un joueur.'
         - '&7Votre but est d''éliminer tous les villageois. Votre vote compte double.'
+        - ''
+        - '&8➥ &7Votre équipe: &cLoup-Garou'
         ITEM: 'player head'
         NBT: '{SkullOwner:{Id:"736e9be2-4984-4cbc-bbb6-9ab419bb55bc",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjgzYTJhYTlkMzczNGI5MTlhYzI0Yzk2NTllNWUwZjg2ZWNhZmJmNjRkNDc4OGNmYTQzM2JiZWMxODllOCJ9fX0="}]}}}'
     TOWNSFOLK_CURSED:
         NAME: '&7Villageois &8Maudit'
         DESC:
+        - ''
         - '&8➥ &7Vous êtes un villageois normal, vous n''avez rien à faire.'
         - '&7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village &f| &cLoup-Garou'
         ITEM: 'bread'
     TOWNSFOLK:
         NAME: '&7Villageois'
         DESC:
+        - ''
         - '&8➥ &7Vous n''avez aucune action spécifique, vous n''avez &eaucune faculté&7.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'bread'
     CUPID:
         NAME: '&dCupidon'
         DESC:
+        - ''
         - '&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront'
         - '&eamant &7durant toute la partie. Si l''un des deux meurt, l''autre mourra également.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'player head'
         NBT: '{SkullOwner:{Id:"94c9b15f-f65a-427d-a699-ad0d4d5489f6",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRlYWY4OTQyOGEzNjQ5YzI2ZWRjMWY3MWNjMTlmMjYzZTlmNGViMzFlZDE4Yzk3Njg2YWFjODJmNzY0MjQyIn19fQ=="}]}}}'
     SEER:
         NAME: '&aVoyante'
         DESC:
+        - ''
         - '&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître le rôle d''un joueur&7.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'eyes of ender'
     SEER_AURA:
         NAME: '&2Voyante Aura'
         DESC:
+        - ''
         - '&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître l''aura d''un joueur&7.'
-        - 'L''aura peut être "Claire", "Obscure" ou bien "Inconnue".'
+        - '&7L''aura peut être &aClaire&7, &8Obscure &7ou bien &9Inconnue&7.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'ender pearl'
     CRAZY:
         NAME: '&6Fou'
         DESC:
+        - ''
         - '&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7.'
-        - 'Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin ;)'
+        - '&7Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin ;)'
+        - ''
+        - '&8➥ &7Votre équipe: &aSolo'
         ITEM: 'player head'
         NBT: '{SkullOwner:{Id:"7e18508f-feb6-445b-8020-2c7cb79ace7c",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0="}]}}}'
     SHOOTER:
         NAME: '&eTireur'
         DESC:
+        - ''
         - '&8➥ &7Vous commencez la partie avec &edeux balles&7.'
-        - 'Vous aurez la possiblité de tuer n''importe qui.'
+        - '&7Vous aurez la possiblité de tuer n''importe qui.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'bow'
     HEADHUNTER:
         NAME: '&9Chasseur de Tête'
         DESC:
+        - ''
         - '&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement.'
-        - 'Si ce joueur est &etué par le village&7, il gagnera la partie.'
+        - '&7Si ce joueur est &etué par le village&7, il gagnera la partie.'
+        - ''
+        - '&8➥ &7Votre équipe: &aSolo'
         ITEM: 'player head'
         NBT: '{SkullOwner:{Id:"9d58f311-003b-4d1d-8ba8-b678e182bab3",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2MxZGYwZGI4ZDQ3NzNjYzI1NWE2M2I4ZjBiMGU0Y2RkN2Q3NGMzYjRjNjc1MzYyMTY4NDYwYmM2N2JiMzAyZSJ9fX0="}]}}}'
     DOCTOR:
         NAME: '&bDocteur'
         DESC:
+        - ''
         - '&8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre les Loup-Garous.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'apple'
     WITCH:
         NAME: '&5Sorcière'
         DESC:
+        - ''
         - '&8➥ &7Vous possédez &edeux potions&7. L''une permets de récussiter un joueur,'
-        - 'l''autre permets de tuer un joueur. Vous ne pouvez les utiliser qu''une seule fois.'
+        - '&7l''autre permets de tuer un joueur. Vous ne pouvez les utiliser qu''une seule fois.'
+        - ''
+        - '&8➥ &7Votre équipe: &6Village'
         ITEM: 'player head'
         NBT: '{SkullOwner:{Id:"7f92b3d6-5ee0-4ab6-afae-2206b9514a63",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMTNkMTg0NzRmYzk0ZWQ1NWFlYjcwNjk1NjZlNDY4N2Q3NzNkYWMxNmY0YzNmODcyMmZjOTViZjlmMmRmYSJ9fX0="}]}}}'
 
