@@ -37,7 +37,7 @@ PERMISSION:
     ADMIN: lg.admin
 
 MESSAGE:
-    JOIN_INFO: '&fBienvenue ! Si tu ne connais pas les règles du jeu, rendez-vous dans les informations.'
+    JOIN_INFO: '&fBienvenue ! Si tu ne connais pas les règles du jeu, rends-toi dans les informations.'
     HELLO: '&7Bonjour !'
     START_PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
     START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'

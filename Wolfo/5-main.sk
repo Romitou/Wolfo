@@ -35,23 +35,20 @@ function wolfoJoin(p: player):
 	heal {_p}
 	set {_p}'s walk speed to 0.2
 	set {_p}'s selected hotbar slot to slot 4 of {_p}
+	add {_p} to {wolfo::players::list::*}
 	set slot 0 of {_p} to enchanted book named wolfoGet("ITEM.COSM")
 	set slot 4 of {_p} to book named wolfoGet("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")
-	wolfoSbPlayer({_p}, 0)
-	wolfoSetupPlayer({_p})
 	wolfoCheckStart()
-
-function wolfoLeave(p: player):
-	wolfoSbPlayer({_p}, 1)
-	remove {_p} from {wolfo::players::list::*}
-
-function wolfoSetupPlayer(p: player):
-	add {_p} to {wolfo::players::list::*}
+	wolfoSbPlayer({_p}, 0)
 	set {wolfo::players::role_text::%{_p}%} to "&7Aucun"
 	set {wolfo::players::life::%{_p}%} to "&aEn vie"
 	wait 1 second
 	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.JOIN_INFO") to {_p}
+
+function wolfoLeave(p: player):
+	wolfoSbPlayer({_p}, 1)
+	remove {_p} from {wolfo::players::list::*}
 
 function wolfoSetupGame(p: player):
 	wolfoMenuSetup({_p})
