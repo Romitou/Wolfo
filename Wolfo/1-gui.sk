@@ -2,9 +2,9 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	broadcast join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%."
-	broadcast ""
-	broadcast "&6&lWolfo &7&l» &7Loading GUI ..."
+	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send "" to ops
+	send "&6&lWolfo &7&l» &7Loading GUI ..." to ops
 	set {wolfo::loading} to now
 
 function wolfoMenuDeco(p: player, t: text, i: integer = 6):

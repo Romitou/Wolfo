@@ -37,40 +37,31 @@ PERMISSION:
     ADMIN: lg.admin
 
 MESSAGE:
-    JOIN_INFO: '&fSi tu ne connais pas (encore !) les règles du jeu, rends-toi dans les informations afin d''en savoir plus.'
+    JOIN_INFO: '&fBienvenue ! Si tu ne connais pas les règles du jeu, rendez-vous dans les informations.'
     HELLO: '&7Bonjour !'
     START_PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
     START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'
     COSM_ON: '&fNous avons activé tes particules, j''espère qu''elles te vont bien.'
     COSM_OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
     SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
-    PERMISSION: '&cVous n''avez pas accès à cette commande.'
-    SETWAITROOM: '&eVous avez correctement défini la salle d''attente à votre position.'
-    SETDEATHROOM: '&eVous avez correctement défini la zone des morts à votre position.'
-    ADDSPAWN: '&eVous avez correctement défini la position de spawn à votre position. '
+    PERMISSION: '&cVous n''avez pas les privilèges d''exécuter cette action.'
     FORCESTART: '&eVous avez correctement démarré la partie de force.'
     FORCESTOP: '&eVous avez correctement arrêté la partie de force.'
-    DEBUGON: '&eVous avez correctement &aactivé &ele mode développement.'
-    DEBUGOFF: '&eVous avez correctement &cdésactivé &ele mode développement.'
-    YMLON: '&eVous avez correctement &aactivé &eles informations YML.'
-    YMLOFF: '&eVous avez correctement &cdésactivé &eles informations YML.'
     SETUP: '&eVous avez correctement mis en place la partie de LG.'
     SETUPERROR: '&cVous avez déjà effectué cette commande.'
     ALREADYSTART: '&cLa partie est déjà en cours.'
     ALREADYSTOP: '&cLa partie est déjà arrêtée.'
     ALREADYSETUP: '&cLa partie est déjà configurée.'
-    ENDGAME: La partie est terminée.
+    ENDGAME: 'La partie est terminée.'
     ROLEDESC: '&eDescription de votre rôle :'
-    MUTED: Votre rôle ne vous permet pas parler durant la nuit.
-    GOODLEFT: Vous avez correctement quitté la partie.
+    MUTED: 'Votre rôle ne vous permet pas parler durant la nuit.'
+    GOODLEFT: 'Vous avez correctement quitté la partie.'
     NOTENOUGH1: '&cIl manque '
     NOTENOUGH2: ' &cjoueurs avant de lancer une partie.'
     TOOMANY: '&cIl y a trop de joueurs pour lancer une partie.'
     REVEAL: 'Vous êtes désormais '
     START: '&6➥ &eLa partie commence !'
     STARTING: '&6➥ &eLa partie commence dans '
-    YMLRELOAD: '&eEtes-vous sûr de vouloir réinitialiser les messages ? Si oui, faites
-        /lg ymlreload confirm.'
     VICTORY_FIRST: '&aConditions de victoire :'
     VICTORY:
     - '  &f» &eTous les &6villagoies &esont mort'
@@ -82,9 +73,7 @@ MESSAGE:
     ADMIN_FIRST: '&eCommandes admin :'
     ADMIN:
     - '  &f» &e/wolfo help'
-    - '  &f» &e/wolfo setwait'
-    - '  &f» &e/wolfo setdeath'
-    - '  &f» &e/wolfo addSpawn'
+    - '  &f» &e/wolfo admin'
     - '  &f» &e/wolfo forcestart'
     - '  &f» &e/wolfo forcestop'
     - ''

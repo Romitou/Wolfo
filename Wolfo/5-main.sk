@@ -1,0 +1,139 @@
+# Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
+# Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
+
+on script load:
+	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send "" to ops
+	send "&6&lWolfo &7&l» &7Loading main ..." to ops
+	set {wolfo::loading} to now
+
+function wolfoAutoMsg():
+	set {_list::*} to wolfoGetO("MESSAGE.AUTO")
+	if {wolfo::game::automsg} is not set:
+		set {wolfo::game::automsg} to true
+		while {wolfo::game::automsg} is true:
+			set {_random} to a random element out of {_list::*}
+			if {_random} is not {_last}:
+				set {_last} to {_random}
+				broadcast join wolfoGet("PREFIX.GENERAL"), "&7" and {_random}
+				wait 30 seconds
+
+function wolfoHelp(msg: text, p: player):
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.%{_msg}%_FIRST") to {_p}
+	set {_help::%{_msg}%::*} to wolfoGetO("MESSAGE.%{_msg}%")
+	loop {_help::%{_msg}%::*}:
+		send colored loop-value to {_p}
+
+
+function wolfoJoin(p: player):
+	loop 200 times:
+		send "" to {_p}
+	set {_p}'s xp to 0
+	teleport {_p} to {wolfo::loc::waitRoom}
+	set {_p}'s gamemode to adventure
+	clear {_p}'s inventory
+	heal {_p}
+	set {_p}'s walk speed to 0.2
+	set {_p}'s selected hotbar slot to slot 4 of {_p}
+	set slot 0 of {_p} to enchanted book named wolfoGet("ITEM.COSM")
+	set slot 4 of {_p} to book named wolfoGet("ITEM.INFO")
+	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")
+	wolfoSbPlayer({_p}, 0)
+	wolfoSetupPlayer({_p})
+	wolfoCheckStart()
+
+function wolfoLeave(p: player):
+	wolfoSbPlayer({_p}, 1)
+	remove {_p} from {wolfo::players::list::*}
+
+function wolfoSetupPlayer(p: player):
+	add {_p} to {wolfo::players::list::*}
+	set {wolfo::players::role_text::%{_p}%} to "&7Aucun"
+	set {wolfo::players::life::%{_p}%} to "&aEn vie"
+	wait 1 second
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.JOIN_INFO") to {_p}
+
+function wolfoSetupGame(p: player):
+	wolfoMenuSetup({_p})
+
+command /wolfo [<text>] [<text>]:
+	trigger:
+		if arg 1 is "help":
+			wolfoHelp("COMMANDS", player)
+		else if arg 1 is "admin":
+			wolfoSetupGame(player)
+		else if arg 1 is "role":
+			send "To Do"
+		else:
+			wolfoHelp("ADMIN", player)
+
+function wolfoCheckStart(force: boolean = false):
+	if {_force} is false:
+		if (size of {wolfo::players::list::*}) < 5:
+			stop
+	wolfoTime(30, {wolfo::players::list::*}, 0)
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START_PREPARE") to {wolfo::players::list::*}
+
+function wolfoStart():
+	loop {wolfo::players::list::*}:
+		teleport loop-value to {wolfo::spawn::%loop-index%}
+		set loop-value's walk speed to 0
+	wolfoGiveRoles()
+	set {wolfo::game::automsg} to false
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START_ROLES") to {wolfo::players::list::*}
+
+function wolfoEnd():
+	loop {wolfo::players::list::*}:
+		kick loop-value due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ENDGAME")
+	clear {wolfo::players::*}
+	clear {wolfo::game::*}
+	clear {wolfo::timer}
+	clear {wolfo::vote::*}
+
+
+on join:
+	if {wolfo::game::start} is set:
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
+	else if size of {wolfo::players::list::*} is greater than or equal to 27:
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.TOOMANY")
+	else:
+		set join message to "&a✔ %player% &7(%amount of all players% &8» %wolfoGetConfig(1)%&7)"
+		wolfoJoin(player)
+
+on quit:
+	set quit message to "&c✘ %player% &7(%amount of all players - 1% &8» %wolfoGetConfig(1)%&7)"
+	wolfoLeave(player)
+
+on right click:
+	if name of player's tool is wolfoGet("ITEM.COSM"):
+		cancel event
+		wolfoCosmetic(1, player)
+	else if name of player's tool is wolfoGet("ITEM.COSM_OFF"):
+		cancel event
+		wolfoCosmetic(4, player)
+	else if name of player's tool is wolfoGet("ITEM.INFO"):
+		cancel event
+		wolfoMenuRoles(player)
+	else if name of player's tool is wolfoGet("ITEM.EXIT"):
+		cancel event
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.GOODLEFT")
+
+on jump:
+	{wolfo::game::start} is set
+	cancel event
+
+on drop:
+	cancel event
+
+on inventory click:
+	if player isn't op:
+		cancel event
+
+on hunger meter change:
+	cancel event
+
+on weather change:
+	cancel event
+
+on damage of player:
+	cancel event
