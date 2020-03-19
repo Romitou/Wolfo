@@ -2,6 +2,7 @@ on script load:
 	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
 	send "&6&lWolfo &7&l» &7Reloading game gestion ..." to ops
+	set {wolfo::loading} to now
 
 function wolfoGetConfig(mode: integer) :: text:
 	set {_p} to size of {wolfo::players::list::*}

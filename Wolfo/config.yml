@@ -11,7 +11,7 @@ PREFIX:
 COSMETICS:
     PARTICLE:
     - explosion;bone meal;&7Explosion
-    - firework;firework;&fTraînée de feu d'artifice
+    - firework;firework;&9Feu d'artifice
     - crit;trident;&3Coup critique
     - critmagic;trident of sharpness 1;&3Coup critique magique
     - smoke;campfire;&8Fumée
@@ -20,7 +20,7 @@ COSMETICS:
     - waterdrip;water bucket;&bGouttes d'eau
     - flame;flint and steel;&eFlammes
     - lavadrip;lava bucket;&6Gouttes de lave
-    - note;note block; &6Note
+    - note;note block;&6Note
     - portal;ender eye;&dPortail
     - enchantmenttable;enchanting table;&cEnchantement
     - cloud;nether star;&fNuage
@@ -29,7 +29,7 @@ COSMETICS:
     - heart;apple;&cCœur
     EFFECT:
     - wings;elytra;&dÉlytres
-    - nyancat;dirt;&dN&ey&aa&6n&d c&aa&dt
+    - nyancat;dirt;&dN&ey&aa&6n &cc&aa&dt
     - rings;string;&6Anneaux
     - spiral;lead;&eSpirale
 
@@ -41,7 +41,8 @@ MESSAGE:
     HELLO: '&7Bonjour !'
     START_PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
     START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'
-    COSM_ON: '&fNous avons activé tes particules, j''espère qu''elles te vont bien.'
+    COSM_ON1: '&fNous avons activé tes particules, j''espère que tes '
+    COSM_ON2: '&fte vont bien ! :D'
     COSM_OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
     SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
     PERMISSION: '&cVous n''avez pas les privilèges d''exécuter cette action.'
