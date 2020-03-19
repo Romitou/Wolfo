@@ -3,3 +3,7 @@ on script load:
 	send "" to ops
 	send "&6&lWolfo &7&l» &7Reloading setup ..." to ops
 	set {wolfo::loading} to now
+
+function wolfoManage(p: player, loop: integer):
+	if {_loop} is 11:
+		wolfoCheckStart()
