@@ -53,7 +53,7 @@ function wolfoGiveRoles():
 	if wolfoGetConfig(2) parsed as integer is 0 or 4:
 		broadcast join wolfoGet("PREFIX.GENERAL") and {_input::*}
 		stop
-	wolfoRound(0)
+	wolfoGameRound(0)
 	loop {wolfo::players::list::*}:
 		set {_role} to wolfoGet("%{_input::%loop-index%}%.NAME")
 		set {_desc} to wolfoGet("%{_input::%loop-index%}%.DESC")
@@ -64,9 +64,9 @@ function wolfoGiveRoles():
 		send {_desc} to loop-value
 		add loop-value to {wolfo::players::role::%{_input::%loop-index%}%::*}
 		wait 4 ticks
-	wolfoRound(1)
+	wolfoGameRound(1)
 
-function wolfoRound(type: integer):
+function wolfoGameRound(type: integer):
 	if {_type} is 0:
 		set {wolfo::game::day} to 0
 		set {wolfo::game::start} to true
@@ -80,7 +80,7 @@ function wolfoRound(type: integer):
 				wait a tick
 			strike lightning at {wolfo::game::center}
 			set {wolfo::game::status} to "&7Nuit"
-			wolfoManage(1)
+			wolfoGameManage(1)
 		else:
 			send "&6&lWolfo &7&l» &fLe jour se lève ..." to {wolfo::players::list::*}
 			while "%time of ""world""%" isn't "12:00":
@@ -88,9 +88,9 @@ function wolfoRound(type: integer):
 				wait a tick
 			set {wolfo::game::status} to "&6Jour"
 			add 1 to {wolfo::game::day}
-			wolfoManage(2)
+			wolfoGameManage(2)
 
-function wolfoManage(i: number):
+function wolfoGameManage(i: number):
 	{wolfo::game::start} is set
 	if {_i} is 1:
 		if {wolfo::vote::round} is not set:
@@ -124,7 +124,7 @@ function wolfoManage(i: number):
 				send "&6&lWolfo &7&l» &fLa sorcière va décider de tuer un joueur ou sauver la victime choisie par les Loup-Garous ..." to {wolfo::players::list::*}
 		else if {wolfo::vote::round} is 4:
 			clear {wolfo::vote::round}
-			wolfoRound(1)
+			wolfoGameRound(1)
 			stop
 		loop {_roles::*}:
 			wolfoVote(loop-value)
@@ -133,58 +133,12 @@ function wolfoManage(i: number):
 		wolfoVote({wolfo::players::list::*})
 		wolfoTime(30, {wolfo::players::list::*}, 3)
 	else if {_i} is 3:
-		wolfoRound(1)
+		wolfoGameRound(1)
 
 function wolfoVote(roles: objects):
 	loop {_roles::*}:
 		wolfoVoteMenu({wolfo::players::role::%loop-value%::*})
 		wolfoTime(30, {wolfo::players::role::%loop-value%::*}, 1)
-
-function wolfoVoteMenu(p: objects):
-	{wolfo::game::start} is set
-	loop {_p::*}:
-		unformat all gui slots of loop-value-1
-		wolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
-		set {_loop} to 11
-		loop {wolfo::players::list::*}:
-			set {_player} to loop-value-2
-			while {_loop} is 16, 17, 18, 26, 27 or 28:
-				add 1 to {_loop}
-			if {wolfo::vote::round} is 0:
-				if {wolfo::vote::cupidon::*} contains {_player}:
-					set {_heart} to "&c❤"
-				else:
-					set {_heart} to "&7❤"
-				make a gui slot {_loop} of loop-value-1 with {_player}'s skull named "&6%{_player}% &f- %{_heart}%" to run:
-					if size of {wolfo::vote::cupidon::*} is greater than or equal to 2:
-						if {wolfo::vote::cupidon::*} contains {_player}:
-							remove {_player} from {wolfo::vote::cupidon::*}
-					else if {wolfo::vote::cupidon::*} do not contain {_player}:
-						add {_player} to {wolfo::vote::cupidon::*}
-						send "&6&lWolfo &7&l» &fSuper ! On espère que tu as fait le bon choix. Ton vote contre %{_player}% a été ajouté." to loop-value-1
-			else if {wolfo::vote::round} is 1:
-				if {wolfo::vote::list::%{_player}%::*} is not set:
-					set {_material} to {_player}'s skull named "&6%{_player}% &f- &7Aucun vote" with lore "" and "&7Personne n'a voté."
-				else:
-					set {_material} to {_player}'s skull named "&6%{_player}% &f- &e&7%{wolfo::vote::list::%{_player}%}% votes" with lore "" and "&7Votants: %{wolfo::vote::list::%{_player}%::*}%"
-				make a gui slot {_loop} of loop-value-1 with {_material} to run:
-					if {wolfo::vote::success::%loop-value-1%} is set:
-						if {wolfo::players::role::WEREWOLF_ALPHA::*} contains loop-value-1:
-							remove 2 from {wolfo::vote::list::%{wolfo::vote::success::%loop-value-1%}%}
-						else:
-							remove 1 from {wolfo::vote::list::%{wolfo::vote::success::%loop-value-1%}%}
-						remove loop-value-1 from {wolfo::vote::list::%{_player}%::*}
-						clear {wolfo::vote::success::%loop-value-1%}
-					set {wolfo::vote::success::%loop-value-1%} to {_player}
-					if {wolfo::players::role::WEREWOLF_ALPHA::*} contains loop-value-1:
-						add 2 to {wolfo::vote::list::%{_player}%}
-					else:
-						add 1 to {wolfo::vote::list::%{_player}%}
-					add loop-value-1 to {wolfo::vote::list::%{_player}%::*}
-					send "&6&lWolfo &7&l» &fSuper ! On espère que tu as fait le bon choix. Ton vote contre %{_player}% a été ajouté." to loop-value-1
-					wolfoVoteMenu({_p::*})
-				wolfoVoteMenu({_p::*})
-			add 1 to {_loop}
 
 function wolfoTime(t: integer, p: objects, mode: integer):
 	if {wolfo::timer} is set:
@@ -223,7 +177,7 @@ function wolfoTime(t: integer, p: objects, mode: integer):
 	if {_mode} is 0:
 		wolfoStart()
 	if {_mode} is 1 or 2:
-		wolfoManage({_mode})
+		wolfoGameManage({_mode})
 
 function wolfoKill(p: player):
 	hide {_p} from all players
