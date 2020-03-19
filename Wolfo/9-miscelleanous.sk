@@ -1,0 +1,12 @@
+on script load:
+	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send "" to ops
+	if {wolfo::loading::error} is set:
+		broadcast "&cOops! %{wolfo::loading::error}% errors were encountered while loading."
+		broadcast "&7Please consult the console for more information."
+	else:
+		set {_version} to wolfoGet("VERSION")
+		broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_version}%)"
+	delete {wolfo::loading::*}
+	{wolfo::game::start} is not set
+	wolfoAutoMsg()

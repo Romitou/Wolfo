@@ -2,9 +2,9 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	broadcast join "&6&lWolfo &7&l» &eTook %difference between now and {wolfo::loading}%."
-	broadcast ""
-	broadcast "&6&lWolfo &7&l» &7Loading scoreboards ..."
+	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send "" to ops
+	send "&6&lWolfo &7&l» &7Loading scoreboards ..." to ops
 	set {wolfo::loading} to now
 
 function wolfoSbPlayer(p: player, i: integer):
@@ -21,7 +21,8 @@ function wolfoSbPlayer(p: player, i: integer):
 		set line 4 of {_p}'s scoreboard to "&6&l» &f&lJoueur:"
 		set line 3 of {_p}'s scoreboard to "&4"
 		set line 2 of {_p}'s scoreboard to " &6● &eVotre rôle &f» &e%{wolfo::players::role_text::%{_p}%}%"
-		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::death::%{_p}%}%"
+		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::life::%{_p}%}%"
+		wolfoSbEveryone()
 	if {_i} is 1:
 		clear scoreboard of {_p}
 
