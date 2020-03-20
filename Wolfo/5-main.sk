@@ -7,23 +7,11 @@ on script load:
 	send "&6&lWolfo &7&l» &7Loading main ..." to ops
 	set {wolfo::loading} to now
 
-function wolfoAutoMsg():
-	set {_list::*} to wolfoGetO("MESSAGE.AUTO")
-	if {wolfo::game::automsg} is not set:
-		set {wolfo::game::automsg} to true
-		while {wolfo::game::automsg} is true:
-			set {_random} to a random element out of {_list::*}
-			if {_random} is not {_last}:
-				set {_last} to {_random}
-				broadcast join wolfoGet("PREFIX.GENERAL"), "&7" and {_random}
-				wait 30 seconds
-
 function wolfoHelp(msg: text, p: player):
-	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.%{_msg}%_FIRST") to {_p}
-	set {_help::%{_msg}%::*} to wolfoGetO("MESSAGE.%{_msg}%")
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.%{_msg}%.TITLE") to {_p}
+	set {_help::%{_msg}%::*} to wolfoGetO("MESSAGE.%{_msg}%.MSG")
 	loop {_help::%{_msg}%::*}:
 		send colored loop-value to {_p}
-
 
 function wolfoJoin(p: player):
 	loop 200 times:
@@ -41,62 +29,62 @@ function wolfoJoin(p: player):
 	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")
 	set slot 6 of {_p} to magma cream named wolfoGet("ITEM.SETUP") if {_p} is op
 	set slot 2 of {_p} to ender pearl named wolfoGet("ITEM.MANAGE") if {_p} is op
-	wolfoCheckStart()
 	wolfoSbPlayer({_p}, 0)
 	set {wolfo::players::role_text::%{_p}%} to "&7Aucun"
 	set {wolfo::players::life::%{_p}%} to "&aEn vie"
 	wait 1 second
-	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.JOIN_INFO") to {_p}
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.WELCOME") to {_p}
 
 function wolfoLeave(p: player):
 	wolfoSbPlayer({_p}, 1)
 	remove {_p} from {wolfo::players::list::*}
-
-function wolfoSetupGame(p: player):
-	wolfoMenuSetup({_p})
 
 command /wolfo [<text>] [<text>] [<integer>]:
 	trigger:
 		if arg 1 is "help":
 			wolfoHelp("COMMANDS", player)
 		else if arg 1 is "admin":
-			wolfoSetupGame(player)
+			wolfoMenuAdmin(player)
+		else if arg 1 is "manage":
+			wolfoMenuManage(player)
 		else if arg 1 is "whitelist":
 			if arg-3 is set:
 				wolfoWhitelist(player, arg-2, arg-3)
 			else:
 				wolfoWhitelist(player, arg-2, 0)
 		else:
-			wolfoHelp("ADMIN", player)
+			wolfoHelp("COMMANDS", player)
 
 function wolfoWhitelist(executor: player, target: text, action: integer):
-	set {_check::*} to wolfoGetO("WHITELIST.PLAYERS")
-	if {_action} is 0:
-		if {_check::*} do not contain {_target}:
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOT_WHITELISTED") to {_executor}
-			send join wolfoGet("PREFIX.GENERAL") and formatted "<cmd:/wolfo whitelist %{_target}% 1><tooltip:&aAjouter %{_target}% la liste !>&a[Accorder l'accès à %{_target}%]&r" to {_executor}
-		else:
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.WHITELISTED") to {_executor}
-			send join wolfoGet("PREFIX.GENERAL") and formatted "<cmd:/wolfo whitelist %{_target}% 2><tooltip:&cRetirer %{_target}% de la liste !>&c[Révoquer l'accès de %{_target}%]&r" to {_executor}
-	else if {_action} is 1:
-		if {_check::*} do not contain {_target}:
-			wolfoUpdateO("WHITELIST.PLAYERS", {_target}, 0)
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.WHITELISTED_SUCCESS") to {_executor}
-		else:
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.WHITELISTED_ALREADY") to {_executor}
-	else if {_action} is 2:
-		if {_check::*} contains {_target}:
-			wolfoUpdateO("WHITELIST.PLAYERS", {_target}, 1)
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOT_WHITELISTED_SUCCESS") to {_executor}
-		else:
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOT_WHITELISTED_ALREADY") to {_executor}
-
-function wolfoCheckStart():
-	if size of {wolfo::players::list::*} < 5:
-		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOTENOUGH")
+	if {_executor} is not op:
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOT_WHITELISTED") to {_executor}
 	else:
+		set {_check::*} to wolfoGetO("GAME.WHITELIST")
+		if {_action} is 0:
+			if {_check::*} do not contain {_target}:
+				send formatted join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.NOT_WHITELISTED") and "          <cmd:/wolfo whitelist %{_target}% 1><tooltip:&aAjouter %{_target}% la liste !>&a[Accorder l'accès à %{_target}%]&r" to {_executor}
+			else:
+				send formatted join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.WHITELISTED") and "          <cmd:/wolfo whitelist %{_target}% 2><tooltip:&cRetirer %{_target}% de la liste !>&c[Révoquer l'accès de %{_target}%]&r" to {_executor}
+		else if {_action} is 1:
+			if {_check::*} do not contain {_target}:
+				wolfoUpdateO("GAME.WHITELIST", {_target}, 0)
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.WHITELISTED_SUCCESS") to {_executor}
+			else:
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.WHITELISTED_ALREADY") to {_executor}
+		else if {_action} is 2:
+			if {_check::*} contains {_target}:
+				wolfoUpdateO("GAME.WHITELIST", {_target}, 1)
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOT_WHITELISTED_SUCCESS") to {_executor}
+			else:
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOT_WHITELISTED_ALREADY") to {_executor}
+
+function wolfoCheckStart(p: player):
+	if size of {wolfo::players::list::*} < 5:
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOTENOUGH") to {_p}
+	else:
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.FORCESTART") to {_p}
 		wolfoTime(30, {wolfo::players::list::*}, 0)
-		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START_PREPARE") to {wolfo::players::list::*}
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.PREPARE") to {wolfo::players::list::*}
 
 function wolfoStart():
 	loop {wolfo::players::list::*}:
@@ -104,7 +92,7 @@ function wolfoStart():
 		set loop-value's walk speed to 0
 	wolfoGiveRoles()
 	set {wolfo::game::automsg} to false
-	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START_ROLES") to {wolfo::players::list::*}
+	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.ROLES") to {wolfo::players::list::*}
 
 function wolfoEnd():
 	loop {wolfo::players::list::*}:
@@ -114,18 +102,25 @@ function wolfoEnd():
 	clear {wolfo::timer}
 	clear {wolfo::vote::*}
 
-
 on join:
-	if {wolfo::game::start} is set:
-		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
+	if player is op:
+		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of all players%&8/&75&8)"
+		wolfoJoin(player)
 	else if size of {wolfo::players::list::*} is greater than or equal to 27:
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.TOOMANY")
+	else if {wolfo::game::start} is set:
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
+	else if wolfoGet("GAME.PRIVACY") is "CLOSED":
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.CLOSED")
+	else if wolfoGet("GAME.PRIVACY") is "WHITELISTED":
+		if wolfoGetO("GAME.WHITELIST") do not contain player:
+			kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
 	else:
-		set join message to "&a✔ %player% &7(%amount of all players% &8» %wolfoGetConfig(1)%&7)"
+		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
 
 on quit:
-	set quit message to "&c✘ %player% &7(%amount of all players - 1% &8» %wolfoGetConfig(1)%&7)"
+	set quit message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.LEFT") and " &8(&7%amount of all players%&8/&75&8)"
 	wolfoLeave(player)
 
 on right click:
@@ -143,7 +138,7 @@ on right click:
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.GOODLEFT")
 	else if name of player's tool is wolfoGet("ITEM.SETUP"):
 		cancel event
-		wolfoMenuSetup(player)
+		wolfoMenuAdmin(player)
 	else if name of player's tool is wolfoGet("ITEM.MANAGE"):
 		cancel event
 		wolfoMenuManage(player)

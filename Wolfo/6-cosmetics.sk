@@ -98,11 +98,11 @@ function wolfoCosmetic(type: integer, p: player):
 		set {_effect} to colored {wolfo::cosmetic::%{_p}%::1::name}
 		set {_particle} to colored {wolfo::cosmetic::%{_p}%::2::name}
 		if {wolfo::cosmetic::%{_p}%::2} is not set:
-			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.COSM_ON1"), {_effect} and wolfoGet("MESSAGE.COSM_ON2") to {_p}
+			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.COSMETICS.ON1"), {_effect} and wolfoGet("MESSAGE.COSMETICS.ON2") to {_p}
 		else:
-			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.COSM_ON1"), {_effect}, "&fen ", {_particle} and wolfoGet("MESSAGE.COSM_ON2") to {_p}
+			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.COSMETICS.ON1"), {_effect}, "&fen ", {_particle} and wolfoGet("MESSAGE.COSMETICS.ON2") to {_p}
 	else if {_type} is 4:
 		clear {wolfo::cosmetic::%{_p}%::active}
 		stopEffect "wolfo-%{_p}%"
 		set slot 0 of {_p} to a enchanted book named wolfoGet("ITEM.COSM")
-		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.COSM_OFF") to {_p}
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.COSMETICS.OFF") to {_p}

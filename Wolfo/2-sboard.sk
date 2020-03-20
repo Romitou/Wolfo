@@ -13,21 +13,22 @@ function wolfoSbPlayer(p: player, i: integer):
 		set line 12 of {_p}'s scoreboard to "&1"
 		set line 11 of {_p}'s scoreboard to "&6&l» &f&lPartie:"
 		set line 10 of {_p}'s scoreboard to "&2"
-		set line 9 of {_p}'s scoreboard to " &6● &eStatus &f» &e%{wolfo::game::status}%"
-		set line 8 of {_p}'s scoreboard to " &6● &eConnectés &f» &e%size of {wolfo::players::list::*}%"
-		set line 7 of {_p}'s scoreboard to " &6● &eConfiguration &f» &e%wolfoGetConfig(1)%"
-		set line 6 of {_p}'s scoreboard to " &6● &eJour &f» &bn°%{wolfo::game::day}%"
 		set line 5 of {_p}'s scoreboard to "&3"
 		set line 4 of {_p}'s scoreboard to "&6&l» &f&lJoueur:"
 		set line 3 of {_p}'s scoreboard to "&4"
-		set line 2 of {_p}'s scoreboard to " &6● &eVotre rôle &f» &e%{wolfo::players::role_text::%{_p}%}%"
-		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f» &e%{wolfo::players::life::%{_p}%}%"
+		set line 2 of {_p}'s scoreboard to " &6● &eVotre rôle &f&l» &e%{wolfo::players::role_text::%{_p}%}%"
+		set line 1 of {_p}'s scoreboard to " &6● &eVotre status &f&l» &e%{wolfo::players::life::%{_p}%}%"
 	if {_i} is 1:
 		clear scoreboard of {_p}
+	wait 1 tick # Obligatoire pour mettre à jour le scoreboard :'(
 	wolfoSbEveryone()
 
 function wolfoSbEveryone():
-	set line 9 of all players' scoreboard to " &6● &eStatus &f» &e%{wolfo::game::status}%"
-	set line 8 of all players' scoreboard to " &6● &eConnectés &f» &e%size of {wolfo::players::list::*}%"
-	set line 7 of all players' scoreboard to " &6● &eConfiguration &f» &e%wolfoGetConfig(1)%"
-	set line 6 of all players' scoreboard to " &6● &eJour &f» &bn°%{wolfo::game::day}%"
+	set {_status} to wolfoGet("GAME.STATUS")
+	set {_status} to wolfoGet("MESSAGE.TIME.%{_status}%")
+	set {_day} to wolfoGet("GAME.DAY")
+	set {_config} to wolfoGet("MESSAGE.GAMETYPE.%wolfoGetConfig()%")
+	set line 9 of all players' scoreboard to " &6● &eStatus &f&l» %{_status}%"
+	set line 8 of all players' scoreboard to " &6● &eConnectés &f&l» &7%size of {wolfo::players::list::*}% joueur(s)"
+	set line 7 of all players' scoreboard to " &6● &eConfiguration &f&l» %{_config}%"
+	set line 6 of all players' scoreboard to " &6● &eJour &f&l» &6n°%{_day}%"
