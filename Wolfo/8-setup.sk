@@ -5,5 +5,15 @@ on script load:
 	set {wolfo::loading} to now
 
 function wolfoManage(p: player, loop: integer):
+	close {_p}'s inventory
 	if {_loop} is 11:
-		wolfoCheckStart()
+		wolfoCheckStart({_p})
+	else if {_loop} is 13:
+		wolfoSet("GAME.PRIVACY", "CLOSED")
+		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.CLOSED")
+	else if {_loop} is 14:
+		wolfoSet("GAME.PRIVACY", "WHITELISTED")
+		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
+	else if {_loop} is 15:
+		wolfoSet("GAME.PRIVACY", "OPEN")
+		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.OPEN")
