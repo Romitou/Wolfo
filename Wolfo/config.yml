@@ -34,27 +34,50 @@ COSMETICS:
 
 PERMISSION:
     ADMIN: lg.admin
+    MESSAGE: '&cVous n''avez pas les privilèges d''exécuter cette action.'
 
 MESSAGE:
-    JOIN_INFO: '&fBienvenue ! Si tu ne connais pas les règles du jeu, rends-toi dans
-        les informations.'
-    HELLO: '&7Bonjour !'
-    START_PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
-    START_ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir
-        ?'
-    COSM_ON1: '&fNous avons activé tes particules, j''espère que tes '
-    COSM_ON2: '&fte vont bien ! :D'
-    COSM_OFF: Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.
+    START:
+        PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
+        ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir
+            ?'
+        BEGIN: '&6➥ &eLa partie commence dans '
+        START: '&6➥ &eLa partie commence !'
+    COSMETICS:
+        ON1: '&fNous avons activé tes particules, j''espère que tes '
+        ON2: '&fte vont bien ! :D'
+        'false': Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les
+            cosmétiques.
+    PRIVACY:
+        CLOSED: '&fLes opérateurs ont &cfermé&f cette partie.'
+        WHITELISTED: '&fLes opérateurs ont &6réservé&f cette partie à certains joueurs. '
+        OPEN: '&fLes opérateurs ont &aouvert&f cette partie à tous les joueurs. '
+    TIME:
+        WAIT: '&7Attente'
+        START: '&aDémarrage'
+        DAY: '&eJour'
+        NIGHT: '&9Nuit'
+        VOTE: '&dVote'
+    GAMETYPE:
+        '0': '&7Attente ...'
+        '1': '&aMini!'
+        '2': '&eClassik!'
+        '3': '&6Ultimate!'
+        '4': '&cTrop de joueurs!'
+    WELCOME: '&7Bienvenue ! Si tu ne connais pas les règles du jeu, rends-toi dans
+        les informations !'
     SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
-    PERMISSION: '&cVous n''avez pas les privilèges d''exécuter cette action.'
     FORCESTART: '&eVous avez correctement démarré la partie de force.'
     FORCESTOP: '&eVous avez correctement arrêté la partie de force.'
-    SETUP: '&eVous avez correctement mis en place la partie de LG.'
     SETUPERROR: '&cVous avez déjà effectué cette commande.'
     ALREADYSTART: '&cLa partie est déjà en cours.'
-    WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &aautorisé&f. Super !'
+    JOINED: '&fa &arejoint&f la partie.'
+    LEFT: '&fa &cquitté&f la partie.'
+    WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &aautorisé&f. Super
+        !'
     WHITELISTED_ALREADY: '&fL''accès au serveur de ce joueur est déjà &aautorisé&f.'
-    NOT_WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &crévoqué&f. Dommage pour lui.'
+    NOT_WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &crévoqué&f.
+        Dommage pour lui.'
     NOT_WHITELISTED_ALREADY: '&fL''accès au serveur de ce joueur est déjà &crévoqué&f.'
     WHITELISTED: '&fCe joueur est &aautorisé&f à jouer sur ce serveur.'
     NOT_WHITELISTED: '&fCe joueur &cn''est pas autorisé&f à jouer sur ce serveur. '
@@ -63,33 +86,34 @@ MESSAGE:
     ENDGAME: La partie est terminée.
     ROLEDESC: '&eDescription de votre rôle :'
     MUTED: Votre rôle ne vous permet pas parler durant la nuit.
-    GOODLEFT: Vous avez correctement quitté la partie.
+    GOODLEFT: Vous partez déjà ? On s'amuse tout de suite moins sans vous.
     NOTENOUGH1: '&cIl manque '
     NOTENOUGH2: ' &cjoueurs avant de lancer une partie.'
-    NOTENOUGH: '&cIl n''y a pas assez de joueur pour lancer une partie.'
-    TOOMANY: '&cIl y a trop de joueurs pour lancer une partie.'
+    NOTENOUGH: '&fIl n''y a &cpas assez de joueur&f pour lancer une partie. Si vous
+        avez des amis, invitez-les et réessayez.'
+    TOOMANY: '&fWow! Il y a beaucoup de monde, vous &cne pouvez pas&f rejoindre cette
+        partie.'
     REVEAL: 'Vous êtes désormais '
-    START: '&6➥ &eLa partie commence !'
-    STARTING: '&6➥ &eLa partie commence dans '
-    VICTORY_FIRST: '&aConditions de victoire :'
     VICTORY:
-    - '  &f» &eTous les &6villagoies &esont mort'
-    - '  &f» &eTous les &6Loup-garou sont &emort'
-    - '  &f» &eLe &6Fou &eest tué par le village'
-    - '  &f» &eLa cible du &6chasseur de tête &eest tué par le village'
-    - '  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers survivant'
-    - ''
-    ADMIN_FIRST: '&eCommandes admin :'
-    ADMIN:
-    - '  &f» &e/wolfo help'
-    - '  &f» &e/wolfo admin'
-    - '  &f» &e/wolfo forcestart'
-    - '  &f» &e/wolfo forcestop'
-    - ''
-    AUTO:
-    - Vous pouvez personnaliser la particule ainsi que l'effet de vos cosmétiques
-        !
-    - La partie peut commencer dès lorsque 5 joueurs auront rejoint la partie.
+        TITLE: '&fVoici les conditions de victoire :'
+        MSG:
+        - ''
+        - '  &f» &eTous les &6villagoies &esont mort'
+        - '  &f» &eTous les &6Loup-garou sont &emort'
+        - '  &f» &eLe &6Fou &eest tué par le village'
+        - '  &f» &eLa cible du &6chasseur de tête &eest tué par le village'
+        - '  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers
+            survivant'
+        - ''
+    COMMANDS:
+        TITLE: '&fVoici la liste des commandes :'
+        MSG:
+        - ''
+        - '  &f» &e/wolfo help&7: affiche cette page d''aide'
+        - '  &f» &e/wolfo admin&7: administration de la partie &c*'
+        - '  &f» &e/wolfo manage&7: gestion de la partie &c*'
+        - '  &f» &e/wolfo my&7: affiche vos informations'
+        - ''
 
 GUI:
     ROLELIST: '&8➽ &6Liste des rôles'
@@ -274,8 +298,13 @@ SETUP:
         - '&7Idéal pour faire une partie à 27.'
         - ''
 
-CONFIG:
+GAME:
+    DAY: 0
+    STATUS: WAIT
+    PRIVACY: CLOSED
     SETUP:
         STEP: 0
         FINISHED: false
     LOCATIONS:
+    WHITELIST:
+    - Romitou
