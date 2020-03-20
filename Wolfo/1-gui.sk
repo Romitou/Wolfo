@@ -80,7 +80,7 @@ function wolfoVoteMenu(p: objects):
 				wolfoVoteMenu({_p::*})
 			add 1 to {_loop}
 
-function wolfoMenuSetup(p: player):
+function wolfoMenuAdmin(p: player):
 	set {_title} to wolfoGet("GUI.SETUP")
 	wolfoMenuDeco({_p}, {_title}, 5)
 
