@@ -4,32 +4,22 @@ on script load:
 	send "&6&lWolfo &7&l» &7Reloading game gestion ..." to ops
 	set {wolfo::loading} to now
 
-function wolfoGetConfig(mode: integer) :: text:
+function wolfoGetConfig() :: integer:
 	set {_p} to size of {wolfo::players::list::*}
-	if {_mode} is 1:
-		if {_p} is between 5 and 12:
-			return "&6Mini"
-		if {_p} is between 13 and 17:
-			return "&eClassique"
-		if {_p} is between 18 and 26:
-			return "&aMéga"
-		else:
-			return "&cJoueurs manquants"
-	else if {_mode} is 2:
-		if {_p} is between 5 and 12:
-			return "1"
-		if {_p} is between 13 and 17:
-			return "2"
-		if {_p} is between 18 and 26:
-			return "3"
-		if {_p} is greater than or equal to 27:
-			return "4"
-		else:
-			return "0"
+	if {_p} is between 5 and 12:
+		return 1
+	else if {_p} is between 13 and 17:
+		return 2
+	else if {_p} is between 18 and 26:
+		return 3
+	else if {_p} is greater than or equal to 27:
+		return 4
+	else:
+		return 0
 
 function wolfoGetConfigRoles() :: objects:
 	set {_p} to size of {wolfo::players::list::*}
-	set {_config} to wolfoGetConfig(2) parsed as integer
+	set {_config} to wolfoGetConfig()
 	if {_config} is 0:
 		return join wolfoGet("MESSAGE.NOTENOUGH1"), "&c%5 - {_p}%" and wolfoGet("MESSAGE.NOTENOUGH2")
 		stop
@@ -50,7 +40,7 @@ function wolfoGetConfigRoles() :: objects:
 
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
-	if wolfoGetConfig(2) parsed as integer is 0 or 4:
+	if wolfoGetConfig() is 0 or 4:
 		broadcast join wolfoGet("PREFIX.GENERAL") and {_input::*}
 		stop
 	wolfoGameRound(0)
@@ -94,7 +84,7 @@ function wolfoGameManage(i: number):
 	{wolfo::game::start} is set
 	if {_i} is 1:
 		if {wolfo::vote::round} is not set:
-			set {_config} to wolfoGetConfig(2) parsed as integer
+			set {_config} to wolfoGetConfig()
 			if {_config} is 1:
 				set {wolfo::vote::round} to 1
 			else:
@@ -147,8 +137,8 @@ function wolfoTime(t: integer, p: objects, mode: integer):
 	if {_mode} is 0:
 		set {_second} to wolfoGet("TIME.SECOND")
 		set {_title} to wolfoGet("MESSAGE.TITLE")
-		set {_starting} to wolfoGet("MESSAGE.STARTING")
-		set {_start} to wolfoGet("MESSAGE.START")
+		set {_starting} to wolfoGet("MESSAGE.START.BEGIN")
+		set {_start} to wolfoGet("MESSAGE.START.START")
 	if {_mode} is 1:
 		set {_second} to "seconde(s)"
 		set {_title} to "test"
