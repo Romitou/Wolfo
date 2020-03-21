@@ -172,7 +172,7 @@ function wolfoTime(t: integer, p: objects, mode: integer):
 function wolfoKill(p: player):
 	hide {_p} from all players
 	set {wolfo::players::life::%{_p}%} to "&cMort"
-	teleport {_p} to {wolfo::loc::deathSpawn}
+	teleport {_p} to wolfoGetL("GAME.LOCATIONS.END")
 	send title "&6&lWolfo &7&l»" with subtitle "&c Vous êtes mort !" to {_p} for 2 seconds
 
 function wolfoMostVoted(c: objects) :: objects:
