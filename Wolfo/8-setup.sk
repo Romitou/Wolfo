@@ -4,16 +4,40 @@ on script load:
 	send "&6&lWolfo &7&l» &7Reloading setup ..." to ops
 	set {wolfo::loading} to now
 
-function wolfoManage(p: player, loop: integer):
+function wolfoMenuAction(p: player, loop: integer, action: text):
 	close {_p}'s inventory
-	if {_loop} is 11:
-		wolfoCheckStart({_p})
-	else if {_loop} is 13:
-		wolfoSet("GAME.PRIVACY", "CLOSED")
-		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.CLOSED")
-	else if {_loop} is 14:
-		wolfoSet("GAME.PRIVACY", "WHITELISTED")
-		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
-	else if {_loop} is 15:
-		wolfoSet("GAME.PRIVACY", "OPEN")
-		broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.OPEN")
+	if {_action} is "MANAGE":
+		if {_loop} is 11:
+			wolfoCheckStart({_p})
+		else if {_loop} is 13:
+			wolfoSet("GAME.PRIVACY", "CLOSED")
+			broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.CLOSED")
+		else if {_loop} is 14:
+			wolfoSet("GAME.PRIVACY", "WHITELISTED")
+			broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
+		else if {_loop} is 15:
+			wolfoSet("GAME.PRIVACY", "OPEN")
+			broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.OPEN")
+	else:
+		if {_loop} is 11:
+			wolfoSetL("GAME.LOCATIONS.MIDDLE", position of {_p})
+			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
+			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.MIDDLE", 0)
+		else if {_loop} is 12:
+			wolfoAddL("GAME.LOCATIONS.SPAWNPOINTS", position of {_p})
+			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSETO") and "&7(%position of {_p}%)" to {_p}
+			if size of wolfoGetO("GAME.LOCATIONS.SPAWNPOINTS") is 5:
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETUP_FINISHED1") to {_p}
+				wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.SPAWNPOINT", 0)
+		else if {_loop} is 14:
+			wolfoSetL("GAME.LOCATIONS.BEGIN", position of {_p})
+			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
+			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.BEGIN", 0)		
+		else if {_loop} is 15:
+			wolfoSetL("GAME.LOCATIONS.END", position of {_p})
+			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
+			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.END", 0)
+		set {_size} to size of wolfoGetO("GAME.SETUP.STEPS")
+		if size of wolfoGetO("GAME.SETUP.STEPS") is 4:
+			wolfoSet("GAME.SETUP.FINISH", "true")
+			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETUP.FINISHED2") to {_p}
