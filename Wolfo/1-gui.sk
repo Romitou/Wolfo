@@ -21,7 +21,7 @@ function wolfoMenuDeco(p: player, t: text, i: integer = 6):
 
 function wolfoMenuRoles(p: player):
 	set {_title} to wolfoGet("GUI.ROLES")
-	wolfoMenuDeco({_p}, "test", 5)
+	wolfoMenuDeco({_p}, {_title}, 5)
 	set {_loop} to 11
 	loop yaml node list "ROLES" from "config":
 		while {_loop} is 16, 17, 18, 26, 27 or 28:
@@ -80,19 +80,23 @@ function wolfoVoteMenu(p: objects):
 				wolfoVoteMenu({_p::*})
 			add 1 to {_loop}
 
-function wolfoMenuAdmin(p: player):
-	set {_title} to wolfoGet("GUI.SETUP")
-	wolfoMenuDeco({_p}, {_title}, 5)
-
-function wolfoMenuManage(p: player):
-	set {_title} to wolfoGet("GUI.MANAGE")
-	wolfoMenuDeco({_p}, {_title}, 3)
-	set {_loop} to 11
-	loop yaml node list "SETUP" from "config":
-		while {_loop} is 16, 17, 18, 26, 27 or 28:
+function wolfoMenu(p: player, type: text):
+	if {_p} is not op:
+		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("PERMISSION.MESSAGE") to {_p}
+	else:
+		set {_title} to wolfoGet("GUI.%{_type}%")
+		wolfoMenuDeco({_p}, {_title}, 3)
+		set {_loop} to 11
+		if {_type} is "SETUP":
+			set {_steps::*} to wolfoGetO("GAME.SETUP.STEPS")
+		loop yaml node list "%{_type}%" from "config":
+			while {_loop} is 16, 17, 18, 26, 27 or 28:
+				add 1 to {_loop}
+			set {_item} to wolfoGet("%loop-node%.ITEM") parsed as material
+			set {_lore::*} to wolfoGetO("%loop-node%.LORE")
+			if {_type} is "SETUP":
+				if {_steps::*} contains "%loop-node%":
+					add "&2✔ &aTerminé !" and "" to {_lore::*}
+			make a gui slot {_loop} of {_p} with {_item} named colored wolfoGet("%loop-node%.NAME") with lore colored {_lore::*} to run:
+				wolfoMenuAction({_p}, {_loop}, {_type})
 			add 1 to {_loop}
-		set {_item} to wolfoGet("%loop-node%.ITEM") parsed as material
-		set {_lore::*} to wolfoGetO("%loop-node%.LORE")
-		make a gui slot {_loop} of {_p} with {_item} named colored wolfoGet("%loop-node%.NAME") with lore colored {_lore::*} to run:
-			wolfoManage({_p}, {_loop})
-		add 1 to {_loop}
