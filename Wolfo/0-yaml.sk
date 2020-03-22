@@ -17,36 +17,36 @@ on script load:
 		add 1 to {wolfo::loading::error}
 
 function wolfoGet(request: text) :: text: # POUR LES TEXTES (plus utilisé)
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug} is true
 	return yaml value {_request} from "config"
 
 function wolfoGetO(request: text) :: objects: # POUR LES OBJECTS
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::game::debug} is true
 	return yaml list {_request} from "config"
 
 function wolfoGetL(request: text) :: location:
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::game::debug} is true
 	return yaml value {_request} from "config"
 
 function wolfoSet(request: text, value: text):
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::game::debug} is true
 	set yaml value {_request} from "config" to {_value}
 	save yaml "config"
 
 function wolfoSetL(request: text, value: location):
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::game::debug} is true
 	set yaml value {_request} from "config" to {_value}
 	save yaml "config"
 
 function wolfoAddL(request: text, value: location):
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::game::debug} is true
 	set {_list::*} to yaml list {_request} from "config"
 	add {_value} to {_list::*}
 	set yaml list {_request} from "config" to {_list::*}
 	save yaml "config"
 
 function wolfoUpdateO(request: text, value: text, type: integer):
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::game::debug::yml} is true
+	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::game::debug} is true
 	set {_list::*} to yaml list {_request} from "config"
 	if {_type} is 0:
 		add {_value} to {_list::*} if {_list::*} doesn't contain {_value}
