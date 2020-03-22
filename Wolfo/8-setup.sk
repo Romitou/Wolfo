@@ -41,3 +41,5 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 		if size of wolfoGetO("GAME.SETUP.STEPS") is 4:
 			wolfoSet("GAME.SETUP.FINISH", "true")
 			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETUP.FINISHED2") to {_p}
+			wolfoDraw("img", "sun")
+			wolfoDraw("center", "")

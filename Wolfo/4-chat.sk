@@ -14,7 +14,7 @@ on chat:
 					send "&8[&7Mort&8] &7%player% &8» &7%message%" to loop-value
 					stop
 		else:
-			if {wolfo::game::status} is "&7Nuit":
+			if {wolfo::game::status} is "NIGHT":
 				if {wolfo::players::role_name::%player%} is "WEREWOLF" or "WEREWOLF_ALPHA":
 					loop {wolfo::players::role::WEREWOLF::*}:
 						send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value

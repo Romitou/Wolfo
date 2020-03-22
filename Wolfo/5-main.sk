@@ -6,6 +6,11 @@ on script load:
 	send "" to ops
 	send "&6&lWolfo &7&l» &7Loading main ..." to ops
 	set {wolfo::loading} to now
+	wolfoInitialize()
+
+function wolfoInitialize():
+	set {wolfo::game::status} to "WAIT" if {wolfo::game::status} is not set
+	set {wolfo::game::day} to "0" if {wolfo::game::day} is not set
 
 function wolfoHelp(msg: text, p: player):
 	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.%{_msg}%.TITLE") to {_p}
@@ -84,7 +89,9 @@ function wolfoWhitelist(executor: player, target: text, action: integer):
 				send wolfoGet("MESSAGE.WHITELIST.LIST.2") to {_executor}
 
 function wolfoCheckStart(p: player):
-	if wolfoGet("GAME.SETUP.FINISHED") is "true": # C'est moche, mais ça sera corrigé dans les prochaines versions. :)
+	set {_finish} to wolfoGet("GAME.SETUP.FINISH")
+	broadcast "%{_finish}%"
+	if "%{_finish}%" is "true": # C'est moche, mais ça sera corrigé dans les prochaines versions. :)
 		if size of {wolfo::players::list::*} < 5:
 			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOTENOUGH") to {_p}
 		else:
@@ -105,10 +112,8 @@ function wolfoStart():
 function wolfoEnd():
 	loop {wolfo::players::list::*}:
 		kick loop-value due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ENDGAME")
-	clear {wolfo::players::*}
-	clear {wolfo::game::*}
-	clear {wolfo::timer}
-	clear {wolfo::vote::*}
+	clear {wolfo::*}
+	wolfoInitialize()
 
 on join:
 	if player is op:
