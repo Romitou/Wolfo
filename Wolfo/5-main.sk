@@ -128,6 +128,10 @@ on join:
 	else if wolfoGet("GAME.PRIVACY") is "WHITELISTED":
 		if wolfoGetO("GAME.WHITELIST") do not contain player:
 			kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
+			send "&e%player%&7 a essayé de se connecter mais il n'est pas inscrit sur la liste. :(" to ops
+		else:
+			set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of all players%&8/&75&8)"
+			wolfoJoin(player)
 	else:
 		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)

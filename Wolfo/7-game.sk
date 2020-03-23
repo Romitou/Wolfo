@@ -71,7 +71,7 @@ function wolfoGameRound(type: integer):
 			set {wolfo::game::status} to "DAY"
 			add 1 to {wolfo::game::day}
 			wolfoGameManage(2)
-	wolfoSbEveryone()
+	wolfoSb({wolfo::players::list::*})
 
 function wolfoGameManage(i: number):
 	{wolfo::game::start} is set
@@ -86,37 +86,41 @@ function wolfoGameManage(i: number):
 			add 1 to {wolfo::vote::round}
 		if {wolfo::vote::round} is 0:
 			add "CUPID" to {_roles::*}
-			send "&6&lWolfo &7&l» &f... et Cupidon va rendre deux joueurs amoureux." to {wolfo::players::list::*}
+			send "&6&lWolfo &7&l» &8... et Cupidon va rendre deux joueurs amoureux." to {wolfo::players::list::*}
 		else if {wolfo::vote::round} is 1:
-			broadcast "Les amoureux sont %{wolfo::vote::voters::%{_voter}%::*}%"
 			add "WEREWOLF" to {_roles::*}
-			send "&6&lWolfo &7&l» &fLes Loup-Garous vont choisir leur victime ..." to {wolfo::players::list::*}
+			send "&6&lWolfo &7&l» &8Les Loup-Garous vont choisir leur victime ..." to {wolfo::players::list::*}
 		else if {wolfo::vote::round} is 2:
-			set {wolfo::vote::results::WEREWOLF} to wolfoMostVoted({wolfo::vote::list::*})
-			broadcast "Les loup-garous ont choisis %{wolfo::vote::results::WEREWOLF}%"
+			set {_results::*} to wolfoMostVoted({wolfo::vote::players::*})
+			set {wolfo::vote::results::WEREWOLF} to {_results::1}
+			set {wolfo::vote::results::WEREWOLF::votes} to {_results::2}
 			add "SEER" and "DOCTOR" to {_roles::*}
-			send "&6&lWolfo &7&l» &fLa Voyante va découvrir le rôle d'un joueur ..." to {wolfo::players::list::*}
+			send "&6&lWolfo &7&l» &8La Voyante va découvrir le rôle d'un joueur ..." to {wolfo::players::list::*}
 			if {_config} is 1:
 				add "SEER_AURA" to {_roles::*}
-				send "&6&lWolfo &7&l» &f... tandis que la Voyante Aura va découvrir l'aura d'un autre ..." to {wolfo::players::list::*}
-			send "&6&lWolfo &7&l» &f... pendant que le Docteur va décider de protéger un joueur." to {wolfo::players::list::*}
+				send "&6&lWolfo &7&l» &8... tandis que la Voyante Aura va découvrir l'aura d'un autre ..." to {wolfo::players::list::*}
+			send "&6&lWolfo &7&l» &8... pendant que le Docteur va décider de protéger un joueur." to {wolfo::players::list::*}
 		else if {wolfo::vote::round} is 3:
-			broadcast "La Voyante a vu la personne ayant un rôle %{wolfo::vote::results::SEER}%"
-			broadcast "Le Docteur a protégé %{wolfo::vote::results::DOCTOR}%"
-			if {_config} is 1:
-				broadcast "La Voyante Aura a vu la personne ayant un aura %{wolfo::vote::results::SEER_AURA}%"
 			if {_config} is 2 or 3:
 				add "WITCH" to {_roles::*}
-				send "&6&lWolfo &7&l» &fLa sorcière va décider de tuer un joueur ou sauver la victime choisie par les Loup-Garous ..." to {wolfo::players::list::*}
+				send "&6&lWolfo &7&l» &8La sorcière va décider de tuer un joueur ou sauver la victime choisie par les Loup-Garous ..." to {wolfo::players::list::*}
 			else:
 				clear {wolfo::vote::round}
 				wolfoGameRound(1)
 		if {wolfo::vote::round} is 4:
+			broadcast "%{_results::*}%"
+			broadcast "&6&lWolfo &7&l» &f Les amoureux sont %{wolfo::vote::cupid::%{_voter}%::*}%&f."
+			broadcast "&6&lWolfo &7&l» &fLes loup-garous ont votés %{wolfo::vote::results::WEREWOLF}%&f."
+			broadcast "&6&lWolfo &7&l» &fLa Voyante a vu la personne ayant un rôle %{wolfo::vote::results::SEER}%&f."
+			broadcast "&6&lWolfo &7&l» &fLe Docteur a protégé %{wolfo::vote::results::DOCTOR}%&f."
+			if {_config} is 1:
+				broadcast "&6&lWolfo &7&l» &fLa Voyante Aura a vu un joueur ayant une aura %{wolfo::vote::results::SEER_AURA}%&f."
 			clear {wolfo::vote::round}
 			wolfoGameRound(1)
 			stop
 		loop {_roles::*}:
 			clear {wolfo::vote::list::*}
+			clear {wolfo::vote::voters::*}
 			wolfoVote(loop-value, 1)
 	else if {_i} is 2:
 		if {wolfo::vote::round} is not set:
@@ -198,6 +202,7 @@ function wolfoKill(p: player):
 	send title "&6&lWolfo &7&l»" with subtitle "&c Vous êtes mort !" to {_p} for 2 seconds
 
 function wolfoMostVoted(c: objects) :: objects:
+	broadcast "%{_c::*}% M.VOTED"
 	set {_sorted::*} to sorted {_c::*}
 	set {_top} to last element out of {_sorted::*}
 	loop {_c::*}:
