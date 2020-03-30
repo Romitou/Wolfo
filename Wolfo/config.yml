@@ -40,14 +40,16 @@ PERMISSION:
 MESSAGE:
     START:
         PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
-        ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir
-            ?'
+        ROLES: |-
+            &fWow ! On est sur le point de commencer, quel rôle allez-vous avoir
+            ?
         BEGIN: '&6➥ &eLa partie commence dans '
         START: '&6➥ &eLa partie commence !'
     COSMETICS:
         ON1: '&fNous avons activé tes particules, j''espère que tes '
         ON2: '&fte vont bien ! :D'
-        'false': Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les
+        'false': |-
+            Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les
             cosmétiques.
     PRIVACY:
         CLOSED: '&fLes opérateurs ont &cfermé&f cette partie.'
@@ -114,8 +116,9 @@ MESSAGE:
         - '  &f» &eTous les &6Loup-garou sont &emort'
         - '  &f» &eLe &6Fou &eest tué par le village'
         - '  &f» &eLa cible du &6chasseur de tête &eest tué par le village'
-        - '  &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers
-            survivant'
+        - |4-
+              &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers
+            survivant
         - ''
     COMMANDS:
         TITLE: '&fVoici la liste des commandes :'
@@ -141,6 +144,7 @@ ITEM:
     EXIT: '&8➽ &cQuitter la partie &7(clic-droit)'
     SETUP: '&8➽ &6Configurer la partie &c(opérateur)'
     MANAGE: '&8➽ &5Gérer la partie &c(opérateur)'
+    VOTE: '&8➽ &aMenu des votes'
 
 TIME:
     HOUR: heure(s)
@@ -226,14 +230,15 @@ ROLES:
         DESC:
         - ''
         - '&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7.'
-        - '&7Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin
-            ;)'
+        - |-
+            &7Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin
+            ;)
         - ''
         - '&8➥ &7Votre équipe: &aSolo'
         ITEM: player head
         NBT: '{SkullOwner:{Id:"7e18508f-feb6-445b-8020-2c7cb79ace7c",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiZWNhY2VjODU4YTE5ODQ4ODYwYjI1MjJjMzI5MzZhZGYxNTg4YzFlZjQyMzc5NDAzZmVmODNkYTRiYiJ9fX0="}]}}}'
         AURA: 4
-     SHOOTER:
+    SHOOTER:
         NAME: '&eTireur'
         DESC:
         - ''
@@ -258,8 +263,9 @@ ROLES:
         NAME: '&bDocteur'
         DESC:
         - ''
-        - '&8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre
-            les Loup-Garous.'
+        - |-
+            &8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre
+            les Loup-Garous.
         - ''
         - '&8➥ &7Votre équipe: &6Village'
         ITEM: apple
@@ -364,7 +370,7 @@ SETUP:
         - ''
 
 GAME:
-    PRIVACY: CLOSED
+    PRIVACY: OPEN
     LOCATIONS:
     SETUP:
         STEPS:
