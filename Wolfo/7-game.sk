@@ -3,6 +3,7 @@ on script load:
 	send "" to ops
 	send "&6&lWolfo &7&l» &7Reloading game gestion ..." to ops
 	set {wolfo::loading} to now
+	make console execute command "gamerule doDaylightCycle false"
 
 function wolfoGetConfig() :: integer:
 	set {_p} to size of {wolfo::players::list::*}
@@ -18,14 +19,17 @@ function wolfoGetConfig() :: integer:
 		return 1
 
 function wolfoGetConfigRoles() :: objects:
+	clear {wolfo::role::round::*}
 	set {_p} to size of {wolfo::players::list::*}
 	set {_config} to wolfoGetConfig()
-	add "SEER", "DOCTOR" and "SHOOTER" to {_roles::*}    
+	add "SEER", "DOCTOR" and "SHOOTER" to {_roles::*}
 	if {_config} is 1:
+		add "WEREWOLF", "SEER" and "DOCTOR" to {wolfo::role::round::*}
 		{_p} is not 5
 		add "CRAZY" to {_roles::*}
 	if {_config} is 2 or 3:
 		add "SEER_AURA", "CUPID", "WEREWOLF_ALPHA", "TOWNSFOLK_CURSED", "TOWNSFOLK_CURSED", "WITCH" and "HEADHUNTER" to {_roles::*}
+		add "CUPID", "WEREWOLF", "SEER", "SEER_AURA", "DOCTOR" and "WITCH" to {wolfo::role::round::*}
 	remove size of {_roles::*} from {_p}
 	while {_p} is greater than 0:
 		if mod({_p}, 2) is 0:
@@ -38,13 +42,117 @@ function wolfoGetConfigRoles() :: objects:
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
 	loop {wolfo::players::list::*}:
-		set {wolfo::players::role_text::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
+		set {wolfo::players::role::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
 		set {_desc::*} to wolfoGetO("ROLES.%{_input::%loop-index%}%.DESC")
 		send title {_role} to loop-value for 2 seconds
 		send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.REVEAL") and wolfoGet("ROLES.%{_input::%loop-index%}%.NAME") to loop-value
-		add loop-value to {wolfo::players::role::%{_input::%loop-index%}%::*}
+		add loop-value to {wolfo::role::list::%{_input::%loop-index%}%::*}
+		clear loop-value's inventory
+		set {_item} to wolfoGet("ROLES.%{_input::%loop-index%}%.ITEM")
+		set {_nbt} to wolfoGet("ROLES.%{_input::%loop-index%}%.NBT")
+		set {_name} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
+		set {_lore::*} to wolfoGetO("ROLES.%{_input::%loop-index%}%.DESC")
+		#set slot 8 of {_p} to {_item} parsed as material with nbt "%{_nbt}%" named colored "&7Votre rôle: %{_name}%" with lore colored {_lore::*} # C'est pas beau mais ça sera réglé prochainement.
 		wait 4 ticks
+	wolfoMain(0)
+
+function wolfoVote(p: player):
+	if {wolfo::vote::open} is true:
+		add {_p} to {wolfo::role::list::TOWNSFOLK::*}
+		wolfoMenuVote("TOWNSFOLK")
+	else if {wolfo::vote::current} is {wolfo::players::role_name::%{_p}%}:
+		wolfoMenuVote({wolfo::vote::current})
+	else:
+		send "c'est pas ton tour, boulet" to {_p}
+		broadcast "%{wolfo::vote::current}% %{wolfo::players::role_name::%{_p}%}%"
+
+function wolfoTime():
+	if {wolfo::game::start} is true:
+		if {wolfo::game::status} is "DAY":	
+			send "&6&lWolfo &7&l» &fLa nuit tombe ..." to {wolfo::players::list::*}
+			while "%time of ""world""%" isn't "0:00":
+				add 50 ticks to time of "world"
+				wait a tick
+			strike lightning at {wolfo::game::center}
+			set {wolfo::game::status} to "NIGHT"
+			wolfoMain(1)
+		else:	
+			send "&6&lWolfo &7&l» &fLe jour se lève ..." to {wolfo::players::list::*}	
+			while "%time of ""world""%" isn't "12:00":	
+				add 50 ticks to time of "world"	
+				wait a tick	
+			set {wolfo::game::status} to "DAY"	
+			add 1 to {wolfo::game::day}
+			wolfoMain(1)	
+	wolfoSb({wolfo::players::list::*})
+
+function wolfoMostVoted() :: objects:
+	loop {wolfo::vote::list::*}:
+		add 1 to {_vote::%loop-value%}
+	set {_sorted::*} to sorted {_vote::*}
+	set {_top} to last element out of {_sorted::*}
+	if {_top} is not set:
+		return 0
+	loop {_vote::*}:
+		loop-value is {_top}
+		set {_p} to loop-index
+	return {_p} and {_top}
+
+function wolfoMain(i: integer):
+	if {_i} is 0:
+		set {wolfo::game::day} to 0
+		set {wolfo::game::status} to "DAY"
+		set {wolfo::game::start} to true
+		wolfoTime()
+	if {_i} is 1:
+		{wolfo::game::start} is true
+		if {wolfo::game::status} is "NIGHT":
+			set {wolfo::game::round} to true
+			loop {wolfo::role::round::*}:
+				set {wolfo::vote::current} to loop-value
+				wolfoMenuVote(loop-value)
+				set {wolfo::timer} to 30
+				while {wolfo::timer} is higher than 0:
+					send action bar "Il reste %{wolfo::timer}%" to all players
+					remove 1 from {wolfo::timer}
+					wait 1 second
+				if loop-value is "WEREWOLF":
+					set {_result::*} to wolfoMostVoted()
+					broadcast "%{_result::1}% avec %{_result::2}% votes !"
+				set {wolfo::vote::results::WEREWOLF} to {_result::1}
+				close {wolfo::role::list::%loop-value%::*}'s inventory
+				clear {wolfo::vote::*}
+			clear {wolfo::vote::*}
+			wolfoTime()
+		else if {wolfo::game::status} is "DAY":
+			set {wolfo::timer} to 30
+			while {wolfo::timer} is higher than 0:
+				wait 1 second
+				send action bar "Il reste %{wolfo::timer}% pour discutter !" to all players
+				remove 1 from {wolfo::timer}
+			set {wolfo::vote::open} to true
+			set slot 4 of all players to a book named wolfoGet("ITEM.VOTE")
+			set {wolfo::timer} to 30
+			while {wolfo::timer} is higher than 0:
+				wait 1 second
+				send action bar "Il reste %{wolfo::timer}% pour voter !" to all players
+				remove 1 from {wolfo::timer}
+			set {wolfo::vote::open} to false
+			wolfoTime()
+
+function wolfoTimer(time: integer):
+	while {_time} is not 0:
+		send action bar "Début dans %{_time}%" to all players
+		remove 1 from {_time}
+		wait 1 second
+	wolfoGiveRoles()
+
+function wolfoKill(p: player):	
+	hide {_p} from all players	
+	set {wolfo::players::life::%{_p}%} to "&cMort"	
+	teleport {_p} to wolfoGetL("GAME.LOCATIONS.END")	
+	send title "&6&lWolfo &7&l»" with subtitle "&c Vous êtes mort !" to {_p} for 2 seconds
 
 function wolfoCheckWin():
 	if size of {wolfo::players::list::*} = 0:
