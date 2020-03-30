@@ -35,9 +35,12 @@ function wolfoMenuRoles(p: player):
 		add 1 to {_loop}
 		wait 2 ticks
 
-function wolfoMenuVote(p: objects, role: text):
-	broadcast "%{_role}% vote(nt)..."
-	loop {_p::*}:
+on inventory close:
+	remove player from {wolfo::role::list::TOWNSFOLK::*} if {wolfo::role::list::TOWNSFOLK::*} contains player
+
+function wolfoMenuVote(role: text):
+	loop {wolfo::role::list::%{_role}%::*}:
+		broadcast "%{_role}% - %loop-value%"
 		unformat all gui slots of loop-value-1
 		wolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
 		set {_loop} to 11
@@ -48,35 +51,45 @@ function wolfoMenuVote(p: objects, role: text):
 			set {_target} to loop-value-2
 			# CUPID -------------------------------------------
 			if {_role} is "CUPID":
-				if {wolfo::vote::cupid::*} do not contain {_target}:
+				if {wolfo::vote::voters::%{_voter}%::*} do not contain {_target}:
 					set {_material} to {_target}'s skull named "&6%{_target}% &f- &7❤︎" with lore "" and ""
 				else:
 					set {_material} to {_target}'s skull named "&6%{_target}% &f- &c❤︎" with lore "" and ""
 				make a gui slot {_loop} of {_voter} with {_material} to run:
-					if {wolfo::vote::cupid::*} contains {_target}:
-						remove {_target} from {wolfo::vote::cupid::*}
+					if {wolfo::vote::voters::%{_voter}%::*} contains {_target}:
+						remove {_target} from {wolfo::vote::voters::%{_voter}%::*}
 					else:
-						add {_target} to {wolfo::vote::cupid::*} if size of {wolfo::vote::cupid::*} is 0 or 1
-					wolfoMenuVote({_p::*}, {_role})
+						add {_target} to {wolfo::vote::voters::%{_voter}%::*}
+				make a gui slot 55 of {_voter} with light green dye named "&aTerminer" to run:
+					close {_voter}'s inventory
+					set {wolfo::timer} to 0
+					set {wolfo::vote::results::CUPID::*} to {wolfo::vote::voters::%{_voter}%::*}
 			# WEREWOLF -------------------------------------------
-			else if {_role} is "WEREWOLF":
+			else if {_role} is "WEREWOLF" or "TOWNSFOLK":
 				if {wolfo::vote::players::%{_target}%::*} is not set:
 					set {_material} to {_target}'s skull named "&6%{_target}% &f- &7Aucun vote" with lore "" and "&7Personne n'a voté."
 				else:
-					set {_material} to {_target}'s skull named "&6%{_target}% &f- &e%size of {wolfo::vote::players::%{_target}%::*}% votes" with lore "" and "&7Votants: %{wolfo::vote::players::%{_target}%::*}%"
+					set {_size} to {wolfo::vote::players::%{_target}%::*}
+					set {_vote} to "vote" if {_size} = 1 else set {_vote} to "votes"
+					set {_material} to {_target}'s skull named "&6%{_target}% &f- &e%size of {wolfo::vote::players::%{_target}%::*}% %{_vote}%" with lore "" and "&7Votants: %{wolfo::vote::players::%{_target}%::*}%"
 				make a gui slot {_loop} of {_voter} with {_material} to run:
 					if {wolfo::vote::voters::%{_voter}%} is not set:
 						set {wolfo::vote::voters::%{_voter}%} to {_target}
 					else:
 						remove {_voter} from {wolfo::vote::players::%{wolfo::vote::voters::%{_voter}%}%::*}
+						remove {_target} from {wolfo::vote::list::*}
 					add {_voter} to {wolfo::vote::players::%{_target}%::*}
+					add {_target} to {wolfo::vote::list::*}
 					set {wolfo::vote::voters::%{_voter}%} to {_target}
 					send "&6&lWolfo &7&l» &rTon vote contre &e%{_target}%&f a été &aenregistré&f. J'espère que tu as fait le bon choix." to {_voter}
-					wolfoMenuVote({_p::*}, {_role})
+					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&6%{_target}%" with lore "", "&7Protégez &e%{_target}% du", "&7vote des &cLoup-Garous&7." and "" to run:
+					close {_voter}'s inventory
+					set {wolfo::timer} to 0
 					set {wolfo::vote::results::DOCTOR} to {_target}
+					send "Ayé!" to {_voter}
 			# SEER -------------------------------------------
 			else if {_role} is "SEER" or "SEER_AURA":
 				if {_role} is "SEER":
@@ -84,26 +97,30 @@ function wolfoMenuVote(p: objects, role: text):
 				else:
 					set {_type} to "le rôle"
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&6%{_target}%" with lore "", "&7Découvrez %{_type}% de &e%{_target}%", "&7en cliquant ici ! :D" and "" to run:
+					close {_voter}'s inventory
 					if {_role} is "SEER":
-						set {_reveal} to {wolfo::players::role_text::%{_target}%}
+						set {_reveal} to {wolfo::players::role::%{_target}%}
 					else if {_role} is "SEER_AURA":
 						set {_aura} to wolfoGet("ROLES.%{wolfo::players::role::%{_target}%}%.AURA")
 						set {_teams::*} to wolfoGetO("TEAMS")
 						set {_reveal} to {_teams::%{_aura}%}
+					send "Ui, %{_type}% de &e%{_target}% est %{_reveal}%" to {_voter}
 					set {wolfo::vote::voters::%{_voter}%} to true
 					set {wolfo::vote::results::%{_role}%} to {_reveal}
+					set {wolfo::timer} to 0
 			# WITCH -------------------------------------------
 			else if {_role} is "WITCH":
 				set {_target} to {wolfo::vote::results::WEREWOLF}
 				make a gui slot 30 of {_voter} with {_target}'s skull named "&6%{_target}%" with lore "", "&7Protégez &e%{_target}% du", "&7vote des &cLoup-Garous&7." and ""
 				if {wolfo::potions::SAVE} is not set:
 					make a gui slot 38 of {_voter} with light green dye named "&aSélectionner cette option" with lore "", "&7Vous utiliserez une de vos", "&7deux potions en faisant cela." and "" to run:
+						close {_voter}'s inventory
+						set {wolfo::timer} to 0
 						set {wolfo::vote::results::WITCH} to 0
 						set {wolfo::potions::SAVE} to true
 				else:
-					make a gui slot 38 of {_voter} with red dye named "&cPotion déjà utilisée" with lore "", "&7Vous utiliserez une de vos", "&7deux potions en faisant cela." and ""
+					make a gui slot 38 of {_voter} with red dye named "&cPotion déjà utilisée" with lore "", "&7Vous utiliserez une de vos", "&7deux potions en faisant cela." and "" to run:
 			add 1 to {_loop}
-			wait 2 ticks
 
 function wolfoMenu(p: player, type: text):
 	if {_p} is not op:
