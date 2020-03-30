@@ -26,10 +26,10 @@ function wolfoSb(p: objects):
 	set {_status} to wolfoGet("MESSAGE.TIME.%{_status}%")
 	set {_day} to {wolfo::game::day}
 	set {_config} to wolfoGet("MESSAGE.GAMETYPE.%wolfoGetConfig()%")
-	set line 9 of {_p::*}'s scoreboard to " &6● &eStatus &f&l» %{_status}%"
+	set line 9 of {_p::*}'s scoreboard to " &6● &eStatut &f&l» %{_status}%"
 	set line 8 of {_p::*}'s scoreboard to " &6● &eConnectés &f&l» &7%size of {wolfo::players::list::*}% joueur(s)"
 	set line 7 of {_p::*}'s scoreboard to " &6● &eConfiguration &f&l» %{_config}%"
 	set line 6 of {_p::*}'s scoreboard to " &6● &eJour &f&l» &6n°%{_day}%"
 	loop {_p::*}:
-		set line 2 of loop-value's scoreboard to " &6● &eVotre rôle &f&l» &e%{wolfo::players::role_text::%loop-value%}%"
-		set line 1 of loop-value's scoreboard to " &6● &eVotre status &f&l» &e%{wolfo::players::life::%loop-value%}%"
+		set line 2 of loop-value's scoreboard to " &6● &eVotre rôle &f&l» &e%{wolfo::players::role::%loop-value%}%"
+		set line 1 of loop-value's scoreboard to " &6● &eVotre statut &f&l» &e%{wolfo::players::life::%loop-value%}%"
