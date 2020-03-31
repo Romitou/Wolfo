@@ -29,11 +29,11 @@ function wolfoDraw(type: text, p: text):
 		add 3 to y-coordinate of {_loc}
 		set {_pos} to location of {_p}
 		add 1 to y-coordinate of {_pos}
-		drawArc particle "flame", center location of {_pos}, target location of {_loc}, id "wolfo-rayon", rainbowMode false, density 50, height 0, pitchMultiplier 0, visibleRange 30
+		drawArc particle "flame", center location of {_pos}, target location of {_loc}, id "wolfo-rayon-%{_p}%", rainbowMode false, density 50, height 0, pitchMultiplier 0, visibleRange 30
 		set {_r} to 0
 		loop 20 times:
-			stopEffect id "wolfo-sphere"
-			drawSphere style 1, particle "flame", center location of {_pos}, id "wolfo-sphere", rainbowMode false, radius {_r}, density 400, visibleRange 32, pulseDelay 1
+			stopEffect id "wolfo-sphere-%{_p}%"
+			drawSphere style 1, particle "flame", center location of {_pos}, id "wolfo-sphere-%{_p}%", rainbowMode false, radius {_r}, density 400, visibleRange 32, pulseDelay 1
 			add 0.1 to {_r}
 			wait a tick
 		wait 8 ticks
@@ -44,8 +44,8 @@ function wolfoDraw(type: text, p: text):
 		strike lightning effect at location of {_p}
 		wolfoKill({_p})
 		wait 2 ticks
-		stopEffect id "wolfo-rayon"
-		stopEffect id "wolfo-sphere"
+		stopEffect id "wolfo-rayon-%{_p}%"
+		stopEffect id "wolfo-sphere-%{_p}%"
 	else if {_type} is "spawn":
 		hide {_p} from all players
 		drawWarpRings style 2, particle "redstone", RGB 80, 255, 255, center location of {_p}, id "wolfo-%{_type}%", rainbowMode true, scan true, height 2, radius 1, ringCount 40, ringDensity 20, visibleRange 32, pulseDelay 1
