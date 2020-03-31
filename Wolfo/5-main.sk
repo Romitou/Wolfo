@@ -26,6 +26,7 @@ function wolfoJoin(p: player):
 	heal {_p}
 	reset {_p}'s walk speed
 	add {_p} to {wolfo::players::list::*}
+	add {_p} to {wolfo::players::alive::*}
 	set slot 0 of {_p} to enchanted book named wolfoGet("ITEM.COSM")
 	set slot 4 of {_p} to book named wolfoGet("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")
