@@ -36,14 +36,18 @@ function wolfoMenuRoles(p: player):
 		wait 2 ticks
 
 on inventory close:
-	remove player from {wolfo::role::list::TOWNSFOLK::*} if {wolfo::role::list::TOWNSFOLK::*} contains player
+	if {wolfo::bypass::*} contains player:
+		remove player from {wolfo::bypass::*}
+	else:
+		remove player from {wolfo::role::list::TOWNSFOLK::*}
+# Ce système est vraiment pas beau. Il sera sûrement fixé dans la prochaine version !
 
 function wolfoMenuVote(role: text):
 	loop {wolfo::role::list::%{_role}%::*}:
 		unformat all gui slots of loop-value-1
-		wolfoMenuDeco(loop-value-1, "&6A vous de voter..", 6)
+		wolfoMenuDeco(loop-value-1, "&8%{_role}%", 6)
 		set {_loop} to 11
-		loop {wolfo::players::list::*}:
+		loop {wolfo::players::alive::*}:
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
 			set {_voter} to loop-value-1
@@ -84,6 +88,7 @@ function wolfoMenuVote(role: text):
 					add {_target} to {wolfo::vote::list::*}
 					set {wolfo::vote::voters::%{_voter}%} to {_target}
 					send "&6&lWolfo &7&l» &rTon vote contre &e%{_target}%&f a été &aenregistré&f. J'espère que tu as fait le bon choix." to {_voter}
+					add player to {wolfo::bypass::*}
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":

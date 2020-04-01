@@ -41,6 +41,7 @@ function wolfoJoin(p: player):
 function wolfoLeave(p: player):
 	wolfoSbPlayer({_p}, 1)
 	remove {_p} from {wolfo::players::list::*}
+	remove {_p} from {wolfo::players::alive::*}
 
 command /wolfo [<text>] [<text>] [<integer>]:
 	trigger:
