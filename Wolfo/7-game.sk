@@ -4,6 +4,7 @@ on script load:
 	send "&6&lWolfo &7&l» &7Reloading game gestion ..." to ops
 	set {wolfo::loading} to now
 	make console execute command "gamerule doDaylightCycle false"
+	wolfoDraw("center", "")
 
 function wolfoGetConfig() :: integer:
 	set {_p} to size of {wolfo::players::list::*}
@@ -65,11 +66,12 @@ function wolfoVote(p: player):
 	else if {wolfo::vote::current} is {wolfo::players::role_name::%{_p}%}:
 		wolfoMenuVote({wolfo::vote::current})
 	else:
-		send "Désolé, c'est pas ton tour. Attends comme tout le monde." to {_p}
+		send "&6&lWolfo &7&l» &fDésolé, ce n'est pas ton tour." to {_p}
 
 function wolfoTime():
 	if {wolfo::game::start} is true:
-		if {wolfo::game::status} is "DAY":	
+		if {wolfo::game::status} is "DAY":
+			clear {wolfo::vote::*}
 			send "&6&lWolfo &7&l» &fLa nuit tombe ..." to {wolfo::players::list::*}
 			while "%time of ""world""%" isn't "0:00":
 				add 50 ticks to time of "world"
@@ -77,7 +79,8 @@ function wolfoTime():
 			strike lightning at {wolfo::game::center}
 			set {wolfo::game::status} to "NIGHT"
 			wolfoMain(1)
-		else:	
+		else:
+			clear {wolfo::vote::*}
 			send "&6&lWolfo &7&l» &fLe jour se lève ..." to {wolfo::players::list::*}	
 			while "%time of ""world""%" isn't "12:00":	
 				add 50 ticks to time of "world"	
@@ -86,22 +89,20 @@ function wolfoTime():
 			add 1 to {wolfo::game::day}
 			wolfoMain(1)	
 	wolfoSb({wolfo::players::list::*})
-	clear {wolfo::vote::*}
 
 function wolfoResult() :: objects:
-	broadcast "WEREWOLF: %{wolfo::results::WEREWOLF}%"
-	broadcast "SEER: %{wolfo::results::SEER}%"
-	broadcast "DOCTOR: %{wolfo::results::DOCTOR}%"
 	if wolfoGetConfig() is 1:
 		set {_voted} to {wolfo::results::WEREWOLF}
 		clear {_voted} if {wolfo::results::DOCTOR} is {_voted}
+	broadcast "&6&lWolfo &7&l» &f... la &aVoyante&f a aperçu l'aura d'un joueur ayant le role %{wolfo::results::SEER}%&f." if {wolfo::results::SEER} is set
 	if {_voted} is set:
-		broadcast "Le village se réveille et %{_voted}% est mort !"
-		return null
+		broadcast "&6&lWolfo &7&l» &f... et &e%{_voted}%&f est &cmort&f. Il était %{wolfo::players::role::%{_voted}%}%&f."
+		clear {wolfo::results::*}
+		return {_voted}
 	else:
-		broadcast "Le village se réveille et il n'y a eu aucun mort !"
-		return 0
-	clear {wolfo::results::*}
+		broadcast "&6&lWolfo &7&l» &f... et personne n'est mort !"
+		clear {wolfo::results::*}
+		return null
 
 function wolfoMostVoted() :: objects:
 	loop {wolfo::vote::list::*}:
@@ -109,7 +110,7 @@ function wolfoMostVoted() :: objects:
 	set {_sorted::*} to sorted {_vote::*}
 	set {_top} to last element out of {_sorted::*}
 	if {_top} is not set:
-		return 0
+		return null
 	loop {_vote::*}:
 		loop-value is {_top}
 		set {_p} to loop-index
@@ -143,8 +144,10 @@ function wolfoMain(i: integer):
 				close {wolfo::role::list::%loop-value%::*}'s inventory
 			wolfoTime()
 		else if {wolfo::game::status} is "DAY":
-			loop wolfoResult():
-				wolfoDraw("kill", loop-value)
+			set {_result::*} to wolfoResult()
+			if {_result::*} is set:
+				loop {_result::*}:
+					wolfoDraw("kill", "%loop-value%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
 			set {wolfo::timer} to 60
@@ -159,8 +162,16 @@ function wolfoMain(i: integer):
 				send action bar "&8[&7%{wolfo::timer}%&8] &6Vote des villageois" to all players
 				remove 1 from {wolfo::timer}
 			set {wolfo::vote::open} to false
-			loop wolfoResult():
-				wolfoDraw("kill", loop-value)
+			close inventory of all players
+			clear {wolfo::role::list::TOWNSFOLK::*}
+			broadcast "&6&lWolfo &7&l» &fLe village s'est décidé ..."
+			set {_result::*} to wolfoMostVoted()
+			if {_result::1} is not set:
+				broadcast "&6&lWolfo &7&l» &f... mais les votes sont ex aequo."
+				# à venir : départager les deux joueurs ou revote etc ...
+			else:
+				broadcast "&6&lWolfo &7&l» &f... et élimine &e%{_result::1}%&f avec &6%{_result::2}% voix&f."
+				wolfoDraw("kill", "%{_result::1}%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
 			wolfoTime()
@@ -178,6 +189,7 @@ function wolfoKill(p: player):
 	teleport {_p} to wolfoGetL("GAME.LOCATIONS.END")	
 	send title "&6&lWolfo &7&l»" with subtitle "&c Vous êtes mort !" to {_p} for 2 seconds
 	set game mode of {_p} to spectator
+	remove {_p} from {wolfo::players::alive::*}
 
 function wolfoCheckWin():
 	if size of {wolfo::players::alive::*} is 0:
