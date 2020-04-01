@@ -5,6 +5,7 @@ on script load:
 	set {wolfo::loading} to now
 
 function wolfoDraw(type: text, p: text):
+	broadcast "DRAW: %{_type}% %{_p}%"
 	if {_type} is "erase":
 		stopEffect id "wolfo-%{_p}%"
 	if {_type} is "img":
