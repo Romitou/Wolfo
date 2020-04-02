@@ -61,8 +61,7 @@ function wolfoGiveRoles():
 
 function wolfoVote(p: player):
 	if {wolfo::vote::open} is true:
-		add {_p} to {wolfo::role::list::TOWNSFOLK::*}
-		wolfoMenuVote("TOWNSFOLK")
+		wolfoMenuDeco({_p}, "", 6)
 	else if {wolfo::vote::current} is {wolfo::players::role_name::%{_p}%}:
 		wolfoMenuVote({wolfo::vote::current})
 	else:
