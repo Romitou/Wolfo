@@ -118,7 +118,7 @@ on join:
 	if player is op:
 		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of {wolfo::players::list::*} + 1%&8/&75&8)"
 		wolfoJoin(player)
-	else if size of {wolfo::players::list::*} is greater than or equal to 27:
+	else if size of {wolfo::players::list::*} is greater than or equal to 25:
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.TOOMANY")
 	else if {wolfo::game::start} is set:
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
