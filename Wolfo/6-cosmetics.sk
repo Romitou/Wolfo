@@ -26,6 +26,7 @@ function wolfoDraw(type: text, p: text):
 		set {_name} to wolfoGet("ANIMATION.SELECTION")
 		drawImage file "%{_name}%.png", center {_loc}, id "wolfo-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 	else if {_type} is "kill":
+		wolfoKill({_p})
 		set {_loc} to wolfoGetL("GAME.LOCATIONS.MIDDLE")
 		add 3 to y-coordinate of {_loc}
 		set {_pos} to location of {_p}
@@ -43,7 +44,6 @@ function wolfoDraw(type: text, p: text):
 		else:
 			play sound "entity.wither.spawn" with volume 10 and pitch 1 at {_p} for all players
 		strike lightning effect at location of {_p}
-		wolfoKill({_p})
 		wait 2 ticks
 		stopEffect id "wolfo-rayon-%{_p}%"
 		stopEffect id "wolfo-sphere-%{_p}%"
