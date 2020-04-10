@@ -6,14 +6,8 @@ on script load:
 	set {wolfo::loading} to now
 	load yaml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
 	if yaml "config" is empty:
-		broadcast "&4Error! The file containing the config could not be found."
-		broadcast "&7Please download it and add it to the Wolfo folder."
-		add 1 to {wolfo::loading::error}
-	set {_actual} to "1.0"
-	set {_current} to wolfoGet("VERSION")
-	if {_actual} is not {_current}:
-		broadcast "&6Wow! It's been a while since you last updated Wolfo."
-		broadcast "&7Version &eV%{_actual}%&7 is already out, you are in &eV%{_current}%&7!"
+		send "&4Error! The file containing the config could not be found." to console
+		send "&7Please download it and add it to the Wolfo folder." to console
 		add 1 to {wolfo::loading::error}
 
 function wolfoGet(request: text) :: text: # POUR LES TEXTES (plus utilisé)

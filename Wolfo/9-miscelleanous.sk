@@ -8,3 +8,6 @@ on script load:
 		set {_version} to wolfoGet("VERSION")
 		broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_version}%)"
 	delete {wolfo::loading::*}
+
+# Pour l'instant ce fichier ne sert à rien...
+# Il sera utile un jour au l'autre ! ;)
