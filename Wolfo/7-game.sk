@@ -3,7 +3,6 @@ on script load:
 	send "" to ops
 	send "&6&lWolfo &7&l» &7Reloading game gestion ..." to ops
 	set {wolfo::loading} to now
-	make console execute command "gamerule doDaylightCycle false"
 	wolfoDraw("center", "")
 
 function wolfoGetConfig() :: integer:
@@ -55,7 +54,8 @@ function wolfoGiveRoles():
 		set {_nbt} to wolfoGet("ROLES.%{_input::%loop-index%}%.NBT")
 		set {_name} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
 		set {_lore::*} to wolfoGetO("ROLES.%{_input::%loop-index%}%.DESC")
-		#set slot 8 of {_p} to {_item} parsed as material with nbt "%{_nbt}%" named colored "&7Votre rôle: %{_name}%" with lore colored {_lore::*} # C'est pas beau mais ça sera réglé prochainement.
+		# Cette syntaxe étant buggée, elle sera mise à jour dans une des prochaines versions.
+		# set slot 8 of {_p} to {_item} parsed as material with nbt "%{_nbt}%" named colored "&7Votre rôle: %{_name}%" with lore colored {_lore::*} # C'est pas beau mais ça sera réglé prochainement.
 		wait 4 ticks
 	wolfoMain(0)
 
@@ -72,7 +72,9 @@ function wolfoTime():
 		if {wolfo::game::status} is "DAY":
 			clear {wolfo::vote::*}
 			send "&6&lWolfo &7&l» &fLa nuit tombe ..." to {wolfo::players::list::*}
-			while "%time of ""world""%" isn't "0:00":
+			# On utilise un between pour être sûr que le while s'arrête correctement
+			# quand l'heure ne tombe pas sur un nombre juste.
+			while time of "world" isn't between 0:00 and 01:00:
 				add 50 ticks to time of "world"
 				wait a tick
 			strike lightning at {wolfo::game::center}
@@ -81,7 +83,9 @@ function wolfoTime():
 		else:
 			clear {wolfo::vote::*}
 			send "&6&lWolfo &7&l» &fLe jour se lève ..." to {wolfo::players::list::*}	
-			while "%time of ""world""%" isn't "12:00":	
+			# On utilise un between pour être sûr que le while s'arrête correctement
+			# quand l'heure ne tombe pas sur un nombre juste.
+			while time of "world" isn't between 12:00 and 13:00:
 				add 50 ticks to time of "world"	
 				wait a tick	
 			set {wolfo::game::status} to "DAY"	
@@ -108,7 +112,9 @@ function wolfoResult() :: objects:
 		return null
 
 function wolfoMostVoted() :: objects:
-	loop {wolfo::vote::list::*}:
+	# On mélange préalablement la liste
+	# pour être sûr du hazard. :)
+	loop shuffled {wolfo::vote::list::*}:
 		add 1 to {_vote::%loop-value%}
 	set {_sorted::*} to sorted {_vote::*}
 	set {_top} to last element out of {_sorted::*}
@@ -117,6 +123,7 @@ function wolfoMostVoted() :: objects:
 	loop {_vote::*}:
 		loop-value is {_top}
 		set {_p} to loop-index
+	# On retourne le joueur ainsi que son nombre de vote.
 	return {_p} and {_top}
 
 function wolfoMain(i: integer):
@@ -183,11 +190,13 @@ function wolfoMain(i: integer):
 			clear {wolfo::role::list::TOWNSFOLK::*}
 			broadcast "&6&lWolfo &7&l» &fLe village s'est décidé ..."
 			set {_result::*} to wolfoMostVoted()
+			# Dans tous les cas, si deux votes sont ex aequo, cette fonction
+			# retournera toujours quelque chose, faisant appel à l'aléatoire !
 			{_result::1} is not set:
-				broadcast "&6&lWolfo &7&l» &f... mais les votes sont ex aequo."
-				# à venir : départager les deux joueurs ou revote etc ...
+				broadcast "&6&lWolfo &7&l» &f... mais en fait non."
 			else:
-				broadcast "&6&lWolfo &7&l» &f... et élimine &e%{_result::1}%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
+				# On parse as offline player pour garder la casse des pseudos.
+				broadcast "&6&lWolfo &7&l» &f... et élimine &e%{_result::1} parsed as offline player%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
 				wolfoDraw("kill", "%{_result::1}%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
@@ -211,6 +220,10 @@ function wolfoKill(p: player):
 	remove {_p} from {wolfo::players::alive::*}
 	remove {_p} from {wolfo::role::list::%{wolfo::players::role_name::%{_p}%}%::*}
 
+
+# Cette partie est particulièrement sensible au niveau des bugs,
+# si cette fonction ne fonctionne pas correctement, merci de nous
+# signaler sur le forum ou sur Discord ! Merci !
 function wolfoCheckWin():
 	if size of {wolfo::players::alive::*} is 0:
 		wolfoEnd()

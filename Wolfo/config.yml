@@ -1,11 +1,17 @@
 VERSION: '1.0'
 
+# Inutilisé (pour le moment)
 ANIMATION:
     SELECTION: ARROW
 
 PREFIX:
     GENERAL: '&6&lWolfo &7&l» &r'
     TITLE: '&7» &6&lWolfo'
+
+# Envie de rajouter des cosmétiques ?
+# Voici un exemple :
+#   - explosion;bone meal;&7Explosion
+#      EFFET ^   ITEM ^     NOM ^
 
 COSMETICS:
     PARTICLE:
@@ -371,6 +377,9 @@ SETUP:
         - '&7Les joueurs morts apparaîtrons à cet emplacement.'
         - ''
 
+# Merci de ne pas modificer ces lignes.
+# Elles garantissent le bon fonctionnement de la partie
+# et de ses fonctionnalités.
 GAME:
     PRIVACY: OPEN
     LOCATIONS:

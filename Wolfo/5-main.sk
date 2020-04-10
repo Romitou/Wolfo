@@ -135,7 +135,29 @@ on quit:
 	set quit message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.LEFT") and " &8(&7%amount of {wolfo::players::list::*} - 1%&8/&75&8)"
 	wolfoLeave(player)
 
-on right click:
+on inventory click:
+	if name of event-item is wolfoGet("ITEM.COSM"):
+		cancel event
+		wolfoCosmetic(1, player)
+	else if name of event-item is wolfoGet("ITEM.COSM_OFF"):
+		cancel event
+		wolfoCosmetic(4, player)
+	else if name of event-item is wolfoGet("ITEM.INFO"):
+		cancel event
+		wolfoMenuRoles(player)
+	else if name of event-item is wolfoGet("ITEM.VOTE"):
+		wolfoVote(player)
+	else if name of event-item is wolfoGet("ITEM.EXIT"):
+		cancel event
+		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.GOODLEFT")
+	else if name of event-item is wolfoGet("ITEM.SETUP"):
+		cancel event
+		wolfoMenu(player, "SETUP")
+	else if name of event-item is wolfoGet("ITEM.MANAGE"):
+		cancel event
+		wolfoMenu(player, "MANAGE")
+
+on click:
 	if name of player's tool is wolfoGet("ITEM.COSM"):
 		cancel event
 		wolfoCosmetic(1, player)
@@ -159,10 +181,6 @@ on right click:
 
 on drop:
 	cancel event
-
-on inventory click:
-	if player isn't op:
-		cancel event
 
 on hunger meter change:
 	cancel event

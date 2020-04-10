@@ -19,6 +19,7 @@ function wolfoSbPlayer(p: player, i: integer):
 	if {_i} is 1:
 		clear scoreboard of {_p}
 	wait 1 tick # Obligatoire pour mettre à jour le scoreboard :'(
+	# Sera fixé dans une des prochaines versions.
 	wolfoSb({wolfo::players::list::*})
 
 function wolfoSb(p: objects):
