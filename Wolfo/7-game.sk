@@ -41,6 +41,7 @@ function wolfoGetConfigRoles() :: objects:
 
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
+	send "&6&lWolfo &7&l» &cCette version de Wolfo est actuellement en Alpha. Nous sommes désolés si vous recontrez des bugs et n'hésitez pas à nous les rapporter afin de nous améliorer. Bon jeu !" to all players
 	loop {wolfo::players::list::*}:
 		set {wolfo::players::role::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
@@ -109,7 +110,6 @@ function wolfoResult() :: objects:
 	else:
 		broadcast "&6&lWolfo &7&l» &f... et personne n'est mort !"
 		clear {wolfo::results::*}
-		return null
 
 function wolfoMostVoted() :: objects:
 	# On mélange préalablement la liste
@@ -119,7 +119,7 @@ function wolfoMostVoted() :: objects:
 	set {_sorted::*} to sorted {_vote::*}
 	set {_top} to last element out of {_sorted::*}
 	if {_top} is not set:
-		return null
+		stop
 	loop {_vote::*}:
 		loop-value is {_top}
 		set {_p} to loop-index
