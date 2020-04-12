@@ -109,7 +109,6 @@ function wolfoResult() :: objects:
 	else:
 		broadcast "&6&lWolfo &7&l» &f... et personne n'est mort !"
 		clear {wolfo::results::*}
-		return null
 
 function wolfoMostVoted() :: objects:
 	# On mélange préalablement la liste
@@ -119,7 +118,7 @@ function wolfoMostVoted() :: objects:
 	set {_sorted::*} to sorted {_vote::*}
 	set {_top} to last element out of {_sorted::*}
 	if {_top} is not set:
-		return null
+		stop
 	loop {_vote::*}:
 		loop-value is {_top}
 		set {_p} to loop-index
