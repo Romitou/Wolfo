@@ -8,7 +8,6 @@ on script load:
 # Certaines fonctions ne sont pas encore utilisées,
 # elles le seront dans une future mise à jour. :)
 function wolfoDraw(type: text, p: text):
-	broadcast "DRAW: %{_type}% %{_p}%"
 	if {_type} is "erase":
 		stopEffect id "wolfo-%{_p}%"
 	set {_p} to {_p} parsed as player
