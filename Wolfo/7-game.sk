@@ -41,6 +41,7 @@ function wolfoGetConfigRoles() :: objects:
 
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
+	send "&6&lWolfo &7&l» &cCette version de Wolfo est actuellement en Alpha. Nous sommes désolés si vous recontrez des bugs et n'hésitez pas à nous les rapporter afin de nous améliorer. Bon jeu !" to all players
 	loop {wolfo::players::list::*}:
 		set {wolfo::players::role::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
