@@ -24,9 +24,8 @@ command /debug [<text>]:
 					send "Le mode de développement a été activé."
 					set {wolfo::debug::status} to true
 			else if arg-1 is "addplayer":
-				set {_r} to random element out of all players
-				add {_r} parsed as offline player to {wolfo::players::list::*}
-				add {_r} parsed as offline player to {wolfo::players::alive::*}
+				set {_r} to random element out of players
+				add {_r} to {wolfo::debug::list::*}
 				send "%{_r}% a été ajouté au mode de développement."
 			else:
 				send "&8&m               &r&8[ &6Rapport de dysfonctionnement Wolfo &8]&m               &r"
