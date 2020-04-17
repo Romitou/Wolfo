@@ -5,6 +5,10 @@
 L'idée a été trouvée par Xamez qui le développe avec Romitou.
 Ce script recrée une véritable partie d'un loup-garou directement dans Minecraft, avec de nombreuses fonctionnalités (notamment cosmétiques) !
 
+## Installation
+
+Pour installer Wolfo, vous devez extraire l'archive que vous avez téléchargé, où vous trouverez à l'intérieur un dossier appelé `Wolfo-XXX-alpha`. Ouvez-le puis copiez le dossier `Wolfo`. Rendez-vous dans votre dossier `Skript` puis `scripts` et collez le dossier à l'intérieur. L'emplacement de Wolfo doit être : `/plugins/Skript/scripts/Wolfo`.
+
 ## Dépendances
 
 - Skript (pour le jeu - *testé avec* **2.5-alpha2**);
