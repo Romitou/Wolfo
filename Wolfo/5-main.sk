@@ -47,8 +47,8 @@ command /wolfo [<text>] [<text>] [<integer>]:
 	trigger:
 		if arg 1 is "help":
 			wolfoHelp("COMMANDS", player)
-		else if arg 1 is "admin":
-			wolfoMenu(player, "ADMIN")
+		else if arg 1 is "setup":
+			wolfoMenu(player, "SETUP")
 		else if arg 1 is "manage":
 			wolfoMenu(player, "MANAGE")
 		else if arg 1 is "whitelist":

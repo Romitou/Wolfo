@@ -131,7 +131,7 @@ MESSAGE:
         MSG:
         - ''
         - '  &f» &e/wolfo help&7: affiche cette page d''aide'
-        - '  &f» &e/wolfo admin&7: administration de la partie &c*'
+        - '  &f» &e/wolfo setup&7: initialisation de la partie &c*'
         - '  &f» &e/wolfo manage&7: gestion de la partie &c*'
         - '  &f» &e/wolfo my&7: affiche vos informations'
         - ''
