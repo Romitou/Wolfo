@@ -95,21 +95,28 @@ function wolfoCheckStart(p: player):
 		if size of all players < 5:
 			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOTENOUGH") to {_p}
 		else:
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.FORCESTART") to {_p}
-			wolfoTimer(5)
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.PREPARE") to all players
+			if {wolfo::setup::pos} is greater than or equal to size of all players:
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.FORCESTART") to {_p}
+				wolfoTimer(5)
+				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.PREPARE") to all players
+			else:
+				broadcast "Il n'y a pas assez de points de téléportation."
 	else:
 		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.MISSINGCONFIG") to {_p}
 
 function wolfoStart():
-	{wolfo::debug::status} is set:
+	send "&6&lWolfo &7&l» &fWolfo a été développé par &eXamez##8497&f et &eRomitou##9685&f. Si vous avez la moindre question, rejoignez notre Discord : https://discordapp.com/invite/37nvkpk !" to all players
+	{wolfo::debug::status} is true:
 		set {wolfo::players::list::*} to {wolfo::debug::list::*}
 		set {wolfo::players::alive::*} to {wolfo::debug::list::*}
+		send "&6&lWolfo &7&l» &fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée." to all players
+		broadcast "%{wolfo::players::list::*}% %{wolfo::debug::list::*}%"
 	else:
 		set {wolfo::players::list::*} to players
 		set {wolfo::players::alive::*} to players
+	set {wolfo::spawn::*} to wolfoGetO("GAME.LOCATIONS.SPAWNPOINTS")
 	loop {wolfo::players::list::*}:
-		teleport loop-value to {wolfo::spawn::%loop-index%}
+		teleport loop-value to wolfoGetL("GAME.LOCATIONS.SPAWNPOINTS.%loop-index%")
 		set loop-value's walk speed to 0
 	wolfoGiveRoles()
 	set {wolfo::game::automsg} to false
