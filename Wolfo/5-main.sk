@@ -25,8 +25,6 @@ function wolfoJoin(p: player):
 	clear {_p}'s inventory
 	heal {_p}
 	reset {_p}'s walk speed
-	add {_p} to {wolfo::players::list::*}
-	add {_p} to {wolfo::players::alive::*}
 	set slot 0 of {_p} to enchanted book named wolfoGet("ITEM.COSM")
 	set slot 4 of {_p} to book named wolfoGet("ITEM.INFO")
 	set slot 8 of {_p} to orange bed named wolfoGet("ITEM.EXIT")
@@ -40,6 +38,7 @@ function wolfoJoin(p: player):
 
 function wolfoLeave(p: player):
 	wolfoSbPlayer({_p}, 1)
+	remove {_p} from {wolfo::role::list::%{wolfo::players::role_name::%{_p}%}%::*}
 	remove {_p} from {wolfo::players::list::*}
 	remove {_p} from {wolfo::players::alive::*}
 
@@ -90,16 +89,25 @@ function wolfoWhitelist(executor: player, target: text, action: integer):
 function wolfoCheckStart(p: player):
 	set {_finish} to wolfoGet("GAME.SETUP.FINISH")
 	if "%{_finish}%" is "true": # C'est moche, mais ça sera corrigé dans les prochaines versions. :)
-		if size of {wolfo::players::list::*} < 5:
+		if {wolfo::debug::status} is true:
+			wolfoTimer(5)
+			stop
+		if size of all players < 5:
 			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.NOTENOUGH") to {_p}
 		else:
 			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.FORCESTART") to {_p}
 			wolfoTimer(5)
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.PREPARE") to {wolfo::players::list::*}
+			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.PREPARE") to all players
 	else:
 		send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.MISSINGCONFIG") to {_p}
 
 function wolfoStart():
+	{wolfo::debug::status} is set:
+		set {wolfo::players::list::*} to {wolfo::debug::list::*}
+		set {wolfo::players::alive::*} to {wolfo::debug::list::*}
+	else:
+		set {wolfo::players::list::*} to players
+		set {wolfo::players::alive::*} to players
 	loop {wolfo::players::list::*}:
 		teleport loop-value to {wolfo::spawn::%loop-index%}
 		set loop-value's walk speed to 0
@@ -109,16 +117,15 @@ function wolfoStart():
 	send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.START.ROLES") to {wolfo::players::list::*}
 
 function wolfoEnd():
-	loop {wolfo::players::list::*}:
-		kick loop-value due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ENDGAME")
+	kick all players due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ENDGAME")
 	clear {wolfo::*}
 	wolfoInitialize()
 
 on join:
 	if player is op:
-		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of {wolfo::players::list::*} + 1%&8/&75&8)"
+		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
-	else if size of {wolfo::players::list::*} is greater than or equal to 25:
+	else if size of all players is greater than or equal to 25:
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.TOOMANY")
 	else if {wolfo::game::start} is set:
 		kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.ALREADYSTART")
@@ -128,11 +135,11 @@ on join:
 		if wolfoGetO("GAME.WHITELIST") do not contain player:
 			kick player due to join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
 	else:
-		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of {wolfo::players::list::*} + 1%&8/&75&8)"
+		set join message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.JOINED") and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
 
 on quit:
-	set quit message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.LEFT") and " &8(&7%amount of {wolfo::players::list::*} - 1%&8/&75&8)"
+	set quit message to join wolfoGet("PREFIX.GENERAL"), "&e%player% ", wolfoGet("MESSAGE.LEFT") and " &8(&7%amount of all players%&8/&75&8)"
 	wolfoLeave(player)
 
 on inventory click:
