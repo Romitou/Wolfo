@@ -44,7 +44,6 @@ function wolfoGetConfigRoles() :: objects:
 
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
-	send "&6&lWolfo &7&l» &cCette version de Wolfo est actuellement en Alpha. Nous sommes désolés si vous recontrez des bugs et n'hésitez pas à nous les rapporter afin de nous améliorer. Bon jeu !" to all players
 	loop {wolfo::players::list::*}:
 		{wolfo::players::role_name::%loop-value%} is not set
 		set {wolfo::players::role::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
@@ -212,7 +211,7 @@ function wolfoTimer(time: integer):
 		send action bar "&8[&7%{wolfo::timer}%&8] &6Décompte avant début" to all players
 		remove 1 from {wolfo::timer}
 		wait 1 second
-	wolfoGiveRoles()
+	wolfoStart()
 
 function wolfoKill(p: player):	
 	hide {_p} from all players	
