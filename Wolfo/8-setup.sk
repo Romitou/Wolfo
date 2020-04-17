@@ -24,9 +24,11 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.MIDDLE", 0)
 		else if {_loop} is 12:
-			wolfoAddL("GAME.LOCATIONS.SPAWNPOINTS", position of {_p})
+			set {wolfo::setup::pos} to 1 if {wolfo::setup::pos} is not set
+			wolfoSetL("GAME.LOCATIONS.SPAWNPOINTS.%{wolfo::setup::pos}%", position of {_p})
 			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSETO") and "&7(%position of {_p}%)" to {_p}
-			if size of wolfoGetO("GAME.LOCATIONS.SPAWNPOINTS") is 5:
+			add 1 to {wolfo::setup::pos}
+			if {wolfo::setup::pos} is 5:
 				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETUP_FINISHED1") to {_p}
 				wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.SPAWNPOINT", 0)
 		else if {_loop} is 14:
