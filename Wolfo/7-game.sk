@@ -6,7 +6,7 @@ on script load:
 	wolfoDraw("center", "")
 
 function wolfoGetConfig() :: integer:
-	set {_p} to size of {wolfo::players::list::*}
+	set {_p} to size of all players
 	if {_p} is between 5 and 12:
 		return 1
 	else if {_p} is between 13 and 17:
@@ -20,7 +20,10 @@ function wolfoGetConfig() :: integer:
 
 function wolfoGetConfigRoles() :: objects:
 	clear {wolfo::role::round::*}
-	set {_p} to size of {wolfo::players::list::*}
+	{wolfo::game::start} is set:
+		set {_p} to size of {wolfo::players::list::*}
+	else:
+		set {_p} to size of all players
 	set {_config} to wolfoGetConfig()
 	add "SEER", "DOCTOR" and "SHOOTER" to {_roles::*}
 	if {_config} is 1:
@@ -238,7 +241,7 @@ function wolfoCheckWin():
 		send title "&6&lWolfo &7&l»" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds
 		set {_role} to wolfoGet("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME")
 		broadcast "&6&lWolfo &7&l» &a%loop-value% &fa gagné la partie avec le rôle %{_role}%&f !"
-	set {_players::*} to {wolfo::players::list::*}
+	set {_players::*} to players
 	remove {_winners::*} from {_players::*}
 	loop {_players::*}:
 		send title "&6&lWolfo &7&l»" with subtitle "&cVous avez perdu !" to loop-value for 2 seconds

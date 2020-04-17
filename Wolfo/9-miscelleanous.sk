@@ -11,15 +11,28 @@ on script load:
 # Pour l'instant ce fichier ne sert à rien...
 # Il sera utile un jour au l'autre ! ;)
 
-command /debug:
+command /debug [<text>]:
 	trigger:
 		player is not op:
 			send "Vous n'êtes pas un opérateur."
 		else:
-			send "&8&m               &r&8[ &6Rapport de dysfonctionnement Wolfo &8]&m               &r"
-			send "&eGénéré le: &7%now%"
-			send "&eRapport détaillé:"
-			set {_debug} to "&7Erreurs: &8%{wolfo::loading::error}%||&7Démarrage: &8%{wolfo::game::start}%||&7Statut: &8%{wolfo::game::status}%||&7Nom des rôles: &8%{wolfo::players::role_name::*}%||&7Liste des joueurs: &8%{wolfo::players::list::*}%||&7Liste des joueurs en vie: &8%{wolfo::players::alive::*}%||&7Jour: &8%{wolfo::game::day}%||&7Chargement:&8 %{wolfo::loading}%||&7Tour: &8%{wolfo::role::round::*}%||&7Actuel:&8 %{wolfo::current}%||&7Votes: &8%{wolfo::vote::*}%||&7Résultats: &8%{wolfo::results::*}%||&7Amoureux: &8%{wolfo::game::lovers::*}%||&7Compteur: &8%{wolfo::timer}%"
-			replace all "<none>" with "&8Aucune donnée" in {_debug}
-			loop {_debug} split at "||":
-				send "&f● &7%loop-value%"
+			arg-1 is "debug":
+				if {wolfo::debug::status} is set:
+					send "Le mode de développement a été désactivé."
+					clear {wolfo::debug::status}
+				else:
+					send "Le mode de développement a été activé."
+					set {wolfo::debug::status} to true
+			else if arg-1 is "addplayer":
+				set {_r} to random element out of all players
+				add {_r} parsed as offline player to {wolfo::players::list::*}
+				add {_r} parsed as offline player to {wolfo::players::alive::*}
+				send "%{_r}% a été ajouté au mode de développement."
+			else:
+				send "&8&m               &r&8[ &6Rapport de dysfonctionnement Wolfo &8]&m               &r"
+				send "&eGénéré le: &7%now%"
+				send "&eRapport détaillé:"
+				set {_debug} to "&7Erreurs: &8%{wolfo::loading::error}%||&7Démarrage: &8%{wolfo::game::start}%||&7Statut: &8%{wolfo::game::status}%||&7Nom des rôles: &8%{wolfo::players::role_name::*}%||&7Liste des joueurs en jeu: &8%{wolfo::players::list::*}%||&7Liste des joueurs: &8%all players%||&7Liste des joueurs en vie: &8%{wolfo::players::alive::*}%||&7Jour: &8%{wolfo::game::day}%||&7Chargement:&8 %{wolfo::loading}%||&7Tour: &8%{wolfo::role::round::*}%||&7Actuel:&8 %{wolfo::current}%||&7Votes: &8%{wolfo::vote::*}%||&7Résultats: &8%{wolfo::results::*}%||&7Amoureux: &8%{wolfo::game::lovers::*}%||&7Compteur: &8%{wolfo::timer}%||&7Mode développement: &8%{wolfo::debug::status}%"
+				replace all "<none>" with "&8Aucune donnée" in {_debug}
+				loop {_debug} split at "||":
+					send "  &f● &7%loop-value%"
