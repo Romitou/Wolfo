@@ -33,21 +33,14 @@ function wolfoSetL(request: text, value: location):
 	set yaml value {_request} from "config" to {_value}
 	save yaml "config"
 
-function wolfoAddL(request: text, value: location):
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::debug::status} is true
-	set {_list::*} to yaml list {_request} from "config"
-	add {_value} to {_list::*}
-	set yaml list {_request} from "config" to {_list::*}
-	save yaml "config"
-
 function wolfoUpdateO(request: text, value: text, type: integer):
 	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::debug::status} is true
 	set {_list::*} to yaml list {_request} from "config"
 	if {_type} is 0:
-		add {_value} to {_list::*} if {_list::*} doesn't contain {_value}
-	else:
-		remove {_value} from {_list::*}
-		if {_list::*} is not set:
-			delete yaml list {_request} from "config"
+		if {_list::*} doesn't contain {_value}:
+			add {_value} to {_list::*}
+		else:
+			remove {_value} from {_list::*}
+		delete yaml list {_request} from "config" if {_list::*} is not set
 	set yaml list {_request} from "config" to {_list::*}
 	save yaml "config"
