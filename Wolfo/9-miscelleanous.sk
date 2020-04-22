@@ -13,7 +13,9 @@ on script load:
 
 Command /lang [<text>]:
 	trigger:
-		if 
+		set {_langs::*} to wolfoGetO("LANGUAGES")
+		if arg 1 is not set:
+			
 
 command /debug [<text>]:
 	trigger:
