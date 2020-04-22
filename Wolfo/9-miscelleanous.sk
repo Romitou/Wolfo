@@ -11,6 +11,10 @@ on script load:
 # Pour l'instant ce fichier ne sert à rien...
 # Il sera utile un jour au l'autre ! ;)
 
+Command /lang [<text>]:
+	trigger:
+		if 
+
 command /debug [<text>]:
 	trigger:
 		player is not op:
