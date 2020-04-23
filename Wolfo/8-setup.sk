@@ -47,3 +47,4 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 			wolfoSet("GAME.SETUP.FINISH", "true")
 			send join wolfoGet("PREFIX.GENERAL", {_p}) and wolfoGet("MESSAGE.SETUP_FINISHED2", {_p}) to {_p}
 			wolfoDraw("center", "")
+			wolfoDraw("center", "")

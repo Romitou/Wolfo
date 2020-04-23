@@ -5,6 +5,7 @@ PREFIX:
 # Envie de rajouter des cosmétiques ? Partie 2
 # Indiquez simplement :
 #   monexplosion;&cBim &dBam &4Boum
+#   MONEXPLOSION: '&cBim &dBam &4Boum'
 #      ID ^          NOM ^
 
 COSMETICS:
@@ -320,4 +321,5 @@ SETUP:
         LORE:
         - ''
         - '&8➥ &7Initialise le &cpoint de mort&7 à votre position.'
+        - '&7Les joueurs morts apparaîtrons à cet emplacement.'
         - '&7Les joueurs morts apparaîtrons à cet emplacement.'

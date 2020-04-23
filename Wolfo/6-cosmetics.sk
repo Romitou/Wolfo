@@ -113,3 +113,4 @@ function wolfoCosmetic(type: integer, p: player):
 		stopEffect "wolfo-%{_p}%"
 		set slot 0 of {_p} to a enchanted book named wolfoGet("ITEM.COSM", {_p})
 		send join wolfoGet("PREFIX.GENERAL", {_p}) and wolfoGet("MESSAGE.COSMETICS.OFF", {_p}) to {_p}
+		send join wolfoGet("PREFIX.GENERAL", {_p}) and wolfoGet("MESSAGE.COSMETICS.OFF", {_p}) to {_p}
