@@ -6,16 +6,19 @@ on script load:
 		broadcast "&7Please consult the console for more information."
 	else:
 		set {_version} to wolfoGet("VERSION")
-		broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_version}%)"
+		loop all players:
+			broadcast join wolfoGet("PREFIX.GENERAL", loop-player), wolfoGet("MESSAGE.SUCCESS_LOADING", loop-player) and "&7(v%{_version}%)"
 
-# Pour l'instant ce fichier ne sert à rien...
-# Il sera utile un jour au l'autre ! ;)
+On join:
+	
 
 Command /lang [<text>]:
 	trigger:
-		set {_langs::*} to wolfoGetO("LANGUAGES")
+		set {_lang::*} to wolfoGetO("LANGUAGES.LIST")
 		if arg 1 is not set:
-			
+			message "Langues:"
+			loop {_lang::*}:
+				message formatted join "<command:/lang %loop-value%>" and wolfoGetO("LANGUAGES.PROPERTIES.%loop-value%.name")
 
 command /debug [<text>]:
 	trigger:

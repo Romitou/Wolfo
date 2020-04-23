@@ -20,7 +20,7 @@ function wolfoDraw(type: text, p: text):
 			set {_angle} to 90
 		else:
 			set {_angle} to 0
-		set {_name} to wolfoGet("ANIMATION.SELECTION")
+		set {_name} to wolfoGetO("ANIMATION.SELECTION")
 		drawImage file "%{_name}%.png", center {_loc}, id "wolfo-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 	else if {_type} is "kill":
 		wolfoKill({_p})
@@ -59,14 +59,14 @@ function wolfoDraw(type: text, p: text):
 function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:
 		if {_type} is 1:
-			set {_title} to wolfoGet("GUI.EFFECT_SELECT")
+			set {_title} to wolfoGet("GUI.EFFECT_SELECT", {_p})
 			add wolfoGetO("COSMETICS.EFFECT") to {_p::*}
 		else if {_type} is 2:
 			if {wolfo::cosmetic::%{_p}%::1} is "nyancat":
 				clear {wolfo::cosmetic::%{_p}%::2}
 				wolfoCosmetic(3, {_p})
 				stop
-			set {_title} to wolfoGet("GUI.PARTICLE_SELECT")
+			set {_title} to wolfoGet("GUI.PARTICLE_SELECT", {_p})
 			add wolfoGetO("COSMETICS.PARTICLE") to {_p::*}
 		wolfoMenuDeco({_p}, {_title}, 5)
 		set {_loop} to 11

@@ -2,10 +2,10 @@ PREFIX:
     GENERAL: '&6&lWolfo &7&l» &r'
     TITLE: '&7» &6&lWolfo'
 
-# Envie de rajouter des cosmétiques ?
-# Voici un exemple :
-#   - explosion;bone meal;&7Explosion
-#      EFFET ^   ITEM ^     NOM ^
+# Envie de rajouter des cosmétiques ? Partie 2
+# Indiquez simplement :
+#   MONEXPLOSION: '&cBim &dBam &4Boum'
+#      ID ^          NOM ^
 
 COSMETICS:
     PARTICLE:
@@ -31,9 +31,9 @@ COSMETICS:
         RINGS: '&6Anneaux'
         SPIRAL: '&eSpirale'
 
-MESSAGES:
+MESSAGE:
     PERMISSION:
-        NO_PERMISSION: '&fVous &cn''avez pas les privilèges nécessaires&f pour effectuer cette action.'
+        MESSAGE: '&fVous &cn''avez pas les privilèges nécessaires&f pour effectuer cette action.'
     START:
         PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
         ROLES: |-
@@ -128,6 +128,7 @@ MESSAGES:
 
 GUI:
     ROLELIST: '&8➽ &6Liste des rôles'
+    ROLES: '&8➽ &6Liste des rôles'
     PARTICLE_SELECT: '&8➽ &6Choix de la particule'
     EFFECT_SELECT: '&8➽ &6Choix de l''effet'
     SETUP: '&8➽ &6Configuration de &6Wolfo'

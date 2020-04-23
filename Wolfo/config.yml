@@ -5,23 +5,25 @@ ANIMATION:
     SELECTION: ARROW
 
 LANGUAGES:
+    DEFAULT: 'fr_fr'
     LIST:
     - 'fr_fr'
     - 'fr_ca'
     - 'en_us'
     - 'en_uk'
-    FR_FR:
-        NAME: '&9Français'
-        ITEM: player head
-        NBT: '{SkullOwner:{Id:"395a599f-9588-4fe2-ada9-07cd81262996",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEyNjlhMDY3ZWUzN2U2MzYzNWNhMWU3MjNiNjc2ZjEzOWRjMmRiZGRmZjk2YmJmZWY5OWQ4YjM1Yzk5NmJjIn19fQ=="}]}}}'
-    FR_CA:
-        NAME: '&cCanadien'
-        ITEM: player head
-        NBT: '{SkullOwner:{Id:"ec3a65b7-41d5-40cf-8a0b-0256d065a57d",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjI0MWE2OTdmNmRmYjFjNTdjZGEzMjdiYWE2NzMyYTc4MjhjMzk4YmU0ZWJmZGJkMTY2YzIzMmJjYWUyYiJ9fX0="}]}}}'
-    EN_US:
-        NAME: '&fAnglais'
-        ITEM: player head
-        NBT: '{SkullOwner:{Id:"ec3a65b7-41d5-40cf-8a0b-0256d065a57d",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjI0MWE2OTdmNmRmYjFjNTdjZGEzMjdiYWE2NzMyYTc4MjhjMzk4YmU0ZWJmZGJkMTY2YzIzMmJjYWUyYiJ9fX0="}]}}}'
+    PROPERTIES:
+        FR_FR:
+            NAME: '&9Français'
+            ITEM: player head
+            NBT: '{SkullOwner:{Id:"395a599f-9588-4fe2-ada9-07cd81262996",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEyNjlhMDY3ZWUzN2U2MzYzNWNhMWU3MjNiNjc2ZjEzOWRjMmRiZGRmZjk2YmJmZWY5OWQ4YjM1Yzk5NmJjIn19fQ=="}]}}}'
+        FR_CA:
+            NAME: '&cCanadien'
+            ITEM: player head
+            NBT: '{SkullOwner:{Id:"ec3a65b7-41d5-40cf-8a0b-0256d065a57d",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjI0MWE2OTdmNmRmYjFjNTdjZGEzMjdiYWE2NzMyYTc4MjhjMzk4YmU0ZWJmZGJkMTY2YzIzMmJjYWUyYiJ9fX0="}]}}}'
+        EN_US:
+            NAME: '&fAnglais'
+            ITEM: player head
+            NBT: '{SkullOwner:{Id:"ec3a65b7-41d5-40cf-8a0b-0256d065a57d",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjI0MWE2OTdmNmRmYjFjNTdjZGEzMjdiYWE2NzMyYTc4MjhjMzk4YmU0ZWJmZGJkMTY2YzIzMmJjYWUyYiJ9fX0="}]}}}'
 
 # Envie de rajouter des cosmétiques ?
 # Voici un exemple :

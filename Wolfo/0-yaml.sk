@@ -20,28 +20,29 @@ on script load:
 	send "&7Please download it at 'https://github.com/Romitou/Wolfo/releases' and add it to the Wolfo folder." to console
 	add 1 to {wolfo::loading::error}
 
-Function wolfoGetText(request: text, lang: text) :: text:
+Function wolfoGet(request: text, lang: player) :: text:
+	set {_lang} to {wolfo::lang::%player%}
 	if yml "lang_%{_lang}%" is not loaded:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&cERR::FILE_NO_EXISTS" if {wolfo::debug::status} is true
+		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::FILE_NO_EXISTS" if {wolfo::debug::status} is true
 		return "ERR::FILE_NO_EXISTS"
 	if yml path {_request} from "lang_%{_lang}%" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
+		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
 		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&aSUCCESSFULLY" if {wolfo::debug::status} is true
-	return yml value {_request} from "lang_%{_lang}%"
+	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+	return yml list {_request} from "lang_%{_lang}%"
 
 Function wolfoGetO(request: text) :: objects:
 	if yml path {_request} from "config" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
+		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
 		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
 	return yml list {_request} from "config"
 
 function wolfoGetL(request: text) :: location: # POUR LES TEXTES (plus utilisé)
 	if yml path {_request} from "config" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
+		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
 		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8REP:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
 	return yml list {_request} from "config"
 
 function wolfoSet(request: text, value: text):
