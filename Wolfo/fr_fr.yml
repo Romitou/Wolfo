@@ -4,7 +4,7 @@ PREFIX:
 
 # Envie de rajouter des cosmétiques ? Partie 2
 # Indiquez simplement :
-#   monexplosion;&cBim &dBam &4Boum
+#   MONEXPLOSION: '&cBim &dBam &4Boum'
 #      ID ^          NOM ^
 
 COSMETICS:
