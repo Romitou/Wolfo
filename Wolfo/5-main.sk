@@ -140,9 +140,9 @@ on join:
 		kick player due to join wolfoGet("PREFIX.GENERAL", player) and wolfoGet("MESSAGE.TOOMANY", player)
 	else if {wolfo::game::start} is set:
 		kick player due to join wolfoGet("PREFIX.GENERAL", player) and wolfoGet("MESSAGE.ALREADYSTART", player)
-	else if wolfoGet("GAME.PRIVACY") is "CLOSED":
+	else if wolfoGetO("GAME.PRIVACY") is "CLOSED":
 		kick player due to join wolfoGet("PREFIX.GENERAL", player) and wolfoGet("MESSAGE.PRIVACY.CLOSED", player)
-	else if wolfoGet("GAME.PRIVACY") is "WHITELISTED":
+	else if wolfoGetO("GAME.PRIVACY") is "WHITELISTED":
 		if wolfoGetO("GAME.WHITELIST") do not contain player:
 			kick player due to join wolfoGet("PREFIX.GENERAL", player) and wolfoGet("MESSAGE.PRIVACY.WHITELISTED", player)
 	else:
@@ -153,51 +153,51 @@ on join:
 
 on quit:
 	set quit message to ""
-	loop all player:
+	loop all players:
 		message join wolfoGet("PREFIX.GENERAL", loop-player), "&e%player% ", wolfoGet("MESSAGE.LEFT", loop-player) and " &8(&7%amount of all players%&8/&75&8)" to loop-player
 	wolfoLeave(player)
 
 on inventory click:
-	if name of event-item is wolfoGetO("ITEM.COSM"):
+	if name of event-item is wolfoGet("ITEM.COSM", player):
 		cancel event
 		wolfoCosmetic(1, player)
-	else if name of event-item is wolfoGetO("ITEM.COSM_OFF"):
+	else if name of event-item is wolfoGet("ITEM.COSM_OFF", player):
 		cancel event
 		wolfoCosmetic(4, player)
-	else if name of event-item is wolfoGetO("ITEM.INFO"):
+	else if name of event-item is wolfoGet("ITEM.INFO", player):
 		cancel event
 		wolfoMenuRoles(player)
-	else if name of event-item is wolfoGetO("ITEM.VOTE"):
+	else if name of event-item is wolfoGet("ITEM.VOTE", player):
 		wolfoVote(player)
-	else if name of event-item is wolfoGetO("ITEM.EXIT"):
+	else if name of event-item is wolfoGet("ITEM.EXIT", player):
 		cancel event
 		kick player due to join wolfoGet("PREFIX.GENERAL", player) and wolfoGet("MESSAGE.GOODLEFT", player)
-	else if name of event-item is wolfoGetO("ITEM.SETUP"):
+	else if name of event-item is wolfoGet("ITEM.SETUP", player):
 		cancel event
 		wolfoMenu(player, "SETUP")
-	else if name of event-item is wolfoGetO("ITEM.MANAGE"):
+	else if name of event-item is wolfoGet("ITEM.MANAGE", player):
 		cancel event
 		wolfoMenu(player, "MANAGE")
 
 on click:
-	if name of player's tool is wolfoGetO("ITEM.COSM"):
+	if name of player's tool is wolfoGet("ITEM.COSM", player):
 		cancel event
 		wolfoCosmetic(1, player)
-	else if name of player's tool is wolfoGetO("ITEM.COSM_OFF"):
+	else if name of player's tool is wolfoGet("ITEM.COSM_OFF", player):
 		cancel event
 		wolfoCosmetic(4, player)
-	else if name of player's tool is wolfoGetO("ITEM.INFO"):
+	else if name of player's tool is wolfoGet("ITEM.INFO", player):
 		cancel event
 		wolfoMenuRoles(player)
-	else if name of player's tool is wolfoGetO("ITEM.VOTE"):
+	else if name of player's tool is wolfoGet("ITEM.VOTE", player):
 		wolfoVote(player)
-	else if name of player's tool is wolfoGetO("ITEM.EXIT"):
+	else if name of player's tool is wolfoGet("ITEM.EXIT", player):
 		cancel event
 		kick player due to join wolfoGet("PREFIX.GENERAL", player) and wolfoGet("MESSAGE.GOODLEFT", player)
-	else if name of player's tool is wolfoGetO("ITEM.SETUP"):
+	else if name of player's tool is wolfoGet("ITEM.SETUP", player):
 		cancel event
 		wolfoMenu(player, "SETUP")
-	else if name of player's tool is wolfoGetO("ITEM.MANAGE"):
+	else if name of player's tool is wolfoGet("ITEM.MANAGE", player):
 		cancel event
 		wolfoMenu(player, "MANAGE")
 

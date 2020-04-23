@@ -53,7 +53,7 @@ function wolfoGiveRoles():
 		send join wolfoGet("PREFIX.GENERAL", loop-value), wolfoGet("MESSAGE.REVEAL", loop-value) and wolfoGet("ROLES.%{_input::%loop-index%}%.NAME", loop-value) to loop-value
 		add loop-value to {wolfo::role::list::%{_input::%loop-index%}%::*}
 		clear loop-value's inventory
-		set slot 4 of loop-value to a book named wolfoGetO("ITEM.VOTE")
+		set slot 4 of loop-value to wolfoGetO("ITEM.VOTE")
 		set {_item} to wolfoGetO("ROLES.%{_input::%loop-index%}%.ITEM")
 		set {_nbt} to wolfoGetO("ROLES.%{_input::%loop-index%}%.NBT")
 		set {_name} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME", loop-value)
@@ -149,7 +149,7 @@ function wolfoMain(i: integer):
 				set {wolfo::timer} to wolfoGetO("TIME.VOTE")
 				while {wolfo::timer} is higher than 0:
 					loop all players:
-						set {_name} to wolfoGet("ROLES.%loop-value%.NAME", loop-player)
+						set {_name} to wolfoGet("ROLES.%loop-value-1%.NAME", loop-player)
 						send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to loop-player
 					remove 1 from {wolfo::timer}
 					wait 1 second
@@ -229,6 +229,7 @@ function wolfoKill(p: player):
 # Cette partie est particulièrement sensible au niveau des bugs,
 # si cette fonction ne fonctionne pas correctement, merci de nous
 # signaler sur le forum ou sur Discord ! Merci !
+
 function wolfoCheckWin():
 	if size of {wolfo::players::alive::*} is 0:
 		wolfoEnd()
@@ -240,7 +241,7 @@ function wolfoCheckWin():
 	clear {wolfo::game::start}
 	loop {_winners::*}:
 		send title "&6&lWolfo &7&l»" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds
-		set {_role} to wolfoGet("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME")
+		set {_role} to wolfoGet("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME", loop-value)
 		broadcast "&6&lWolfo &7&l» &a%loop-value% &fa gagné la partie avec le rôle %{_role}%&f !"
 	set {_players::*} to players
 	remove {_winners::*} from {_players::*}
@@ -248,7 +249,7 @@ function wolfoCheckWin():
 		send title "&6&lWolfo &7&l»" with subtitle "&cVous avez perdu !" to loop-value for 2 seconds
 	set {wolfo::timer} to 0
 	wait 1 second
-	set {wolfo::timer} to wolfoGet("TIME.END")
+	set {wolfo::timer} to wolfoGetO("TIME.END")
 	while {wolfo::timer} is higher than 0:
 		wait 1 second
 		send action bar "&8[&7%{wolfo::timer}%&8] &6Fermeture de la partie" to all players

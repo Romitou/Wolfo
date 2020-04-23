@@ -133,7 +133,7 @@ GUI:
     PARTICLE_SELECT: '&8➽ &6Choix de la particule'
     EFFECT_SELECT: '&8➽ &6Choix de l''effet'
     SETUP: '&8➽ &6Configuration de &6Wolfo'
-    MANAGE: '&8➽ &6Gestion de &6Wolfo'
+    MANAGE: '&8➽ &6Test'
 
 ITEM:
     COSM: '&8➽ &bCosmétiques &7(clic-droit)'

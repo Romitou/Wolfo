@@ -42,8 +42,8 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 			wolfoSetL("GAME.LOCATIONS.END", position of {_p})
 			send join wolfoGet("PREFIX.GENERAL", {_p}), wolfoGet("MESSAGE.LOCATIONSET", {_p}) and "&7(%position of {_p}%)" to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.END", 0)
-		set {_size} to size of wolfoGetO("GAME.SETUP.STEPS")
-		if size of wolfoGetO("GAME.SETUP.STEPS") is 4:
+		set {_size} to size of wolfoGetOL("GAME.SETUP.STEPS")
+		if size of wolfoGetOL("GAME.SETUP.STEPS") is 4:
 			wolfoSet("GAME.SETUP.FINISH", "true")
 			send join wolfoGet("PREFIX.GENERAL", {_p}) and wolfoGet("MESSAGE.SETUP_FINISHED2", {_p}) to {_p}
 			wolfoDraw("center", "")
