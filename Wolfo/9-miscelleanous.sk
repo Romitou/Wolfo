@@ -5,11 +5,28 @@ on script load:
 		broadcast "&cOops! %{wolfo::loading::error}% errors were encountered while loading."
 		broadcast "&7Please consult the console for more information."
 	else:
-		set {_version} to wolfoGet("VERSION")
-		broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_version}%)"
+		set {_version} to wolfoGetO("VERSION")
+		loop all players:
+			broadcast join wolfoGet("PREFIX.GENERAL", loop-player), wolfoGet("MESSAGE.SUCCESS_LOADING", loop-player) and "&7(v%{_version}%)"
 
-# Pour l'instant ce fichier ne sert à rien...
-# Il sera utile un jour au l'autre ! ;)
+On join:
+	set {_lang::*} to wolfoGetOL("LANGUAGES.LIST")
+	set {wolfo::lang::%player%} to wolfoGetO("LANGUAGES.DEFAULT") if {_lang::*} doesn't contain {wolfo::lang::%player%}
+	set {wolfo::lang::%player%} to wolfoGetO("LANGUAGES.DEFAULT") if {wolfo::lang::%player%} is not set
+	
+
+Command /lang [<text>]:
+	trigger:
+		set {_lang::*} to wolfoGetOL("LANGUAGES.LIST")
+		if arg 1 is not set:
+			message "Langues:"
+			loop {_lang::*}:
+				set {_} to wolfoGetO("LANGUAGES.PROPERTIES.%loop-value in upper case%.NAME")
+				message formatted join "<command:/lang %loop-value%>" and {_}
+		else:
+			if {_lang::*} doesn't contain arg 1:
+				message "Erreur"
+			set {wolfo::lang::%player%} to arg 1
 
 command /debug [<text>]:
 	trigger:
