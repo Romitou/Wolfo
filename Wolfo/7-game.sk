@@ -46,18 +46,18 @@ function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
 	loop {wolfo::players::list::*}:
 		{wolfo::players::role_name::%loop-value%} is not set
-		set {wolfo::players::role::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
+		set {wolfo::players::role::%loop-value%} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME", loop-value)
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
-		set {_desc::*} to wolfoGetO("ROLES.%{_input::%loop-index%}%.DESC")
+		set {_desc::*} to wolfoGet("ROLES.%{_input::%loop-index%}%.DESC", loop-value)
 		send title {_role} to loop-value for 2 seconds
-		send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.REVEAL") and wolfoGet("ROLES.%{_input::%loop-index%}%.NAME") to loop-value
+		send join wolfoGet("PREFIX.GENERAL", loop-value), wolfoGet("MESSAGE.REVEAL", loop-value) and wolfoGet("ROLES.%{_input::%loop-index%}%.NAME", loop-value) to loop-value
 		add loop-value to {wolfo::role::list::%{_input::%loop-index%}%::*}
 		clear loop-value's inventory
-		set slot 4 of loop-value to a book named wolfoGet("ITEM.VOTE")
-		set {_item} to wolfoGet("ROLES.%{_input::%loop-index%}%.ITEM")
-		set {_nbt} to wolfoGet("ROLES.%{_input::%loop-index%}%.NBT")
-		set {_name} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME")
-		set {_lore::*} to wolfoGetO("ROLES.%{_input::%loop-index%}%.DESC")
+		set slot 4 of loop-value to wolfoGetO("ITEM.VOTE")
+		set {_item} to wolfoGetO("ROLES.%{_input::%loop-index%}%.ITEM")
+		set {_nbt} to wolfoGetO("ROLES.%{_input::%loop-index%}%.NBT")
+		set {_name} to wolfoGet("ROLES.%{_input::%loop-index%}%.NAME", loop-value)
+		set {_lore::*} to wolfoGet("ROLES.%{_input::%loop-index%}%.DESC", loop-value)
 		# Cette syntaxe étant buggée, elle sera mise à jour dans une des prochaines versions.
 		# set slot 8 of {_p} to {_item} parsed as material with nbt "%{_nbt}%" named colored "&7Votre rôle: %{_name}%" with lore colored {_lore::*} # C'est pas beau mais ça sera réglé prochainement.
 		wait 4 ticks
@@ -146,10 +146,11 @@ function wolfoMain(i: integer):
 				size of {wolfo::role::list::%loop-value%::*} is not 0
 				set {wolfo::vote::current} to loop-value
 				wolfoMenuVote(loop-value)
-				set {wolfo::timer} to wolfoGet("TIME.VOTE")
-				set {_name} to wolfoGet("ROLES.%loop-value%.NAME")
+				set {wolfo::timer} to wolfoGetO("TIME.VOTE")
 				while {wolfo::timer} is higher than 0:
-					send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to all players
+					loop all players:
+						set {_name} to wolfoGet("ROLES.%loop-value-1%.NAME", loop-player)
+						send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to loop-player
 					remove 1 from {wolfo::timer}
 					wait 1 second
 				loop-value is "CUPID":
@@ -160,7 +161,8 @@ function wolfoMain(i: integer):
 					set {_result::*} to wolfoMostVoted()
 					set {wolfo::results::WEREWOLF} to {_result::1}
 				{wolfo::results::%loop-value%} is not set:
-					broadcast join wolfoGet("PREFIX.GENERAL") and "&fLe rôle %{_name}%&f n'a pas joué ..."
+					loop all players:
+						message join wolfoGet("PREFIX.GENERAL", loop-player) and "&fLe rôle %{_name}%&f n'a pas joué ..." to loop-player
 				close {wolfo::role::list::%loop-value%::*}'s inventory
 			wolfoTime()
 		else if {wolfo::game::status} is "DAY":
@@ -170,7 +172,7 @@ function wolfoMain(i: integer):
 					wolfoDraw("kill", "%loop-value%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
-			set {wolfo::timer} to wolfoGet("TIME.DEBATE")
+			set {wolfo::timer} to wolfoGetO("TIME.DEBATE")
 			while {wolfo::timer} is higher than 0:
 				wait 1 second
 				send action bar "&8[&7%{wolfo::timer}%&8] &6Discussion" to all players
@@ -178,7 +180,7 @@ function wolfoMain(i: integer):
 			clear {wolfo::vote::*}
 			clear {wolfo::results::*}
 			set {wolfo::vote::open} to true
-			set {wolfo::timer} to wolfoGet("TIME.VOTE")
+			set {wolfo::timer} to wolfoGetO("TIME.VOTE")
 			while {wolfo::timer} is higher than 0:
 				wait 1 second
 				send action bar "&8[&7%{wolfo::timer}%&8] &6Vote des villageois" to all players
@@ -227,6 +229,7 @@ function wolfoKill(p: player):
 # Cette partie est particulièrement sensible au niveau des bugs,
 # si cette fonction ne fonctionne pas correctement, merci de nous
 # signaler sur le forum ou sur Discord ! Merci !
+
 function wolfoCheckWin():
 	if size of {wolfo::players::alive::*} is 0:
 		wolfoEnd()
@@ -238,7 +241,7 @@ function wolfoCheckWin():
 	clear {wolfo::game::start}
 	loop {_winners::*}:
 		send title "&6&lWolfo &7&l»" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds
-		set {_role} to wolfoGet("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME")
+		set {_role} to wolfoGet("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME", loop-value)
 		broadcast "&6&lWolfo &7&l» &a%loop-value% &fa gagné la partie avec le rôle %{_role}%&f !"
 	set {_players::*} to players
 	remove {_winners::*} from {_players::*}
@@ -246,7 +249,7 @@ function wolfoCheckWin():
 		send title "&6&lWolfo &7&l»" with subtitle "&cVous avez perdu !" to loop-value for 2 seconds
 	set {wolfo::timer} to 0
 	wait 1 second
-	set {wolfo::timer} to wolfoGet("TIME.END")
+	set {wolfo::timer} to wolfoGetO("TIME.END")
 	while {wolfo::timer} is higher than 0:
 		wait 1 second
 		send action bar "&8[&7%{wolfo::timer}%&8] &6Fermeture de la partie" to all players
