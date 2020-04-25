@@ -1,7 +1,7 @@
 on script load:
-	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&6&lWolfo &7&l» &7Loading cosmetics ..." to ops
+	send "&3&lWolfo &f&l» &7Loading cosmetics ..." to ops
 	set {wolfo::loading} to now
 
 
@@ -102,11 +102,11 @@ function wolfoCosmetic(type: integer, p: player):
 		set {_effect} to colored {wolfo::cosmetic::%{_p}%::1::name}
 		set {_particle} to colored {wolfo::cosmetic::%{_p}%::2::name}
 		if {wolfo::cosmetic::%{_p}%::2} is not set:
-			send join wolfoGetText("PREFIX.GENERAL", 2, {_p}), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
 		else:
-			send join wolfoGetText("PREFIX.GENERAL", 2, {_p}), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect}, "&fen ", {_particle} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect}, "&fen ", {_particle} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
 	else if {_type} is 4:
 		clear {wolfo::cosmetic::%{_p}%::active}
 		stopEffect "wolfo-%{_p}%"
 		set slot 0 of {_p} to a enchanted book named wolfoGetText("ITEM.COSM", 2, {_p})
-		send join wolfoGetText("PREFIX.GENERAL", 2, {_p}) and wolfoGetText("MESSAGE.COSMETICS.OFF", 2, {_p}) to {_p}
+		send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.COSMETICS.OFF", 2, {_p}) to {_p}
