@@ -19,7 +19,7 @@ on chat:
 					loop {wolfo::players::role::WEREWOLF::*}:
 						send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value
 				else:
-					send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.MUTED")
+					send join wolfoGetText("PREFIX.GENERAL", 2, {_p}) and wolfoGetText("MESSAGE.MUTED", 2, {_p})
 			else:
 				broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
 	else:

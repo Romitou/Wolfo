@@ -5,11 +5,16 @@ on script load:
 		broadcast "&cOops! %{wolfo::loading::error}% errors were encountered while loading."
 		broadcast "&7Please consult the console for more information."
 	else:
-		set {_version} to wolfoGet("VERSION")
-		broadcast join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.SUCCESS_LOADING") and "&7(V%{_version}%)"
+		set {_version} to wolfoGetText("VERSION", 1)
+		loop all players:
+			message join wolfoGetText("PREFIX.GENERAL", 2, loop-player), wolfoGetText("MESSAGE.SUCCESS_LOADING", 2, loop-player) and "&7(v%{_version}%)" to loop-player
 
-# Pour l'instant ce fichier ne sert à rien...
-# Il sera utile un jour au l'autre ! ;)
+on join:
+	loop all loaded yml files from directory "plugins/Wolfo/lang":
+		set {_} to loop-value
+		replace all "lang_" with "" in {_}
+		add {_} to {_lang::*}
+	set {wolfo::players::lang::%player%} to wolfoGetText("LANGUAGES.DEFAULT", 1) if {_lang::*} doesn't contain {wolfo::players::lang::%player%}
 
 command /debug [<text>]:
 	trigger:
