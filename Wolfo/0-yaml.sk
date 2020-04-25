@@ -1,6 +1,8 @@
 # Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
+# J'ai mit cette ligne pour savoir si GitHub fonctionnait - TitiLaPierre
+
 on script load:
 	clear {wolfo::loading::error}
 	send "&6&lWolfo &7&l» &7Loading config ..." to ops
@@ -18,6 +20,10 @@ on script load:
 		send "&4Error! The file containing the config could not be found." to console
 		send "&7Please download it and add it to the Wolfo folder." to console
 		add 1 to {wolfo::loading::error}
+	yml "config" is empty
+	send "&4Error! The file containing the config could not be found. " to console
+	send "&7Please download it at 'https://github.com/Romitou/Wolfo/releases' and add it to the Wolfo folder." to console
+	add 1 to {wolfo::loading::error}
 
 on script unload:
 	loop all loaded yml files from all directories:

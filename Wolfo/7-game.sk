@@ -149,7 +149,9 @@ function wolfoMain(i: integer):
 				set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as int
 				set {_name} to wolfoGetText("ROLES.%loop-value%.NAME", 2, loop-value)
 				while {wolfo::timer} is higher than 0:
-					send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to all players
+					loop all players:
+						set {_name} to wolfoGet("ROLES.%loop-value-1%.NAME", loop-player)
+						send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to loop-player
 					remove 1 from {wolfo::timer}
 					wait 1 second
 				loop-value is "CUPID":
@@ -228,6 +230,7 @@ function wolfoKill(p: player):
 # Cette partie est particulièrement sensible au niveau des bugs,
 # si cette fonction ne fonctionne pas correctement, merci de nous
 # signaler sur le forum ou sur Discord ! Merci !
+
 function wolfoCheckWin():
 	if size of {wolfo::players::alive::*} is 0:
 		wolfoEnd()

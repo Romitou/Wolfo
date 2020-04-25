@@ -103,7 +103,7 @@ ROLES:
         AURA: TOWNSFOLK
 
 MANAGE:
-    FORCESTART: 'green concrete'
+    FORCESTART: 'light green dye'
     SEPARATOR: 'purple stained glass pane'
     CLOSED: 'red dye'
     WHITELIST: 'orange dye'

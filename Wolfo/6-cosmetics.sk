@@ -56,6 +56,7 @@ function wolfoDraw(type: text, p: text):
 # D'autres cosmétiques seront ajoutées dans les
 # futures versions. Vous pouvez nous faire part de
 # vos idées sur le forum ou sur notre Discord.
+
 function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:
 		if {_type} is 1:
