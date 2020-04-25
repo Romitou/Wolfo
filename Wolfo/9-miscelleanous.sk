@@ -1,13 +1,13 @@
 on script load:
-	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	if {wolfo::loading::error} is set:
+	{wolfo::loading::error} is set:
 		broadcast "&cOops! %{wolfo::loading::error}% errors were encountered while loading."
-		broadcast "&7Please consult the console for more information."
+		send "&7Please consult the console for more information about errors." to ops
+		send "&7Please visit https://github.com/Romitou/Wolfo/wiki for help." to console
 	else:
 		set {_version} to wolfoGetText("VERSION", 1)
-		loop all players:
-			message join wolfoGetText("PREFIX.GENERAL", 2, loop-player), wolfoGetText("MESSAGE.SUCCESS_LOADING", 2, loop-player) and "&7(v%{_version}%)" to loop-player
+		broadcast join "&3&lWolfo &f&l» &aWolfo started without intern errors! " and "&7(v%{_version}%)"
 
 on join:
 	loop all loaded yml files from directory "plugins/Wolfo/lang":
@@ -19,24 +19,24 @@ on join:
 command /debug [<text>]:
 	trigger:
 		player is not op:
-			send "Vous n'êtes pas un opérateur."
+			send "&3&lWolfo &f&l» &7You're not an &coperator&7."
 		else:
 			arg-1 is "debug":
 				if {wolfo::debug::status} is set:
-					send "Le mode de développement a été désactivé."
+					send "&3&lWolfo &f&l» &7The developement mode is &aenabled&7."
 					clear {wolfo::debug::status}
 				else:
-					send "Le mode de développement a été activé."
+					send "&3&lWolfo &f&l» &7The developement mode is &cdisabled&7."
 					set {wolfo::debug::status} to true
 			else if arg-1 is "addplayer":
 				set {_r} to random element out of players
 				add {_r} to {wolfo::debug::list::*}
-				send "%{_r}% a été ajouté au mode de développement."
+				send "&3&lWolfo &f&l» &e%{_p}%&7 is &aadded &7to developement mode."
 			else:
-				send "&8&m               &r&8[ &6Rapport de dysfonctionnement Wolfo &8]&m               &r"
-				send "&eGénéré le: &7%now%"
-				send "&eRapport détaillé:"
-				set {_debug} to "&7Erreurs: &8%{wolfo::loading::error}%||&7Démarrage: &8%{wolfo::game::start}%||&7Statut: &8%{wolfo::game::status}%||&7Nom des rôles: &8%{wolfo::players::role_name::*}%||&7Liste des joueurs en jeu: &8%{wolfo::players::list::*}%||&7Liste des joueurs: &8%all players%||&7Liste des joueurs en vie: &8%{wolfo::players::alive::*}%||&7Jour: &8%{wolfo::game::day}%||&7Chargement:&8 %{wolfo::loading}%||&7Tour: &8%{wolfo::role::round::*}%||&7Actuel:&8 %{wolfo::current}%||&7Votes: &8%{wolfo::vote::*}%||&7Résultats: &8%{wolfo::results::*}%||&7Amoureux: &8%{wolfo::game::lovers::*}%||&7Compteur: &8%{wolfo::timer}%||&7Mode développement: &8%{wolfo::debug::status}%"
-				replace all "<none>" with "&8Aucune donnée" in {_debug}
+				send "&8&m                  &r&8[ &6Bug report and details of Wolfo &8]&m                  &r"
+				send "&eGenerated at: &7%now%"
+				send "&eDetailled report:"
+				set {_debug} to "&7Errors: &8%{wolfo::loading::error}%||&7Starting: &8%{wolfo::game::start}%||&7Status: &8%{wolfo::game::status}%||&7Roles names: &8%{wolfo::players::role_name::*}%||&7Players in game: &8%{wolfo::players::list::*}%||&7Players: &8%all players%||&7Alive players: &8%{wolfo::players::alive::*}%||&7Day: &8%{wolfo::game::day}%||&7Loading:&8 %{wolfo::loading}%||&7Round: &8%{wolfo::role::round::*}%||&7Actual:&8 %{wolfo::current}%||&7Votes: &8%{wolfo::vote::*}%||&7Results: &8%{wolfo::results::*}%||&7Lovers: &8%{wolfo::game::lovers::*}%||&7Timer: &8%{wolfo::timer}%||&7Development mode: &8%{wolfo::debug::status}%"
+				replace all "<none>" with "&8no data" in {_debug}
 				loop {_debug} split at "||":
 					send "  &f● &7%loop-value%"
