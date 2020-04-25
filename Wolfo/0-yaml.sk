@@ -7,67 +7,75 @@ on script load:
 	clear {wolfo::loading::error}
 	send "&6&lWolfo &7&l» &7Loading config ..." to ops
 	set {wolfo::loading} to now
-	load yaml "plugins/Wolfo/config.yml" as "config"
-	set {_languages::*} to yml list "LANGUAGES.LIST" from "config"
-	if size of {_languages::*} is 0:
-		add "fr_fr" to {_languages::*}
-	loop {_languages::*}:
-		load yaml "plugins/Wolfo/lang/%loop-value%.yml" as "lang_%loop-value%"
-		yml "lang_%loop-value%" is empty
-		send "&4Error! The file containing the language '%loop-value%' could not be found." to console
-		send "&7Please download it at 'https://github.com/Romitou/Wolfo/releases' and add it to the Wolfo folder." to console
+	load yml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
+	load all yml from directory "plugins/Wolfo/lang"
+	loop all loaded yml files from directory "plugins/Wolfo/lang":
+		set {_} to loop-value
+		replace all "plugins/Wolfo/lang/" and ".yml" with "" in {_}
+		unload yml loop-value
+		load yml loop-value as "lang_%{_}%"
+	if amount of loaded yml files from directory "plugins/Wolfo/lang" is 0:
+		load yml "plugins/Wolfo/lang/fr_fr.yml" as "lang_fr_fr" if amount of loaded yml files from directory "plugins/Wolfo/lang" is 0
+	if yaml "config" is empty:
+		send "&4Error! The file containing the config could not be found." to console
+		send "&7Please download it and add it to the Wolfo folder." to console
 		add 1 to {wolfo::loading::error}
 	yml "config" is empty
 	send "&4Error! The file containing the config could not be found. " to console
 	send "&7Please download it at 'https://github.com/Romitou/Wolfo/releases' and add it to the Wolfo folder." to console
 	add 1 to {wolfo::loading::error}
 
-On unload:
-	set {_languages::*} to yml list "LANGUAGES.LIST" from "config"
-	unload yml "config"
-	loop {_languages::*}:
-		unload yml "lang_%loop-value%"
+on script unload:
+	loop all loaded yml files from all directories:
+		unload yml loop-value
 
-Function wolfoGet(request: text, p: player) :: text: # Single text
-	set {_lang} to {wolfo::lang::%{_p}%}
-	if yml "lang_%{_lang}%" is not loaded:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::FILE_NO_EXISTS" if {wolfo::debug::status} is true
-		return "ERR::FILE_NO_EXISTS"
-	if yml path {_request} from "lang_%{_lang}%" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
-		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
-	return yml value {_request} from "lang_%{_lang}%"
+function wolfoGetText(request: text, type: int, p: player="") :: text: # Single Text
+	if {_type} is 1:
+		if yml path {_request} from "config" doesn't exist:
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7config &f- &8TYPE:&7TEXT &f- &8RETURN:&cINVALID_PATH" if {wolfo::debug::status} is true
+			return {_request}
+		broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7config &f- &8TYPE:&7TEXT &f- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+		return yml value {_request} from "config"
+	if {_type} is 2:
+		set {_lang} to {wolfo::players::lang::%{_p}%}
+		if yml "lang_%{_lang} in lower case%" is not loaded:
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7lang_%{_lang} in lower case% &f- &8TYPE:&7TEXT &f- &8RETURN:&cNO_FILE" if {wolfo::debug::status} is true
+			return {_request}
+		if {_p} is "":
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7lang_%{_lang} in lower case% &f- &8TYPE:&7TEXT &f- &8RETURN:&cNO_PLAYER" if {wolfo::debug::status} is true
+			return {_request}
+		if yml path {_request} from "lang_%{_lang}%" doesn't exist:
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7lang_%{_lang} in lower case% &f- &8TYPE:&7TEXT &f- &8RETURN:&cINVALID_PATH" if {wolfo::debug::status} is true
+			return {_request}
+		broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7lang_%{_lang} in lower case% &f- &8TYPE:&7TEXT &f- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+		return yml value {_request} from "lang_%{_lang} in lower case%"
 
-Function wolfoGetM(request: text, p: player) :: texts: # Multiple texts
-	set {_lang} to {wolfo::lang::%{_p}%}
-	if yml "lang_%{_lang}%" is not loaded:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::FILE_NO_EXISTS" if {wolfo::debug::status} is true
-		return "ERR::FILE_NO_EXISTS"
-	if yml path {_request} from "lang_%{_lang}%" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
-		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
-	return yml list {_request} from "lang_%{_lang}%"
+function wolfoGetMultipleText(request: text, type: int, p: player="") :: texts: # Multiple Text
+	if {_type} is 1:
+		if yml path {_request} from "config" doesn't exist:
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7config &f- &8TYPE:&7MULTIPLETEXT &f- &8RETURN:&cINVALID_PATH" if {wolfo::debug::status} is true
+			return {_request}
+		broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7config &f- &8TYPE:&7TEXT &f- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+		return yml list {_request} from "config"
+	if {_type} is 2:
+		set {_lang} to {wolfo::players::lang::%{_p}%}
+		if yml "lang_%{_lang} in lower case%" is not loaded:
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7lang_%{_lang} in lower case% &f- &8TYPE:&7TEXT &f- &8RETURN:&cNO_FILE" if {wolfo::debug::status} is true
+		if {_p} is "":
+			return {_request}
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7MULTIPLETEXT &f- &8RETURN:&cNO_PLAYER" if {wolfo::debug::status} is true
+			return {_request}
+		if yml path {_request} from "lang_%{_lang}%" doesn't exist:
+			broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7MULTIPLETEXT &f- &8RETURN:&cINVALID_PATH" if {wolfo::debug::status} is true
+			return {_request}
+		broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7lang_%{_lang} in lower case% &f- &8TYPE:&7TEXT &f- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+		return yml list {_request} from "lang_%{_lang} in lower case%"
 
-Function wolfoGetO(request: text) :: object: # Single object
-	if yml path {_request} from "config" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
-		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
-	return yml value {_request} from "config"
-
-Function wolfoGetOL(request: text) :: objects: # Multiple objects
-	if yml path {_request} from "config" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
-		return "ERR::INVALID_PATH"
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
-	return yml list {_request} from "config"
-
-function wolfoGetL(request: text) :: location: # Location
-	if yml path {_request} from "config" doesn't have value:
-		broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&cERR::INVALID_PATH" if {wolfo::debug::status} is true
-	broadcast "&8[&7DEBUG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT &7- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
+function wolfoGetLoc(request: text) :: location: # Locations
+	if yml path {_request} from "config" doesn't exist:
+		broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7config &f- &8TYPE:&7LOCATION &f- &8RETURN:&cINVALID_PATH" if {wolfo::debug::status} is true
+		return {_request}
+		broadcast "&8[YAML &7DEBUG&8]: &8REQ:&7%{_request}% &8IN:&7config &f- &8TYPE:&7TEXT &f- &8RETURN:&aSUCCESSFULLY" if {wolfo::debug::status} is true
 	return yml value {_request} from "config"
 
 function wolfoSet(request: text, value: text):

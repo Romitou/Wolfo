@@ -9,7 +9,7 @@ on script load:
 
 function wolfoSbPlayer(p: player, i: integer):
 	if {_i} is 0:
-		set title of {_p}'s scoreboard to wolfoGet("PREFIX.TITLE", {_p})
+		set title of {_p}'s scoreboard to wolfoGetText("PREFIX.TITLE", 2, {_p})
 		set line 12 of {_p}'s scoreboard to "&1"
 		set line 11 of {_p}'s scoreboard to "&6&l» &f&lPartie:"
 		set line 10 of {_p}'s scoreboard to "&2"
@@ -24,11 +24,11 @@ function wolfoSbPlayer(p: player, i: integer):
 
 function wolfoSb(p: objects):
 	set {_status} to {wolfo::game::status}
+	set {_day} to {wolfo::game::day}
 	loop {_p::*}:
-		set {_status} to wolfoGet("MESSAGE.TIME.%{_status}%", loop-value)
-		set {_day} to {wolfo::game::day}
-		set {_config} to wolfoGet("MESSAGE.GAMETYPE.%wolfoGetConfig()%", loop-value)
-		set line 9 of {_p::*}'s scoreboard to " &6● &eStatut &f&l» %{_status}%"
+		set {_status} to wolfoGetText("MESSAGE.TIME.%{_status}%", 2, loop-value)
+		set {_config} to wolfoGetText("MESSAGE.GAMETYPE.%wolfoGetConfig()%", 2, loop-value)
+		set line 9 of loop-value's scoreboard to " &6● &eStatut &f&l» %{_status}%"
 		set {_players} to size of {wolfo::players::alive::*} otherwise size of all players
 		if {_players} isn't 0 or 1:
 			set line 8 of loop-value's scoreboard to " &6● &eConnectés &f&l» &7%{_players}% joueurs"
