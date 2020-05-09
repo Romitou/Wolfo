@@ -107,7 +107,7 @@ function wolfoResult() :: objects:
 	broadcast "&3&lWolfo &f&l» &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." if {wolfo::results::SEER} is set
 	broadcast "&3&lWolfo &f&l» &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." if {wolfo::results::SEER_AURA} is set
 	if {_voted} is set:
-		broadcast "&3&lWolfo &f&l» &f... et &e%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f."
+		broadcast "&3&lWolfo &f&l» &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f."
 		clear {wolfo::results::*}
 		return {_voted}
 	else:
@@ -202,7 +202,7 @@ function wolfoMain(i: integer):
 				broadcast "&3&lWolfo &f&l» &f... mais en fait non."
 			else:
 				# On parse as offline player pour garder la casse des pseudos.
-				broadcast "&3&lWolfo &f&l» &f... et élimine &e%{_result::1} parsed as offline player%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
+				broadcast "&3&lWolfo &f&l» &f... et élimine &b%{_result::1} parsed as offline player%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
 				wolfoDraw("kill", "%{_result::1}%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true

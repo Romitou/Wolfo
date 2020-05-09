@@ -86,7 +86,7 @@ function wolfoWhitelist(executor: player, target: text, action: integer):
 				if {_check::*} is not set:
 					add "&8Aucun joueur." to {_check::*}
 				loop {_check::*}:
-					send "&e[&6%loop-index%&e] &f%loop-value%" to {_executor}
+					send "&b[&6%loop-index%&b] &f%loop-value%" to {_executor}
 				send wolfoGetText("MESSAGE.WHITELIST.LIST.2", 2, {_executor}) to {_executor}
 
 function wolfoCheckStart(p: player):
@@ -108,7 +108,7 @@ function wolfoCheckStart(p: player):
 		send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MISSINGCONFIG", 2, {_p}) to {_p}
 
 function wolfoStart():
-	send "&3&lWolfo &f&l» &fWolfo a été développé par &eXamez##8497&f et &eRomitou##9685&f. Si vous avez la moindre question, rejoignez notre Discord : https://discordapp.com/invite/37nvkpk !" to all players
+	send "&3&lWolfo &f&l» &fWolfo a été développé par &bXamez##8497&f et &bRomitou##9685&f. Si vous avez la moindre question, rejoignez notre Discord : https://discordapp.com/invite/37nvkpk !" to all players
 	{wolfo::debug::status} is true:
 		set {wolfo::players::list::*} to {wolfo::debug::list::*}
 		set {wolfo::players::alive::*} to {wolfo::debug::list::*}
@@ -133,7 +133,7 @@ function wolfoEnd():
 
 on join:
 	if player is op:
-		set join message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&e%player% ", wolfoGetText("MESSAGE.JOINED", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
+		set join message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&b%player% ", wolfoGetText("MESSAGE.JOINED", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
 	else if size of all players is greater than or equal to 25:
 		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.TOOMANY", 2, player)
@@ -145,11 +145,11 @@ on join:
 		if wolfoGetMultipleText("GAME.WHITELIST", 1) do not contain player:
 			kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, player)
 	else:
-		set join message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&e%player% ", wolfoGetText("MESSAGE.JOINED", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
+		set join message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&b%player% ", wolfoGetText("MESSAGE.JOINED", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
 
 on quit:
-	set quit message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&e%player% ", wolfoGetText("MESSAGE.LEFT", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
+	set quit message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&b%player% ", wolfoGetText("MESSAGE.LEFT", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
 	wolfoLeave(player)
 
 on inventory click:

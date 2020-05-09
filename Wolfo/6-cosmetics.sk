@@ -104,7 +104,7 @@ function wolfoCosmetic(type: integer, p: player):
 		if {wolfo::cosmetic::%{_p}%::2} is not set:
 			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
 		else:
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect}, "&fen ", {_particle} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect}, " &fen ", {_particle} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
 	else if {_type} is 4:
 		clear {wolfo::cosmetic::%{_p}%::active}
 		stopEffect "wolfo-%{_p}%"

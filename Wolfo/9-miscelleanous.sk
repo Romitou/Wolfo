@@ -31,12 +31,12 @@ command /debug [<text>]:
 			else if arg-1 is "addplayer":
 				set {_r} to random element out of players
 				add {_r} to {wolfo::debug::list::*}
-				send "&3&lWolfo &f&l» &e%{_p}%&7 is &aadded &7to developement mode."
+				send "&3&lWolfo &f&l» &b%{_p}%&7 is &aadded &7to developement mode."
 			else:
 				send "&8&m                  &r&8[ &6Bug report and details of Wolfo &8]&m                  &r"
-				send "&eGenerated at: &7%now%"
-				send "&eDetailled report:"
-				set {_debug} to "&7Errors: &8%{wolfo::loading::error}%||&7Starting: &8%{wolfo::game::start}%||&7Status: &8%{wolfo::game::status}%||&7Roles names: &8%{wolfo::players::role_name::*}%||&7Players in game: &8%{wolfo::players::list::*}%||&7Players: &8%all players%||&7Alive players: &8%{wolfo::players::alive::*}%||&7Day: &8%{wolfo::game::day}%||&7Loading:&8 %{wolfo::loading}%||&7Round: &8%{wolfo::role::round::*}%||&7Actual:&8 %{wolfo::current}%||&7Votes: &8%{wolfo::vote::*}%||&7Results: &8%{wolfo::results::*}%||&7Lovers: &8%{wolfo::game::lovers::*}%||&7Timer: &8%{wolfo::timer}%||&7Development mode: &8%{wolfo::debug::status}%"
-				replace all "<none>" with "&8no data" in {_debug}
+				send "&bGenerated at: &7%now%"
+				send "&bDetailled report:"
+				set {_debug} to "&bErrors: &7%{wolfo::loading::error}%||&bStarting: &7%{wolfo::game::start}%||&bStatus: &7%{wolfo::game::status}%||&bRoles names: &7%{wolfo::players::role_name::*}%||&bPlayers in game: &7%{wolfo::players::list::*}%||&bPlayers: &7%all players%||&bAlive players: &7%{wolfo::players::alive::*}%||&bDay: &7%{wolfo::game::day}%||&bLoading:&7 %{wolfo::loading}%||&bRound: &7%{wolfo::role::round::*}%||&bActual:&7 %{wolfo::current}%||&bVotes: &7%{wolfo::vote::*}%||&bResults: &7%{wolfo::results::*}%||&bLovers: &7%{wolfo::game::lovers::*}%||&bTimer: &7%{wolfo::timer}%||&bDevelopment mode: &7%{wolfo::debug::status}%"
+				replace all "<none>" with "&7no data" in {_debug}
 				loop {_debug} split at "||":
-					send "  &f● &7%loop-value%"
+					send "  &f● %loop-value%"
