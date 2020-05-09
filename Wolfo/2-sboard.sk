@@ -29,7 +29,7 @@ function wolfoSb(p: objects):
 		set {_status} to wolfoGetText("MESSAGE.TIME.%{_status}%", 2, loop-value)
 		set {_config} to wolfoGetText("MESSAGE.GAMETYPE.%wolfoGetConfig()%", 2, loop-value)
 		set line 9 of loop-value's scoreboard to " &3● &bStatut&f&l: %{_status}%"
-		set {_players} to size of {wolfo::players::alive::*} if size of {wolfo::players::alive::*} is set, else size of all players
+		set {_players} to size of players if {wolfo::game::status} is "WAIT", else size of {wolfo::players::alive::*}
 		set line 8 of loop-value's scoreboard to " &3● &bConnectés&f&l: &7%{_players}% joueur(s)"
 		set line 7 of loop-value's scoreboard to " &3● &bConfiguration&f&l: %{_config}%"
 		set line 6 of loop-value's scoreboard to " &3● &bJour&f&l: &7n°%{_day}%"

@@ -172,7 +172,6 @@ function wolfoMenu(p: player, type: text):
 			set {_item} to wolfoGetText("%loop-node%", 1) parsed as material
 			set {_lore::*} to wolfoGetMultipleText("%loop-node%.LORE", 2, {_p})
 			{_type} is "SETUP":
-				broadcast "%{_steps::*}% %loop-node%"
 				{_steps::*} contains "%loop-node%"
 				add "&2✔ &aTerminé !" and "" to {_lore::*}
 			make a gui slot {_loop} of {_p} with {_item} named colored wolfoGetText("%loop-node%.NAME", 2, {_p}) with lore colored {_lore::*} to run:
