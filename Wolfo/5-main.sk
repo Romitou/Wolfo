@@ -14,7 +14,7 @@ function wolfoInitialize():
 
 function wolfoHelp(msg: text, p: player):
 	send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.%{_msg}%.TITLE", 2, {_p}) to {_p}
-	set {_help::%{_msg}%::*} to wolfoGetText("MESSAGE.%{_msg}%.MSG", 2, {_p})
+	set {_help::%{_msg}%::*} to wolfoGetMultipleText("MESSAGE.%{_msg}%.MSG", 2, {_p})
 	loop {_help::%{_msg}%::*}:
 		send colored loop-value to {_p}
 
@@ -33,6 +33,8 @@ function wolfoJoin(p: player):
 	set {wolfo::players::role::%{_p}%} to "&7Aucun"
 	set {wolfo::players::life::%{_p}%} to "&aEn vie"
 	set {wolfo::players::lang::%{_p}%} to wolfoGetText("LANGUAGES.DEFAULT", 1)
+	add {_p} to {wolfo::players::list::*}
+	add {_p} to {wolfo::players::alive::*}
 	wolfoSbPlayer({_p}, 0)
 	wait 1 second
 	send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.WELCOME", 2, {_p}) to {_p}
@@ -113,14 +115,12 @@ function wolfoStart():
 		set {wolfo::players::list::*} to {wolfo::debug::list::*}
 		set {wolfo::players::alive::*} to {wolfo::debug::list::*}
 		send "&3&lWolfo &f&l» &fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée." to all players
-		broadcast "%{wolfo::players::list::*}% %{wolfo::debug::list::*}%"
 	else:
 		set {wolfo::players::list::*} to players
 		set {wolfo::players::alive::*} to players
 	set {wolfo::spawn::*} to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS")
 	loop {wolfo::players::list::*}:
 		teleport loop-value to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS.%loop-index%")
-		set loop-value's walk speed to 0
 	wolfoGiveRoles()
 	set {wolfo::game::automsg} to false
 	set time of world "world" to 12:00
