@@ -165,15 +165,16 @@ function wolfoMenu(p: player, type: text):
 		wolfoMenuDeco({_p}, {_title}, 3)
 		set {_loop} to 11
 		if {_type} is "SETUP":
-			set {_steps::*} to wolfoGetText("GAME.SETUP.STEPS", 1)
+			set {_steps::*} to wolfoGetMultipleText("GAME.SETUP.STEPS", 1)
 		loop yaml node list "%{_type}%" from "config":
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
 			set {_item} to wolfoGetText("%loop-node%", 1) parsed as material
 			set {_lore::*} to wolfoGetMultipleText("%loop-node%.LORE", 2, {_p})
-			if {_type} is "SETUP":
-				if {_steps::*} contains "%loop-node%":
-					add "&2✔ &aTerminé !" and "" to {_lore::*}
+			{_type} is "SETUP":
+				broadcast "%{_steps::*}% %loop-node%"
+				{_steps::*} contains "%loop-node%"
+				add "&2✔ &aTerminé !" and "" to {_lore::*}
 			make a gui slot {_loop} of {_p} with {_item} named colored wolfoGetText("%loop-node%.NAME", 2, {_p}) with lore colored {_lore::*} to run:
 				wolfoMenuAction({_p}, {_loop}, {_type})
 			add 1 to {_loop}
