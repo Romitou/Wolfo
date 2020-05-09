@@ -59,11 +59,12 @@ MESSAGE:
         les informations !'
     LANG:
         CHANGED: 'Vous avez défini la langue du jeu en '
-        UNKNOWN: '&cCette langue n''existe pas (Liste: /wolfo lang)'
+        UNKNOWN: '&cDésolé, cette langue n''existe pas. Contactez l''opérateur de la partie.'
         WARNING:
         - ''
-        - '&7Attention! Certains éléments demandent de quitter puis'
+        - '&7Attention ! Certains éléments demandent de quitter puis de'
         - '&7revenir sur le serveur pour se charger correctement.'
+        - ''
     SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
     FORCESTART: 'Vous avez correctement démarré la partie de force.'
     FORCESTOP: 'Vous avez correctement arrêté la partie de force.'
@@ -288,7 +289,7 @@ SETUP:
         - '&7Veillez à qu''elle peux être vue par tous les joueurs autour.'
         - ''
     SPAWNPOINT:
-        NAME: 'Points d''apparition'
+        NAME: '&ePoints d''apparition'
         LORE:
         - ''
         - '&8➥ &7Ajoute un &bpoint d''apparition&7 à votre position.'
@@ -312,5 +313,4 @@ SETUP:
         LORE:
         - ''
         - '&8➥ &7Initialise le &cpoint de mort&7 à votre position.'
-        - '&7Les joueurs morts apparaîtrons à cet emplacement.'
         - '&7Les joueurs morts apparaîtrons à cet emplacement.'
