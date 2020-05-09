@@ -169,7 +169,7 @@ function wolfoMenu(p: player, type: text):
 		loop yaml node list "%{_type}%" from "config":
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
-			set {_item} to wolfoGetText("%loop-node%.ITEM", 1) parsed as material
+			set {_item} to wolfoGetText("%loop-node%", 1) parsed as material
 			set {_lore::*} to wolfoGetMultipleText("%loop-node%.LORE", 2, {_p})
 			if {_type} is "SETUP":
 				if {_steps::*} contains "%loop-node%":
@@ -183,30 +183,23 @@ function wolfoLang(p: player, lang: text):
 	if {_lang} is not set:
 		set {_title} to wolfoGetText("GUI.LANG", 2, {_p})
 		wolfoMenuDeco({_p}, {_title}, 6)
-		loop all loaded yml files from directory "plugins/Wolfo/lang":
+		set {_loop} to 11
+		loop {wolfo::config::*}:
+			loop-value is not "config"
+			set {_value} to loop-value
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
-			set {_} to loop-value
-			replace all "lang_" in {_} with ""
-			if wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.ITEM", 1) is not "LANGUAGES.PROPERTIES.%{_} in upper case%.ITEM":
-				set {_item} to wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.ITEM", 1)
-			else:
-				set {_item} to oak wood floor sign
-			if wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.NAME", 1) is not "LANGUAGES.PROPERTIES.%{_} in upper case%.NAME":
-				set name of {_item} to wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.NAME", 1)
-			else:
-				set name of {_item} to {_}
-			add wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.NBT", 1) to nbt of {_item} if wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.NBT", 1) is not "LANGUAGES.PROPERTIES.%{_} in upper case%.NBT"
-			format gui slot {_loop} of {_p} with {_item} named colored wolfoGetText("LANGUAGES.PROPERTIES.%{_} in upper case%.NAME", 1) to run:
-				wolfoLang({_p}, {_})
+			set {_item} to (wolfoGetText("LANGUAGES.PROPERTIES.%{_value}%.ITEM", 1) parsed as material) otherwise (oak wood floor sign)
+			set name of {_item} to (wolfoGetText("LANGUAGES.PROPERTIES.%{_value}%.NAME", 1)) otherwise ({_value})
+			add wolfoGetText("LANGUAGES.PROPERTIES.%{_value}%.NBT", 1) to nbt of {_item}
+			format gui slot {_loop} of {_p} with {_item} named colored wolfoGetText("LANGUAGES.PROPERTIES.%{_value}%.NAME", 1) to run:
+				wolfoLang({_p}, {_value})
+			add 1 to {_loop}
 	else:
-		loop all loaded yml files from directory "plugins/Wolfo/lang":
-			set {_} to loop-value
-			replace all "lang_" in {_} with ""
-			add {_} to {_lang::*}
-		if {_lang::*} doesn't contain {_lang}:
+		if {wolfo::config::*} doesn't contain {_lang}:
 			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LANG.UNKNOWN", 2, {_p}) to {_p}
 		else:
 			set {wolfo::players::lang::%{_p}%} to {_lang}
-			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LANG.CHANGED", 2, {_p}) and colored wolfoGetText("LANGUAGES.PROPERTIES.%{_lang} in upper case%", 1) to {_p}
-			send colored join wolfoGetMultipleText("MESSAGE.LANG.WARNING", 2, {_p}) by nl to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LANG.CHANGED", 2, {_p}), (colored wolfoGetText("LANGUAGES.PROPERTIES.%{_lang}%.NAME", 1) otherwise ("&b%{_lang}%")) and "&f." to {_p}
+			set {_texts::*} to wolfoGetMultipleText("MESSAGE.LANG.WARNING", 2, {_p})
+			send colored {_texts::*} to {_p}
