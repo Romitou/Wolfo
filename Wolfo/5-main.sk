@@ -19,6 +19,9 @@ function wolfoHelp(msg: text, p: player):
 		send colored loop-value to {_p}
 
 function wolfoJoin(p: player):
+	set {wolfo::players::lang::%{_p}%} to wolfoGetText("LANGUAGES.DEFAULT", 1)
+	loop all players:
+		send join wolfoGetText("PREFIX.GENERAL", 1, loop-player), "&b%{_p}% ", wolfoGetText("MESSAGE.JOINED", 2, loop-player) and " &8(&7%amount of all players%&8/&75&8)" to loop-player
 	set {_p}'s xp to 0
 	teleport {_p} to wolfoGetLoc("GAME.LOCATIONS.BEGIN")
 	set {_p}'s gamemode to adventure
@@ -32,9 +35,6 @@ function wolfoJoin(p: player):
 	set slot 2 of {_p} to ender pearl named wolfoGetText("ITEM.MANAGE", 2, {_p}) if {_p} is op
 	set {wolfo::players::role::%{_p}%} to "&7Aucun"
 	set {wolfo::players::life::%{_p}%} to "&aEn vie"
-	set {wolfo::players::lang::%{_p}%} to wolfoGetText("LANGUAGES.DEFAULT", 1)
-	add {_p} to {wolfo::players::list::*}
-	add {_p} to {wolfo::players::alive::*}
 	wolfoSbPlayer({_p}, 0)
 	wait 1 second
 	send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.WELCOME", 2, {_p}) to {_p}
@@ -132,8 +132,8 @@ function wolfoEnd():
 	wolfoInitialize()
 
 on join:
+	set join message to ""
 	if player is op:
-		set join message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&b%player% ", wolfoGetText("MESSAGE.JOINED", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
 	else if size of all players is greater than or equal to 25:
 		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.TOOMANY", 2, player)
@@ -145,7 +145,6 @@ on join:
 		if wolfoGetMultipleText("GAME.WHITELIST", 1) do not contain player:
 			kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, player)
 	else:
-		set join message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&b%player% ", wolfoGetText("MESSAGE.JOINED", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
 		wolfoJoin(player)
 
 on quit:
