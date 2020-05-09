@@ -141,29 +141,29 @@ function wolfoMain(i: integer):
 			set {wolfo::game::round} to true
 			loop {wolfo::role::round::*}:
 				clear {wolfo::vote::*}
-				loop-value is "CUPID":
+				loop-value-1 is "CUPID":
 					{wolfo::game::day} is 0
-				size of {wolfo::role::list::%loop-value%::*} is not 0
-				set {wolfo::vote::current} to loop-value
-				wolfoMenuVote(loop-value)
-				set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as int
-				set {_name} to wolfoGetText("ROLES.%loop-value%.NAME", 2, loop-value)
+				size of {wolfo::role::list::%loop-value-1%::*} is not 0
+				set {wolfo::vote::current} to loop-value-1
+				wolfoMenuVote(loop-value-1)
+				set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as integer
 				while {wolfo::timer} is higher than 0:
-					loop all players:
-						set {_name} to wolfoGet("ROLES.%loop-value-1%.NAME", loop-player)
-						send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to loop-player
+					loop {wolfo::players::list::*}:
+						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", loop-value-2)
+						send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to loop-value-2
 					remove 1 from {wolfo::timer}
 					wait 1 second
-				loop-value is "CUPID":
-					size of {wolfo::results::%loop-value%::*} is 2
-					set {wolfo::game::lovers::*} to {wolfo::results::%loop-value%::*}
+				loop-value-1 is "CUPID":
+					size of {wolfo::results::%loop-value-1%::*} is 2
+					set {wolfo::game::lovers::*} to {wolfo::results::%loop-value-1%::*}
 					set {wolfo::results::CUPID} to true
-				loop-value is "WEREWOLF":
+				loop-value-1 is "WEREWOLF":
 					set {_result::*} to wolfoMostVoted()
 					set {wolfo::results::WEREWOLF} to {_result::1}
-				{wolfo::results::%loop-value%} is not set:
-					loop all players:
-						message join wolfoGetText("PREFIX.GENERAL", 1, loop-player) and "&fLe rôle %{_name}%&f n'a pas joué ..." to loop-player
+				{wolfo::results::%loop-value-1%} is not set:
+					loop {wolfo::players::list::*}:
+						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", loop-value-2)
+						message join wolfoGetText("PREFIX.GENERAL", 1, loop-value-2) and "&fLe rôle %{_name}%&f n'a pas joué ..." to loop-value-2
 				close {wolfo::role::list::%loop-value%::*}'s inventory
 			wolfoTime()
 		else if {wolfo::game::status} is "DAY":
