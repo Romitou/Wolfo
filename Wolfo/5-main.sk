@@ -92,8 +92,7 @@ function wolfoWhitelist(executor: player, target: text, action: integer):
 				send wolfoGetText("MESSAGE.WHITELIST.LIST.2", 2, {_executor}) to {_executor}
 
 function wolfoCheckStart(p: player):
-	set {_finish} to wolfoGetText("GAME.SETUP.FINISH", 1)
-	if "%{_finish}%" is "true": # C'est moche, mais ça sera corrigé dans les prochaines versions. :)
+	if wolfoGetText("GAME.SETUP.FINISH", 1) is "finished": # C'est moche, mais ça sera corrigé dans les prochaines versions. :)
 		if {wolfo::debug::status} is true:
 			wolfoTimer(5)
 			stop

@@ -41,6 +41,6 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.END", 0)
 		set {_size} to size of wolfoGetMultipleText("GAME.SETUP.STEPS", 1)
 		if size of wolfoGetMultipleText("GAME.SETUP.STEPS", 1) is 4:
-			wolfoSetText("GAME.SETUP.FINISH", "true")
+			wolfoSetText("GAME.SETUP.FINISH", "finished")
 			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.SETUP_FINISHED2", 2, {_p}) to {_p}
 			wolfoDraw("center", "")
