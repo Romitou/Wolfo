@@ -5,9 +5,9 @@ on script load:
 	clear {wolfo::loading::error}
 	send "&3&lWolfo &f&l» &7Loading config ..." to ops
 	set {wolfo::loading} to now
-	reload all yml from directory "plugins/Wolfo/lang/" using filename as id
-	reload all yml from directory "plugins/Wolfo/" using filename as id
-	size of loaded yml is above 2:
+	reload all yml from directory "plugins/Skript/scripts/Wolfo/" using filename as id
+	reload all yml from directory "plugins/Skript/scripts/Wolfo/lang/" using filename as id
+	size of loaded yml is below 2:
 		send "&c[Wolfo] Error! Please check that the configuration or / and the language files are placed in the correct folders." to console
 		add 1 to {wolfo::loading::error}
 	yml "config" is empty

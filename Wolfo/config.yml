@@ -1,11 +1,15 @@
 VERSION: '1.0'
 
+PREFIX:
+    GENERAL: '&3&lWolfo &f&l» &r'
+    TITLE: '&f&l» &3&lWolfo'
+
 # Inutilisé (pour le moment)
 ANIMATION:
     SELECTION: ARROW
 
 LANGUAGES:
-    DEFAULT: 'fr_fr'
+    DEFAULT: 'FR_FR'
     PROPERTIES:
         'FR_FR':
             NAME: '&9Français'
