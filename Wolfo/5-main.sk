@@ -120,13 +120,14 @@ function wolfoStart():
 	set {wolfo::spawn::*} to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS")
 	loop {wolfo::players::list::*}:
 		teleport loop-value to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS.%loop-index%")
-	wolfoGiveRoles()
 	set {wolfo::game::automsg} to false
 	set time of world "world" to 12:00
-	send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.START.ROLES", 2, {_p}) to {wolfo::players::list::*}
+	wait 5 seconds
+	wolfoGiveRoles()
 
 function wolfoEnd():
-	kick all players due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.ENDGAME", 2, {_p})
+	loop all players:
+		kick loop-player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.ENDGAME", 2, loop-player)
 	clear {wolfo::*}
 	wolfoInitialize()
 
@@ -135,19 +136,19 @@ on join:
 	if player is op:
 		wolfoJoin(player)
 	else if size of all players is greater than or equal to 25:
-		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.TOOMANY", 2, player)
+		kick player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.TOOMANY", 2, player)
 	else if {wolfo::game::start} is set:
-		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.ALREADYSTART", 2, player)
+		kick player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.ALREADYSTART", 2, player)
 	else if wolfoGetText("GAME.PRIVACY", 1) is "CLOSED":
-		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.PRIVACY.CLOSED", 2, player)
+		kick player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.CLOSED", 2, player)
 	else if wolfoGetText("GAME.PRIVACY", 1) is "WHITELISTED":
 		if wolfoGetMultipleText("GAME.WHITELIST", 1) do not contain player:
-			kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, player)
+			kick player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, player)
 	else:
 		wolfoJoin(player)
 
 on quit:
-	set quit message to join wolfoGetText("PREFIX.GENERAL", 1, player), "&b%player% ", wolfoGetText("MESSAGE.LEFT", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
+	set quit message to join wolfoGetText("PREFIX.GENERAL", 1), "&b%player% ", wolfoGetText("MESSAGE.LEFT", 2, player) and " &8(&7%amount of all players%&8/&75&8)"
 	wolfoLeave(player)
 
 on inventory click:
@@ -164,33 +165,11 @@ on inventory click:
 		wolfoVote(player)
 	else if name of event-item is wolfoGetText("ITEM.EXIT", 2, player):
 		cancel event
-		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.GOODLEFT", 2, player)
+		kick player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.GOODLEFT", 2, player)
 	else if name of event-item is wolfoGetText("ITEM.SETUP", 2, player):
 		cancel event
 		wolfoMenu(player, "SETUP")
 	else if name of event-item is wolfoGetText("ITEM.MANAGE", 2, player):
-		cancel event
-		wolfoMenu(player, "MANAGE")
-
-on click:
-	if name of player's tool is wolfoGetText("ITEM.COSM", 2, player):
-		cancel event
-		wolfoCosmetic(1, player)
-	else if name of player's tool is wolfoGetText("ITEM.COSM_OFF", 2, player):
-		cancel event
-		wolfoCosmetic(4, player)
-	else if name of player's tool is wolfoGetText("ITEM.INFO", 2, player):
-		cancel event
-		wolfoMenuRoles(player)
-	else if name of player's tool is wolfoGetText("ITEM.VOTE", 2, player):
-		wolfoVote(player)
-	else if name of player's tool is wolfoGetText("ITEM.EXIT", 2, player):
-		cancel event
-		kick player due to join wolfoGetText("PREFIX.GENERAL", 1, player) and wolfoGetText("MESSAGE.GOODLEFT", 2, player)
-	else if name of player's tool is wolfoGetText("ITEM.SETUP", 2, player):
-		cancel event
-		wolfoMenu(player, "SETUP")
-	else if name of player's tool is wolfoGetText("ITEM.MANAGE", 2, player):
 		cancel event
 		wolfoMenu(player, "MANAGE")
 

@@ -19,10 +19,10 @@ on script load:
 	send "&c[Wolfo] Error! The file containing the config could not be found." to console
 	add 1 to {wolfo::loading::error}
 
-function wolfoGetText(request: text, type: int, p: player = "") :: text:
+function wolfoGetText(request: text, type: integer, p: player = "") :: text:
 	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
-function wolfoGetMultipleText(request: text, type: int, p: player = "") :: objects:
+function wolfoGetMultipleText(request: text, type: integer, p: player = "") :: objects:
 	return yml list {_request} from "config" if {_type} is 1, else yml list {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetLoc(request: text) :: location:

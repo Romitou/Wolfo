@@ -20,10 +20,7 @@ function wolfoGetConfig() :: integer:
 
 function wolfoGetConfigRoles() :: objects:
 	clear {wolfo::role::round::*}
-	{wolfo::game::start} is set:
-		set {_p} to size of {wolfo::players::list::*}
-	else:
-		set {_p} to size of all players
+	set {_p} to size of {wolfo::players::list::*}
 	set {_config} to wolfoGetConfig()
 	add "SEER", "DOCTOR" and "SHOOTER" to {_roles::*}
 	if {_config} is 1:
@@ -45,7 +42,6 @@ function wolfoGetConfigRoles() :: objects:
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
 	loop {wolfo::players::list::*}:
-		{wolfo::players::role_name::%loop-value%} is not set
 		set {wolfo::players::role::%loop-value%} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value)
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
 		set {_desc::*} to wolfoGetMultipleText("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
@@ -149,8 +145,8 @@ function wolfoMain(i: integer):
 				set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as integer
 				while {wolfo::timer} is higher than 0:
 					loop {wolfo::players::list::*}:
-						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", loop-value-2)
-						send action bar join "&8[&7%{wolfo::timer}%&8] &6Tour du rôle " and {_name} to loop-value-2
+						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", 2, loop-value-2)
+						send action bar join "&8[&7%{wolfo::timer}%&8] &3Tour du rôle " and {_name} to loop-value-2
 					remove 1 from {wolfo::timer}
 					wait 1 second
 				loop-value-1 is "CUPID":
@@ -162,9 +158,10 @@ function wolfoMain(i: integer):
 					set {wolfo::results::WEREWOLF} to {_result::1}
 				{wolfo::results::%loop-value-1%} is not set:
 					loop {wolfo::players::list::*}:
-						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", loop-value-2)
-						message join wolfoGetText("PREFIX.GENERAL", 1, loop-value-2) and "&fLe rôle %{_name}%&f n'a pas joué ..." to loop-value-2
-				close {wolfo::role::list::%loop-value%::*}'s inventory
+						loop {wolfo::players::list::*}:
+							set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", 2, loop-value-2)
+							message join wolfoGetText("PREFIX.GENERAL", 1) and "&fLe rôle %{_name}%&f n'a pas joué ..." to loop-value-2
+				close {wolfo::role::list::%loop-value-1%::*}'s inventory
 			wolfoTime()
 		else if {wolfo::game::status} is "DAY":
 			set {_result::*} to wolfoResult()
@@ -173,18 +170,18 @@ function wolfoMain(i: integer):
 					wolfoDraw("kill", "%loop-value%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
-			set {wolfo::timer} to wolfoGetText("TIME.DEBATE", 1) parsed as int
+			set {wolfo::timer} to wolfoGetText("TIME.DEBATE", 1) parsed as integer
 			while {wolfo::timer} is higher than 0:
 				wait 1 second
-				send action bar "&8[&7%{wolfo::timer}%&8] &6Discussion" to all players
+				send action bar "&8[&7%{wolfo::timer}%&8] &3Discussion" to all players
 				remove 1 from {wolfo::timer}
 			clear {wolfo::vote::*}
 			clear {wolfo::results::*}
 			set {wolfo::vote::open} to true
-			set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as int
+			set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as integer
 			while {wolfo::timer} is higher than 0:
 				wait 1 second
-				send action bar "&8[&7%{wolfo::timer}%&8] &6Vote des villageois" to all players
+				send action bar "&8[&7%{wolfo::timer}%&8] &3Vote des villageois" to all players
 				remove 1 from {wolfo::timer}
 			set {wolfo::vote::open} to false
 			# Support des rôles personnalisés dans une mise à jour future.
@@ -211,7 +208,7 @@ function wolfoMain(i: integer):
 function wolfoTimer(time: integer):
 	set {wolfo::timer} to {_time}
 	while {wolfo::timer} is not 0:
-		send action bar "&8[&7%{wolfo::timer}%&8] &6Décompte avant début" to all players
+		send action bar "&8[&7%{wolfo::timer}%&8] &3Décompte avant début" to all players
 		remove 1 from {wolfo::timer}
 		wait 1 second
 	wolfoStart()
@@ -250,9 +247,9 @@ function wolfoCheckWin():
 		send title "&3&lWolfo &f&l»" with subtitle "&cVous avez perdu !" to loop-value for 2 seconds
 	set {wolfo::timer} to 0
 	wait 1 second
-	set {wolfo::timer} to wolfoGetText("TIME.END", 1) parsed as int
+	set {wolfo::timer} to wolfoGetText("TIME.END", 1) parsed as integer
 	while {wolfo::timer} is higher than 0:
 		wait 1 second
-		send action bar "&8[&7%{wolfo::timer}%&8] &6Fermeture de la partie" to all players
+		send action bar "&8[&7%{wolfo::timer}%&8] &3Fermeture de la partie" to all players
 		remove 1 from {wolfo::timer}
 	wolfoEnd()

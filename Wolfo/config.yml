@@ -4,6 +4,9 @@ PREFIX:
     GENERAL: '&3&lWolfo &f&l» &r'
     TITLE: '&f&l» &3&lWolfo'
 
+CONFIG:
+    SELF_VOTE: "off"
+
 # Inutilisé (pour le moment)
 ANIMATION:
     SELECTION: ARROW
@@ -49,10 +52,10 @@ PERMISSION:
     ADMIN: lg.admin
 
 TIME:
-    START: 10
-    VOTE: 30
-    DEBATE: 60
-    END: 20
+    START: '10'
+    VOTE: '30'
+    DEBATE: '60'
+    END: '20'
 
 ROLES:
     WEREWOLF:
