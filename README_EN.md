@@ -5,6 +5,8 @@
 The idea was found by Xamez who is developing it with Romitou.
 This script recreates a real part of a werewolf directly in Minecraft, with a lot of features (especially cosmetic)!
 
+**Visit our [Discord](https://discord.gg/37nvkpk) to get help faster and follow the development.**
+
 ## Installation
 
 To install Wolfo, you need to extract the archive you downloaded, where you will find inside a folder called `Wolfo-XXX-alpha`. Open it and copy the `Wolfo` folder. Go to your `Skript` folder then `scripts` and paste the folder inside. Wolfo's location should be: `/plugins/Skript/scripts/Wolfo`.
