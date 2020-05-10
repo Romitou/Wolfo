@@ -20,9 +20,12 @@ on script load:
 	add 1 to {wolfo::loading::error}
 
 function wolfoGetText(request: text, type: integer, p: player = "") :: text:
-	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
+	broadcast "&8YML: &7GetText File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
+	set {_} to yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
+	return {_}
 
 function wolfoGetMultipleText(request: text, type: integer, p: player = "") :: objects:
+	broadcast "&8YML: &7GetMultipleText File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
 	return yml list {_request} from "config" if {_type} is 1, else yml list {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetLoc(request: text) :: location:
