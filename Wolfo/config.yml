@@ -5,7 +5,7 @@ PREFIX:
     TITLE: '&f&l» &3&lWolfo'
 
 CONFIG:
-    SELF_VOTE: "off"
+    SELF_VOTE: 'off'
 
 # Inutilisé (pour le moment)
 ANIMATION:
