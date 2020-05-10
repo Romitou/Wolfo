@@ -173,28 +173,6 @@ on inventory click:
 		cancel event
 		wolfoMenu(player, "MANAGE")
 
-on click:
-	if name of player's tool is wolfoGetText("ITEM.COSM", 2, player):
-		cancel event
-		wolfoCosmetic(1, player)
-	else if name of player's tool is wolfoGetText("ITEM.COSM_OFF", 2, player):
-		cancel event
-		wolfoCosmetic(4, player)
-	else if name of player's tool is wolfoGetText("ITEM.INFO", 2, player):
-		cancel event
-		wolfoMenuRoles(player)
-	else if name of player's tool is wolfoGetText("ITEM.VOTE", 2, player):
-		wolfoVote(player)
-	else if name of player's tool is wolfoGetText("ITEM.EXIT", 2, player):
-		cancel event
-		kick player due to join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.GOODLEFT", 2, player)
-	else if name of player's tool is wolfoGetText("ITEM.SETUP", 2, player):
-		cancel event
-		wolfoMenu(player, "SETUP")
-	else if name of player's tool is wolfoGetText("ITEM.MANAGE", 2, player):
-		cancel event
-		wolfoMenu(player, "MANAGE")
-
 on drop:
 	cancel event
 
