@@ -2,19 +2,19 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&6&lWolfo &7&l» &7Loading scoreboards ..." to ops
+	send "&3&lWolfo &f&l» &7Loading scoreboards ..." to ops
 	set {wolfo::loading} to now
 
 function wolfoSbPlayer(p: player, i: integer):
 	if {_i} is 0:
-		set title of {_p}'s scoreboard to wolfoGet("PREFIX.TITLE")
+		set title of {_p}'s scoreboard to wolfoGetText("PREFIX.TITLE", 2, {_p})
 		set line 12 of {_p}'s scoreboard to "&1"
-		set line 11 of {_p}'s scoreboard to "&6&l» &f&lPartie:"
+		set line 11 of {_p}'s scoreboard to "&3&l» &f&lPartie:"
 		set line 10 of {_p}'s scoreboard to "&2"
 		set line 5 of {_p}'s scoreboard to "&3"
-		set line 4 of {_p}'s scoreboard to "&6&l» &f&lJoueur:"
+		set line 4 of {_p}'s scoreboard to "&3&l» &f&lJoueur:"
 		set line 3 of {_p}'s scoreboard to "&4"
 	if {_i} is 1:
 		clear scoreboard of {_p}
@@ -24,17 +24,14 @@ function wolfoSbPlayer(p: player, i: integer):
 
 function wolfoSb(p: objects):
 	set {_status} to {wolfo::game::status}
-	set {_status} to wolfoGet("MESSAGE.TIME.%{_status}%")
 	set {_day} to {wolfo::game::day}
-	set {_config} to wolfoGet("MESSAGE.GAMETYPE.%wolfoGetConfig()%")
-	set line 9 of {_p::*}'s scoreboard to " &6● &eStatut &f&l» %{_status}%"
-	set {_players} to size of {wolfo::players::alive::*} otherwise size of all players
-	if {_players} isn't 0 or 1:
-		set line 8 of {_p::*}'s scoreboard to " &6● &eConnectés &f&l» &7%{_players}% joueurs"
-	else:
-		set line 8 of {_p::*}'s scoreboard to " &6● &eConnectés &f&l» &7%{_players}% joueur"
-	set line 7 of {_p::*}'s scoreboard to " &6● &eConfiguration &f&l» %{_config}%"
-	set line 6 of {_p::*}'s scoreboard to " &6● &eJour &f&l» &6n°%{_day}%"
 	loop {_p::*}:
-		set line 2 of loop-value's scoreboard to " &6● &eVotre rôle &f&l» &e%{wolfo::players::role::%loop-value%}%"
-		set line 1 of loop-value's scoreboard to " &6● &eVotre statut &f&l» &e%{wolfo::players::life::%loop-value%}%"
+		set {_stat} to wolfoGetText("MESSAGE.TIME.%{_status}%", 2, loop-value)
+		set {_config} to wolfoGetText("MESSAGE.GAMETYPE.%wolfoGetConfig()%", 2, loop-value)
+		set line 9 of loop-value's scoreboard to " &3● &bStatut&f&l: %{_stat}%"
+		set {_players} to size of players if {wolfo::game::status} is "WAIT", else size of {wolfo::players::alive::*}
+		set line 8 of loop-value's scoreboard to " &3● &bConnectés&f&l: &7%{_players}% joueur(s)"
+		set line 7 of loop-value's scoreboard to " &3● &bConfiguration&f&l: %{_config}%"
+		set line 6 of loop-value's scoreboard to " &3● &bJour&f&l: &7n°%{_day}%"
+		set line 2 of loop-value's scoreboard to " &3● &bVotre rôle&f&l: &e%{wolfo::players::role::%loop-value%}%"
+		set line 1 of loop-value's scoreboard to " &3● &bVotre statut&f&l: &e%{wolfo::players::life::%loop-value%}%"

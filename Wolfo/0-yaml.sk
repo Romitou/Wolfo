@@ -3,32 +3,37 @@
 
 on script load:
 	clear {wolfo::loading::error}
-	send "&6&lWolfo &7&l» &7Loading config ..." to ops
+	send "&3&lWolfo &f&l» &7Loading config ..." to ops
 	set {wolfo::loading} to now
-	load yaml "plugins/Skript/scripts/Wolfo/config.yml" as "config"
-	if yaml "config" is empty:
-		send "&4Error! The file containing the config could not be found." to console
-		send "&7Please download it and add it to the Wolfo folder." to console
+	clear {wolfo::config::*}
+	reload all yml from directory "plugins/Skript/scripts/Wolfo/lang/" using filename as id
+	reload all yml from directory "plugins/Skript/scripts/Wolfo/" using filename as id
+	size of loaded yml is below 2:
+		send "&c[Wolfo] Error! Please check that the configuration or / and the language files are placed in the correct folders." to console
 		add 1 to {wolfo::loading::error}
+	else:
+		loop all loaded yml:
+			send "&8> %loop-value%" to ops
+			add loop-value to {wolfo::config::*}
+	yml "config" is empty
+	send "&c[Wolfo] Error! The file containing the config could not be found." to console
+	add 1 to {wolfo::loading::error}
 
-function wolfoGet(request: text) :: text: # POUR LES TEXTES (plus utilisé)
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::debug::status} is true
-	return yaml value {_request} from "config"
+function wolfoGetText(request: text, type: integer, p: player = "") :: text:
+	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
-function wolfoGetO(request: text) :: objects: # POUR LES OBJECTS
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7OBJECTS" if {wolfo::debug::status} is true
-	return yaml list {_request} from "config"
+function wolfoGetMultipleText(request: text, type: integer, p: player = "") :: objects:
+	return yml list {_request} from "config" if {_type} is 1, else yml list {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
-function wolfoGetL(request: text) :: location:
+function wolfoGetLoc(request: text) :: location:
+	return yml value {_request} from "config"
+
+function wolfoSetText(request: text, value: text):
 	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::debug::status} is true
-	return yaml value {_request} from "config"
-
-function wolfoSet(request: text, value: text):
-	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7TEXT" if {wolfo::debug::status} is true
 	set yaml value {_request} from "config" to {_value}
 	save yaml "config"
 
-function wolfoSetL(request: text, value: location):
+function wolfoSetLoc(request: text, value: location):
 	broadcast "&8[YAML &7CONFIG&8]: &8REQ:&7%{_request}% &f- &8TYPE:&7LOCATION" if {wolfo::debug::status} is true
 	set yaml value {_request} from "config" to {_value}
 	save yaml "config"

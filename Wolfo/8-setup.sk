@@ -1,7 +1,7 @@
 on script load:
-	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&6&lWolfo &7&l» &7Reloading setup ..." to ops
+	send "&3&lWolfo &f&l» &7Reloading setup ..." to ops
 	set {wolfo::loading} to now
 
 function wolfoMenuAction(p: player, loop: integer, action: text):
@@ -10,37 +10,37 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 		if {_loop} is 11:
 			wolfoCheckStart({_p})
 		else if {_loop} is 13:
-			wolfoSet("GAME.PRIVACY", "CLOSED")
-			broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.CLOSED")
+			wolfoSetText("GAME.PRIVACY", "CLOSED")
+			broadcast join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.CLOSED", 2, {_p})
 		else if {_loop} is 14:
-			wolfoSet("GAME.PRIVACY", "WHITELISTED")
-			broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.WHITELISTED")
+			wolfoSetText("GAME.PRIVACY", "WHITELISTED")
+			broadcast join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, {_p})
 		else if {_loop} is 15:
-			wolfoSet("GAME.PRIVACY", "OPEN")
-			broadcast join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.PRIVACY.OPEN")
+			wolfoSetText("GAME.PRIVACY", "OPEN")
+			broadcast join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.OPEN", 2, {_p})
 	else:
 		if {_loop} is 11:
-			wolfoSetL("GAME.LOCATIONS.MIDDLE", position of {_p})
-			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
+			wolfoSetLoc("GAME.LOCATIONS.MIDDLE", position of {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.MIDDLE", 0)
 		else if {_loop} is 12:
 			set {wolfo::setup::pos} to 1 if {wolfo::setup::pos} is not set
-			wolfoSetL("GAME.LOCATIONS.SPAWNPOINTS.%{wolfo::setup::pos}%", position of {_p})
-			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSETO") and "&7(%position of {_p}%)" to {_p}
+			wolfoSetLoc("GAME.LOCATIONS.SPAWNPOINTS.%{wolfo::setup::pos}%", position of {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSETO", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
 			add 1 to {wolfo::setup::pos}
 			if {wolfo::setup::pos} is 5:
-				send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETUP_FINISHED1") to {_p}
+				send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.SETUP_FINISHED1", 2, {_p}) to {_p}
 				wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.SPAWNPOINT", 0)
 		else if {_loop} is 14:
-			wolfoSetL("GAME.LOCATIONS.BEGIN", position of {_p})
-			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
+			wolfoSetLoc("GAME.LOCATIONS.BEGIN", position of {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.BEGIN", 0)		
 		else if {_loop} is 15:
-			wolfoSetL("GAME.LOCATIONS.END", position of {_p})
-			send join wolfoGet("PREFIX.GENERAL"), wolfoGet("MESSAGE.LOCATIONSET") and "&7(%position of {_p}%)" to {_p}
+			wolfoSetLoc("GAME.LOCATIONS.END", position of {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.END", 0)
-		set {_size} to size of wolfoGetO("GAME.SETUP.STEPS")
-		if size of wolfoGetO("GAME.SETUP.STEPS") is 4:
-			wolfoSet("GAME.SETUP.FINISH", "true")
-			send join wolfoGet("PREFIX.GENERAL") and wolfoGet("MESSAGE.SETUP_FINISHED2") to {_p}
+		set {_size} to size of wolfoGetMultipleText("GAME.SETUP.STEPS", 1)
+		if size of wolfoGetMultipleText("GAME.SETUP.STEPS", 1) is 4:
+			wolfoSetText("GAME.SETUP.FINISH", "finished")
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.SETUP_FINISHED2", 2, {_p}) to {_p}
 			wolfoDraw("center", "")
