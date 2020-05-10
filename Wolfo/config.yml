@@ -115,6 +115,10 @@ SETUP:
     BEGIN: light green dye
     END: red dye
 
+OTHER_ITEMS:
+    CLOSE: barrier
+    LANG: oak sign
+
 GAME:
     PRIVACY: OPEN
     LOCATIONS:

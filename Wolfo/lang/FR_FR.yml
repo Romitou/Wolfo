@@ -138,6 +138,9 @@ ITEM:
     SETUP: '&3➽ &bConfigurer la partie &c(opérateur)'
     MANAGE: '&3➽ &aGérer la partie &c(opérateur)'
     VOTE: '&3➽ &aMenu des votes'
+    LANG: '&3➽ &6Langue'
+    CLOSE: '&4➽ &cFermer'
+    BACK: '&8➽ &7Retour'
 
 ROLES:
     WEREWOLF:
