@@ -1,13 +1,3 @@
-PREFIX:
-    GENERAL: '&6&lWolfo &7&l» &r'
-    TITLE: '&7» &6&lWolfo'
-
-# Envie de rajouter des cosmétiques ? Partie 2
-# Indiquez simplement :
-#   monexplosion;&cBim &dBam &4Boum
-#   MONEXPLOSION: '&cBim &dBam &4Boum'
-#      ID ^          NOM ^
-
 COSMETICS:
     PARTICLE:
         EXPLOSION: '&7Explosion'
@@ -18,7 +8,7 @@ COSMETICS:
         ANGRYVILLAGER: '&cColere'
         HAPPYVILLAGER: '&aJoyeux'
         WATERDRIP: '&bGouttes d''eau'
-        FLAME: '&eFlammes'
+        FLAME: 'Flammes'
         LAVADRIP: '&6Gouttes de lave'
         NOTE: '&6Note'
         PORTAL: '&dPortail'
@@ -29,26 +19,22 @@ COSMETICS:
         HEART: '&cCoeur'
     EFFECT:
         WINGS: '&dElytres'
-        NYANTCAT: '&dN&ey&aa&6n &cc&aa&dt'
+        NYANCAT: '&dN&by&aa&6n &cc&aa&dt'
         RINGS: '&6Anneaux'
-        SPIRAL: '&eSpirale'
+        SPIRAL: 'Spirale'
 
 MESSAGE:
     PERMISSION:
         MESSAGE: '&fVous &cn''avez pas les privilèges nécessaires&f pour effectuer cette action.'
     START:
         PREPARE: '&fPréparez vos stratégies, le jeu va commencer ...'
-        ROLES: |-
-            &fWow ! On est sur le point de commencer, quel rôle allez-vous avoir
-            ?
-        BEGIN: '&6➥ &eLa partie commence dans '
-        START: '&6➥ &eLa partie commence !'
+        ROLES: '&fWow ! On est sur le point de commencer, quel rôle allez-vous avoir ?'
+        BEGIN: '&6➥ &bLa partie commence dans '
+        START: '&6➥ &bLa partie commence !'
     COSMETICS:
         ON1: '&fNous avons activé tes particules, j''espère que tes '
         ON2: '&fte vont bien ! :D'
-        'false': |-
-            Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les
-            cosmétiques.
+        OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
     PRIVACY:
         CLOSED: '&fLes opérateurs ont &cfermé&f cette partie.'
         WHITELISTED: '&fLes opérateurs ont &6réservé&f cette partie à certains joueurs. '
@@ -71,9 +57,17 @@ MESSAGE:
             '2': '&7Si vous souhaitez un joueur, ajoutez-le à votre commande.'
     WELCOME: '&7Bienvenue ! Si tu ne connais pas les règles du jeu, rends-toi dans
         les informations !'
+    LANG:
+        CHANGED: 'Vous avez défini la langue du jeu en '
+        UNKNOWN: '&cDésolé, cette langue n''existe pas. Contactez l''opérateur de la partie.'
+        WARNING:
+        - ''
+        - '&7Attention ! Certains éléments demandent de quitter puis de'
+        - '&7revenir sur le serveur pour se charger correctement.'
+        - ''
     SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
-    FORCESTART: '&eVous avez correctement démarré la partie de force.'
-    FORCESTOP: '&eVous avez correctement arrêté la partie de force.'
+    FORCESTART: 'Vous avez correctement démarré la partie de force.'
+    FORCESTOP: 'Vous avez correctement arrêté la partie de force.'
     SETUPERROR: '&cVous avez déjà effectué cette commande.'
     ALREADYSTART: '&cLa partie est déjà en cours.'
     JOINED: '&fa &arejoint&f la partie.'
@@ -91,7 +85,7 @@ MESSAGE:
         d''infos sur /wolfo setup)'
     ALREADYSETUP: '&cLa partie est déjà configurée.'
     ENDGAME: La partie est terminée.
-    ROLEDESC: '&eDescription de votre rôle :'
+    ROLEDESC: 'Description de votre rôle :'
     MUTED: Votre rôle ne vous permet pas parler durant la nuit.
     GOODLEFT: Vous partez déjà ? On s'amuse tout de suite moins sans vous.
     LOCATIONSET: 'Parfait ! Votre position a été enregistrée. '
@@ -110,40 +104,42 @@ MESSAGE:
         TITLE: '&fVoici les conditions de victoire :'
         MSG:
         - ''
-        - '  &f» &eTous les &6villagoies &esont mort'
-        - '  &f» &eTous les &6Loup-garou sont &emort'
-        - '  &f» &eLe &6Fou &eest tué par le village'
-        - '  &f» &eLa cible du &6chasseur de tête &eest tué par le village'
+        - '  &f» &bTous les &6villagoies &bsont mort'
+        - '  &f» &bTous les &6Loup-garou sont &bmort'
+        - '  &f» &bLe &6Fou &best tué par le village'
+        - '  &f» &bLa cible du &6chasseur de tête &best tué par le village'
         - |4-
-              &f» &eLes &6deux amants &eainsi que &6cupidon &esont les trois derniers
+              &f» &bLes &6deux amants &bainsi que &6cupidon &bsont les trois derniers
             survivant
         - ''
     COMMANDS:
         TITLE: '&fVoici la liste des commandes :'
         MSG:
         - ''
-        - '  &f» &e/wolfo help&7: affiche cette page d''aide'
-        - '  &f» &e/wolfo setup&7: initialisation de la partie &c*'
-        - '  &f» &e/wolfo manage&7: gestion de la partie &c*'
-        - '  &f» &e/wolfo my&7: affiche vos informations'
+        - '  &f» &b/wolfo help&7: affiche cette page d''aide'
+        - '  &f» &b/wolfo setup&7: initialisation de la partie &c*'
+        - '  &f» &b/wolfo manage&7: gestion de la partie &c*'
+        - '  &f» &b/wolfo my&7: affiche vos informations'
+        - '  &f» &b/wolfo lang&7: permet de modifier la langue utilisé'
         - ''
 
 GUI:
-    ROLELIST: '&8➽ &6Liste des rôles'
-    ROLES: '&8➽ &6Liste des rôles'
-    PARTICLE_SELECT: '&8➽ &6Choix de la particule'
-    EFFECT_SELECT: '&8➽ &6Choix de l''effet'
-    SETUP: '&8➽ &6Configuration de &6Wolfo'
-    MANAGE: '&8➽ &6Gestion de &6Wolfo'
+    ROLELIST: '&3➽ &8Liste des rôles'
+    ROLES: '&3➽ &8Liste des rôles'
+    PARTICLE_SELECT: '&3➽ &8Choix de la particule'
+    EFFECT_SELECT: '&3➽ &8Choix de l''effet'
+    SETUP: '&3➽ &8Configuration de Wolfo'
+    MANAGE: '&3➽ &8Gestion de Wolfo'
+    LANG: '&3➽ &8Langue'
 
 ITEM:
-    COSM: '&8➽ &bCosmétiques &7(clic-droit)'
-    COSM_OFF: '&8➽ &cDésactiver l''effet cosmétique &7(clic-droit)'
-    INFO: '&8➽ &dInformations &7(clic-droit)'
-    EXIT: '&8➽ &cQuitter la partie &7(clic-droit)'
-    SETUP: '&8➽ &6Configurer la partie &c(opérateur)'
-    MANAGE: '&8➽ &5Gérer la partie &c(opérateur)'
-    VOTE: '&8➽ &aMenu des votes'
+    COSM: '&3➽ &bCosmétiques &7(clic-droit)'
+    COSM_OFF: '&3➽ &cDésactiver l''effet cosmétique &7(clic-droit)'
+    INFO: '&3➽ &dInformations &7(clic-droit)'
+    EXIT: '&3➽ &cQuitter la partie &7(clic-droit)'
+    SETUP: '&3➽ &bConfigurer la partie &c(opérateur)'
+    MANAGE: '&3➽ &aGérer la partie &c(opérateur)'
+    VOTE: '&3➽ &aMenu des votes'
 
 ROLES:
     WEREWOLF:
@@ -167,14 +163,14 @@ ROLES:
         DESC:
         - ''
         - '&8➥ &7Vous êtes un villageois normal, vous n''avez rien à faire.'
-        - '&7En revanche, si les Loup-Garous vous tue, vous &edeviendrez Loup-Garou&7.'
+        - '&7En revanche, si les Loup-Garous vous tue, vous &bdeviendrez Loup-Garou&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village &f| &cLoup-Garou'
     TOWNSFOLK:
         NAME: '&7Villageois'
         DESC:
         - ''
-        - '&8➥ &7Vous n''avez aucune action spécifique, vous n''avez &eaucune faculté&7.'
+        - '&8➥ &7Vous n''avez aucune action spécifique, vous n''avez &baucune faculté&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     CUPID:
@@ -182,7 +178,7 @@ ROLES:
         DESC:
         - ''
         - '&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront'
-        - '&eamant &7durant toute la partie. Si l''un des deux meurt, l''autre mourra
+        - '&7amant durant toute la partie. Si l''un des deux meurt, l''autre mourra
             également.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
@@ -190,7 +186,7 @@ ROLES:
         NAME: '&aVoyante'
         DESC:
         - ''
-        - '&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître le rôle d''un
+        - '&8➥ &7Chaque nuit, vous avez la possiblité de &bconnaître le rôle d''un
             joueur&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
@@ -198,7 +194,7 @@ ROLES:
         NAME: '&2Voyante Aura'
         DESC:
         - ''
-        - '&8➥ &7Chaque nuit, vous avez la possiblité de &econnaître l''aura d''un
+        - '&8➥ &7Chaque nuit, vous avez la possiblité de &bconnaître l''aura d''un
             joueur&7.'
         - '&7L''aura peut être &aClaire&7, &8Obscure &7ou bien &9Inconnue&7.'
         - ''
@@ -207,17 +203,15 @@ ROLES:
         NAME: '&6Fou'
         DESC:
         - ''
-        - '&8➥ &7Vous devez essayer de convaincre le &evillage de vous tuer&7.'
-        - |-
-            &7Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin
-            ;)
+        - '&8➥ &7Vous devez essayer de convaincre le &bvillage de vous tuer&7.'
+        - '&7Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin.'
         - ''
         - '&8➥ &7Votre équipe: &aSolo'
     SHOOTER:
         NAME: '&eTireur'
         DESC:
         - ''
-        - '&8➥ &7Vous commencez la partie avec &edeux balles&7.'
+        - '&8➥ &7Vous commencez la partie avec &bdeux balles&7.'
         - '&7Vous aurez la possiblité de tuer n''importe qui.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
@@ -226,23 +220,21 @@ ROLES:
         DESC:
         - ''
         - '&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement.'
-        - '&7Si ce joueur est &etué par le village&7, il gagnera la partie.'
+        - '&7Si ce joueur est &btué par le village&7, il gagnera la partie.'
         - ''
         - '&8➥ &7Votre équipe: &aSolo'
     DOCTOR:
         NAME: '&bDocteur'
         DESC:
         - ''
-        - |-
-            &8➥ &7Vous avez la possiblité chaque nuit de &eprotéger une personne contre
-            les Loup-Garous.
+        - '|&8➥ &7Vous avez la possiblité chaque nuit de &bprotéger une personne&7 contre les Loup-Garous.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     WITCH:
         NAME: '&5Sorcière'
         DESC:
         - ''
-        - '&8➥ &7Vous possédez &edeux potions&7. L''une permets de récussiter un joueur,'
+        - '&8➥ &7Vous possédez &bdeux potions&7. L''une permets de récussiter un joueur,'
         - '&7l''autre permets de tuer un joueur. Vous ne pouvez les utiliser qu''une
             seule fois.'
         - ''
@@ -252,7 +244,7 @@ AURA:
     WEREWOLF: '&cobscure'
     TOWNSFOLK: '&aclaire'
     WW_TF: '&9inconnue'
-    SOLO: '&esolitaire'
+    SOLO: 'solitaire'
 
 MANAGE:
     FORCESTART:
@@ -278,7 +270,7 @@ MANAGE:
         LORE:
         - ''
         - '&8➥ &6Accepte uniquement certains joueurs &7que vous aurez désigné.'
-        - '&7Pour gérer la liste des joueurs, faites &e/wolfo whitelist&7.'
+        - '&7Pour gérer la liste des joueurs, faites &b/wolfo whitelist&7.'
         - ''
     OPEN:
         NAME: '&aOuvrir la partie à tous'
@@ -300,7 +292,7 @@ SETUP:
         NAME: '&ePoints d''apparition'
         LORE:
         - ''
-        - '&8➥ &7Ajoute un &epoint d''apparition&7 à votre position.'
+        - '&8➥ &7Ajoute un &bpoint d''apparition&7 à votre position.'
         - ''
         - '&cAttention:&7 il est impossible de les réinitialiser si vous vous'
         - '&7êtes trompés. Une amélioration sera apportée sous peu.'
@@ -321,5 +313,4 @@ SETUP:
         LORE:
         - ''
         - '&8➥ &7Initialise le &cpoint de mort&7 à votre position.'
-        - '&7Les joueurs morts apparaîtrons à cet emplacement.'
         - '&7Les joueurs morts apparaîtrons à cet emplacement.'

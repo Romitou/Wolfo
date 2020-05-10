@@ -1,7 +1,7 @@
 on script load:
-	send join "&6&lWolfo &7&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&6&lWolfo &7&l» &7Loading chat ..." to ops
+	send "&3&lWolfo &f&l» &7Loading chat ..." to ops
 	set {wolfo::loading} to now
 
 on chat:
@@ -19,7 +19,7 @@ on chat:
 					loop {wolfo::players::role::WEREWOLF::*}:
 						send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value
 				else:
-					send join wolfoGetText("PREFIX.GENERAL", 2, {_p}) and wolfoGetText("MESSAGE.MUTED", 2, {_p})
+					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, {_p})
 			else:
 				broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
 	else:
