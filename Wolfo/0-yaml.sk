@@ -21,8 +21,7 @@ on script load:
 
 function wolfoGetText(request: text, type: integer, p: player = "") :: text:
 	broadcast "&8YML: &7GetText File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
-	set {_} to yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
-	return {_}
+	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetMultipleText(request: text, type: integer, p: player = "") :: objects:
 	broadcast "&8YML: &7GetMultipleText File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
