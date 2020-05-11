@@ -4,8 +4,8 @@ COSMETICS:
         FIREWORK: '&9Feu d''artifice'
         CRIT: '&3Coup critique'
         CRITMAGIC: '&3Coup critique magique'
-        SMOKE: '&8Fumee'
-        ANGRYVILLAGER: '&cColere'
+        SMOKE: '&8Fumée'
+        ANGRYVILLAGER: '&cColère'
         HAPPYVILLAGER: '&aJoyeux'
         WATERDRIP: '&bGouttes d''eau'
         FLAME: 'Flammes'
@@ -18,10 +18,10 @@ COSMETICS:
         SLIME: '&aSlime'
         HEART: '&cCoeur'
     EFFECT:
-        WINGS: '&dElytres'
+        WINGS: '&dÉlytres'
         NYANCAT: '&dN&by&aa&6n &cc&aa&dt'
         RINGS: '&6Anneaux'
-        SPIRAL: 'Spirale'
+        SPIRAL: '&9Spirale'
 
 MESSAGE:
     PERMISSION:
@@ -34,11 +34,11 @@ MESSAGE:
     COSMETICS:
         ON1: '&fNous avons activé tes particules, j''espère que tes '
         ON2: '&fte vont bien ! :D'
-        OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rendez-vous dans les cosmétiques.'
+        OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rends-toi dans le menu cosmétiques.'
     PRIVACY:
         CLOSED: '&fLes opérateurs ont &cfermé&f cette partie.'
-        WHITELISTED: '&fLes opérateurs ont &6réservé&f cette partie à certains joueurs. '
-        OPEN: '&fLes opérateurs ont &aouvert&f cette partie à tous les joueurs. '
+        WHITELISTED: '&fLes opérateurs ont &6réservé&f cette partie à certains joueurs.'
+        OPEN: '&fLes opérateurs ont &aouvert&f cette partie à tous les joueurs.'
     TIME:
         WAIT: '&7Attente'
         START: '&aDémarrage'
@@ -54,27 +54,25 @@ MESSAGE:
     WHITELIST:
         LIST:
             '1': 'Voici la liste des joueurs &aautorisés&f :'
-            '2': '&7Si vous souhaitez un joueur, ajoutez-le à votre commande.'
-    WELCOME: '&7Bienvenue ! Si tu ne connais pas les règles du jeu, rends-toi dans
-        les informations !'
+            '2': '&7Si vous souhaitez ajouter un joueur, Faites ''/wolfo whitelist JOUEUR''.'
+    WELCOME: '&7Bienvenue ! Si tu ne connais pas les règles du jeu, ouvre le menu ''Informations'' !'
     LANG:
-        CHANGED: 'Vous avez défini la langue du jeu en '
+        CHANGED: 'Vous définissez la langue du jeu en '
         UNKNOWN: '&cDésolé, cette langue n''existe pas. Contactez l''opérateur de la partie.'
         WARNING:
         - ''
-        - '&7Attention ! Certains éléments demandent de quitter puis de'
-        - '&7revenir sur le serveur pour se charger correctement.'
+        - '&7Attention ! Certains éléments ne changeront'
+        - '&7qu''après que vous vous serez reconnecté.'
         - ''
-    SUCCESS_LOADING: '&aWolfo seems to have started correctly. '
+    SUCCESS_LOADING: '&aWolfo semble avoir été correctement démarré.'
     FORCESTART: 'Vous avez correctement démarré la partie de force.'
     FORCESTOP: 'Vous avez correctement arrêté la partie de force.'
     SETUPERROR: '&cVous avez déjà effectué cette commande.'
     ALREADYSTART: '&cLa partie est déjà en cours.'
     JOINED: '&fa &arejoint&f la partie.'
     LEFT: '&fa &cquitté&f la partie.'
-    WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &aautorisé&f. Super
-        !'
-    WHITELISTED_ALREADY: '&fL''accès au serveur de ce joueur est déjà &aautorisé&f.'
+    WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &aautorisé&f. Super !'
+    WHITELISTED_ALREADY: '&fCe joueur est déjà &aautorisé&f à rentrer sur le serveur.'
     NOT_WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &crévoqué&f.
         Dommage pour lui.'
     NOT_WHITELISTED_ALREADY: '&fL''accès au serveur de ce joueur est déjà &crévoqué&f.'
@@ -140,6 +138,9 @@ ITEM:
     SETUP: '&3➽ &bConfigurer la partie &c(opérateur)'
     MANAGE: '&3➽ &aGérer la partie &c(opérateur)'
     VOTE: '&3➽ &aMenu des votes'
+    LANG: '&3➽ &6Langue'
+    CLOSE: '&4➽ &cFermer'
+    BACK: '&8➽ &7Retour'
 
 ROLES:
     WEREWOLF:

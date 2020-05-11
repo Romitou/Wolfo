@@ -72,6 +72,7 @@ function wolfoCosmetic(type: integer, p: player):
 			add wolfoGetMultipleText("COSMETICS.PARTICLE", 1) to {_p::*}
 			set {_} to "PARTICLE"
 		wolfoMenuDeco({_p}, {_title}, 5)
+		make a gui slot 41 of {_p} with (wolfoGetText("OTHER_ITEMS.LANG", 1) parsed as item) named colored wolfoGetText("ITEM.LANG", 2, {_p}) to run {_p} command "/wolfo lang"
 		set {_loop} to 11
 		loop {_p::*}:
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
