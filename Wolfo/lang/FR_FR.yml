@@ -10,13 +10,13 @@ COSMETICS:
         WATERDRIP: '&bGouttes d''eau'
         FLAME: 'Flammes'
         LAVADRIP: '&6Gouttes de lave'
-        NOTE: '&6Note'
+        NOTE: '&6Notes'
         PORTAL: '&dPortail'
         ENCHANTMENTTABLE: '&cEnchantement'
         CLOUD: '&fNuage'
         SNOWBALL: '&fNeige'
         SLIME: '&aSlime'
-        HEART: '&cCoeur'
+        HEART: '&cCoeurs'
     EFFECT:
         WINGS: '&dÉlytres'
         NYANCAT: '&dN&by&aa&6n &cc&aa&dt'
@@ -68,7 +68,7 @@ MESSAGE:
     FORCESTART: 'Vous avez correctement démarré la partie de force.'
     FORCESTOP: 'Vous avez correctement arrêté la partie de force.'
     SETUPERROR: '&cVous avez déjà effectué cette commande.'
-    ALREADYSTART: '&cLa partie est déjà en cours.'
+    ALREADYSTART: '&cLa partie est déjà lancée.'
     JOINED: '&fa &arejoint&f la partie.'
     LEFT: '&fa &cquitté&f la partie.'
     WHITELISTED_SUCCESS: '&fL''accès au serveur de ce joueur a été &aautorisé&f. Super !'
@@ -82,21 +82,18 @@ MESSAGE:
     MISSINGCONFIG: '&fLa configuration de la partie &cn''est pas terminée&f. &7(plus
         d''infos sur /wolfo setup)'
     ALREADYSETUP: '&cLa partie est déjà configurée.'
-    ENDGAME: La partie est terminée.
+    ENDGAME: 'La partie est terminée.'
     ROLEDESC: 'Description de votre rôle :'
-    MUTED: Votre rôle ne vous permet pas parler durant la nuit.
-    GOODLEFT: Vous partez déjà ? On s'amuse tout de suite moins sans vous.
+    MUTED: 'Votre rôle ne vous permet pas parler durant la nuit.'
+    GOODLEFT: 'Vous partez déjà ? On s''amuse tout de suite moins sans vous.'
     LOCATIONSET: 'Parfait ! Votre position a été enregistrée. '
     LOCATIONSETO: 'Parfait ! Votre position a été ajoutée. '
-    SETUP_FINISHED1: '&fVous avez &aterminé&f la configuration minimale. Vous pouvez
-        continuer l''installation ou ajouter plus de points d''apparitions.'
+    SETUP_FINISHED1: '&fVous avez &aterminé&f la configuration minimale. Vous pouvez continuer l''installation ou ajouter plus de points d''apparitions.'
     SETUP_FINISHED2: '&fVous avez &aterminé&f la configuration, bon jeu !'
     NOTENOUGH1: '&cIl manque '
-    NOTENOUGH2: ' &cjoueurs avant de lancer une partie.'
-    NOTENOUGH: '&fIl n''y a &cpas assez de joueur&f pour lancer une partie. Si vous
-        avez des amis, invitez-les et réessayez.'
-    TOOMANY: '&fWow! Il y a beaucoup de monde, vous &cne pouvez pas&f rejoindre cette
-        partie.'
+    NOTENOUGH2: ' &cjoueur(s) avant de pouvoir lancer la partie.'
+    NOTENOUGH: '&fIl n''y a &cpas assez de joueur&f pour lancer une partie. Si vous avez des amis, invitez-les et réessayez.'
+    TOOMANY: '&fWow! Il y a beaucoup de monde, vous &cne pouvez pas&f rejoindre cette partie.'
     REVEAL: 'Vous êtes désormais '
     VICTORY:
         TITLE: '&fVoici les conditions de victoire :'
@@ -147,97 +144,114 @@ ROLES:
         NAME: '&cLoup-Garou'
         DESC:
         - ''
-        - '&8➥ &7Chaque nuit, vous devez voter pour l''élimination d''un joueur.'
-        - '&7Votre but est d''éliminer tous les villageois.'
+        - '&8➥ &7Chaque nuit, vous devez'
+        - '&7voter pour l''élimination'
+        - '&7d''un joueur. Votre but est'
+        - '&7d''éliminer tous les villageois.'
         - ''
         - '&8➥ &7Votre équipe: &cLoup-Garou'
     WEREWOLF_ALPHA:
         NAME: '&cLoup-Garou &4Alpha'
         DESC:
         - ''
-        - '&8➥ &7Chaque nuit, vous devez voter pour l''élimination d''un joueur.'
-        - '&7Votre but est d''éliminer tous les villageois. Votre vote compte double.'
+        - '&8➥ &7Chaque nuit, vous devez voter'
+        - '&7pour l''élimination d''un joueur.'
+        - '&7Votre but est d''éliminer tous les'
+        - '&7villageois. Votre vote compte double.'
         - ''
         - '&8➥ &7Votre équipe: &cLoup-Garou'
     TOWNSFOLK_CURSED:
         NAME: '&7Villageois &8Maudit'
         DESC:
         - ''
-        - '&8➥ &7Vous êtes un villageois normal, vous n''avez rien à faire.'
-        - '&7En revanche, si les Loup-Garous vous tue, vous &bdeviendrez Loup-Garou&7.'
+        - '&8➥ &7Vous êtes un villageois normal,'
+        - '&7vous n''avez rien à faire.'
+        - '&7En revanche, si les Loup-Garous vous'
+        - '&7tuent, vous &bdeviendrez Loup-Garou&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village &f| &cLoup-Garou'
     TOWNSFOLK:
         NAME: '&7Villageois'
         DESC:
         - ''
-        - '&8➥ &7Vous n''avez aucune action spécifique, vous n''avez &baucune faculté&7.'
+        - '&8➥ &7Vous n''avez aucune action spécifique,'
+        - '&7vous n''avez &baucune faculté&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     CUPID:
         NAME: '&dCupidon'
         DESC:
         - ''
-        - '&8➥ &7Au début de la partie, vous devez sélectionnez deux joueurs qui seront'
-        - '&7amant durant toute la partie. Si l''un des deux meurt, l''autre mourra
-            également.'
+        - '&8➥ &7Au début de la partie, vous devez'
+        - '&7sélectionnez deux joueurs qui seront'
+        - '&7amant durant toute la partie. Si l''un'
+        - '&7des deux meurt, l''autre mourra également.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     SEER:
         NAME: '&aVoyante'
         DESC:
         - ''
-        - '&8➥ &7Chaque nuit, vous avez la possiblité de &bconnaître le rôle d''un
-            joueur&7.'
+        - '&8➥ &7Chaque nuit, vous avez la possiblité'
+        - '&7de &bconnaître le rôle d''un joueur&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     SEER_AURA:
         NAME: '&2Voyante Aura'
         DESC:
         - ''
-        - '&8➥ &7Chaque nuit, vous avez la possiblité de &bconnaître l''aura d''un
-            joueur&7.'
-        - '&7L''aura peut être &aClaire&7, &8Obscure &7ou bien &9Inconnue&7.'
+        - '&8➥ &7Chaque nuit, vous avez la possiblité'
+        - '&7de &bconnaître l''aura d''un joueur&7.'
+        - '&7L''aura peut être &aClaire&7, &8Obscure'
+        - '&7ou bien &9Inconnue&7.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     CRAZY:
         NAME: '&6Fou'
         DESC:
         - ''
-        - '&8➥ &7Vous devez essayer de convaincre le &bvillage de vous tuer&7.'
-        - '&7Si vous y arrivez, vous gagnerez la partie, mais pensez à être malin.'
+        - '&8➥ &7Vous devez essayer de convaincre'
+        - '&7le &bvillage de vous tuer&7.'
+        - '&7Si vous y arrivez, vous gagnerez la'
+        - '&7partie, mais pensez à être malin.'
         - ''
         - '&8➥ &7Votre équipe: &aSolo'
     SHOOTER:
         NAME: '&eTireur'
         DESC:
         - ''
-        - '&8➥ &7Vous commencez la partie avec &bdeux balles&7.'
-        - '&7Vous aurez la possiblité de tuer n''importe qui.'
+        - '&8➥ &7Vous commencez la partie avec'
+        - '&bdeux balles&7. &7Vous aurez la'
+        - '&7possiblité de tuer n''importe qui.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     HEADHUNTER:
         NAME: '&9Chasseur de Tête'
         DESC:
         - ''
-        - '&8➥ &7Au début de la partie, un joueur sera choisi aléatoirement.'
-        - '&7Si ce joueur est &btué par le village&7, il gagnera la partie.'
+        - '&8➥ &7Au début de la partie, un'
+        - '&7joueur sera choisi aléatoirement.'
+        - '&7Si ce joueur est &btué par le'
+        - '&bvillage&7, il gagnera la partie.'
         - ''
         - '&8➥ &7Votre équipe: &aSolo'
     DOCTOR:
         NAME: '&bDocteur'
         DESC:
         - ''
-        - '|&8➥ &7Vous avez la possiblité chaque nuit de &bprotéger une personne&7 contre les Loup-Garous.'
+        - '&8➥ &7Vous avez la possiblité'
+        - '&7chaque nuit de &bprotéger une'
+        - '&bpersonne&7 contre les Loup-Garous.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
     WITCH:
         NAME: '&5Sorcière'
         DESC:
         - ''
-        - '&8➥ &7Vous possédez &bdeux potions&7. L''une permets de récussiter un joueur,'
-        - '&7l''autre permets de tuer un joueur. Vous ne pouvez les utiliser qu''une
-            seule fois.'
+        - '&8➥ &7Vous possédez &bdeux potions'
+        - '&7L''une permets de récussiter un joueur,'
+        - '&7l''autre permets de tuer un joueur. Vous ne'
+        - '&7pouvez les utiliser qu''une seule fois.'
         - ''
         - '&8➥ &7Votre équipe: &6Village'
 
@@ -252,8 +266,10 @@ MANAGE:
         NAME: '&aDémarrer la partie'
         LORE:
         - ''
-        - '&8➥ &aForce le démarrage &7de la partie. Waow !'
-        - '&7Assurez-vous qu''il y ait suffisamment de joueurs.'
+        - '&8➥ &aForce le démarrage'
+        - '&7de la partie. Waow !'
+        - '&7Assurez-vous qu''il y ait'
+        - '&7suffisamment de joueurs.'
         - ''
     SEPARATOR:
         NAME: ' '
@@ -263,40 +279,46 @@ MANAGE:
         NAME: '&cFermer la partie'
         LORE:
         - ''
-        - '&8➥ &cFerme la partie &7aux nouveaux joueurs !'
-        - '&7Plus aucun joueur ne pourra rejoindre la partie.'
-        - ''
+        - '&8➥ &cFerme la partie'
+        - '&7aux nouveaux joueurs !'
+        - '&7Plus aucun joueur ne'
+        - '&7pourra rejoindre la partie.'
     WHITELIST:
         NAME: '&6Accepter certains joueurs'
         LORE:
         - ''
-        - '&8➥ &6Accepte uniquement certains joueurs &7que vous aurez désigné.'
-        - '&7Pour gérer la liste des joueurs, faites &b/wolfo whitelist&7.'
-        - ''
+        - '&8➥ &6Accepte uniquement certains'
+        - '&6joueurs &7que vous aurez désigné.'
+        - '&7Pour gérer la liste des joueurs,'
+        - '&7faites &b/wolfo whitelist&7.'
     OPEN:
         NAME: '&aOuvrir la partie à tous'
         LORE:
         - ''
-        - '&8➥ &aOuvre la partie&7 à tous les joueurs !'
-        - '&7Idéal pour faire une partie à 25.'
-        - ''
+        - '&8➥ &aOuvre la partie&7 à'
+        - '&7tous les joueurs ! Idéal'
+        - '&7pour faire une partie à 25.'
 
 SETUP:
     MIDDLE:
         NAME: '&bCentre de la partie'
         LORE:
         - ''
-        - '&8➥ &7Initialise le &bcentre de la partie&7 à votre position.'
-        - '&7Veillez à qu''elle peux être vue par tous les joueurs autour.'
-        - ''
+        - '&8➥ &7Initialise le &bcentre'
+        - '&bde la partie&7 à votre position.'
+        - '&7Veillez à qu''elle peux être'
+        - '&7vue par tous les joueurs autour.'
     SPAWNPOINT:
         NAME: '&ePoints d''apparition'
         LORE:
         - ''
-        - '&8➥ &7Ajoute un &bpoint d''apparition&7 à votre position.'
+        - '&8➥ &7Ajoute un &bpoint'
+        - '&bd''apparition&7 à votre position.'
         - ''
-        - '&cAttention:&7 il est impossible de les réinitialiser si vous vous'
-        - '&7êtes trompés. Une amélioration sera apportée sous peu.'
+        - '&cAttention:&7 il est impossible'
+        - '&7de les réinitialiser si vous vous'
+        - '&7êtes trompés. Une amélioration'
+        - '&7sera apportée sous peu.'
         - ''
     SEPARATOR:
         NAME: ' '
@@ -306,12 +328,16 @@ SETUP:
         NAME: '&aPoint de connexion'
         LORE:
         - ''
-        - '&8➥ &7Initialise le &apoint de connexion&7 à votre position.'
-        - '&7Les joueurs se connectant apparaîtrons à cet emplacement.'
+        - '&8➥ &7Initialise le &apoint de'
+        - '&aconnexion&7 à votre position.'
+        - '&7Les joueurs se connectant'
+        - '&7apparaîtrons à cet emplacement.'
         - ''
     END:
         NAME: '&cPoint de mort'
         LORE:
         - ''
-        - '&8➥ &7Initialise le &cpoint de mort&7 à votre position.'
-        - '&7Les joueurs morts apparaîtrons à cet emplacement.'
+        - '&8➥ &7Initialise le &cpoint de'
+        - '&cmort&7 à votre position.'
+        - '&7Les joueurs morts apparaîtrons'
+        - '&7à cet emplacement.'
