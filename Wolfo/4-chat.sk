@@ -1,7 +1,7 @@
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&3&lWolfo &f&l» &7Loading chat ..." to ops
+	send "&3&lWolfo &7&l▪ &7Loading chat ..." to ops
 	set {wolfo::loading} to now
 
 on chat:

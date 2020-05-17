@@ -1,7 +1,7 @@
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&3&lWolfo &f&l» &7Reloading game gestion ..." to ops
+	send "&3&lWolfo &7&l▪ &7Reloading game gestion ..." to ops
 	set {wolfo::loading} to now
 	wolfoDraw("center", "")
 
@@ -65,13 +65,13 @@ function wolfoVote(p: player):
 	else if {wolfo::vote::current} is {wolfo::players::role_name::%{_p}%}:
 		wolfoMenuVote({wolfo::vote::current})
 	else:
-		send "&3&lWolfo &f&l» &fDésolé, ce n'est pas ton tour." to {_p}
+		send "&3&lWolfo &7&l▪ &fDésolé, ce n'est pas ton tour." to {_p}
 
 function wolfoTime():
 	if {wolfo::game::start} is true:
 		if {wolfo::game::status} is "DAY":
 			clear {wolfo::vote::*}
-			send "&3&lWolfo &f&l» &fLa nuit tombe ..." to {wolfo::players::list::*}
+			send "&3&lWolfo &7&l▪ &fLa nuit tombe ..." to {wolfo::players::list::*}
 			# On utilise un between pour être sûr que le while s'arrête correctement
 			# quand l'heure ne tombe pas sur un nombre juste.
 			while time of "world" isn't between 0:00 and 01:00:
@@ -82,7 +82,7 @@ function wolfoTime():
 			wolfoMain(1)
 		else:
 			clear {wolfo::vote::*}
-			send "&3&lWolfo &f&l» &fLe jour se lève ..." to {wolfo::players::list::*}	
+			send "&3&lWolfo &7&l▪ &fLe jour se lève ..." to {wolfo::players::list::*}	
 			# On utilise un between pour être sûr que le while s'arrête correctement
 			# quand l'heure ne tombe pas sur un nombre juste.
 			while time of "world" isn't between 12:00 and 13:00:
@@ -100,14 +100,14 @@ function wolfoResult() :: objects:
 		clear {_voted}
 	if {wolfo::results::WITCH} is true:
 		clear {_voted}
-	broadcast "&3&lWolfo &f&l» &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." if {wolfo::results::SEER} is set
-	broadcast "&3&lWolfo &f&l» &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." if {wolfo::results::SEER_AURA} is set
+	broadcast "&3&lWolfo &7&l▪ &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." if {wolfo::results::SEER} is set
+	broadcast "&3&lWolfo &7&l▪ &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." if {wolfo::results::SEER_AURA} is set
 	if {_voted} is set:
-		broadcast "&3&lWolfo &f&l» &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f."
+		broadcast "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f."
 		clear {wolfo::results::*}
 		return {_voted}
 	else:
-		broadcast "&3&lWolfo &f&l» &f... et personne n'est mort !"
+		broadcast "&3&lWolfo &7&l▪ &f... et personne n'est mort !"
 		clear {wolfo::results::*}
 
 function wolfoMostVoted() :: objects:
@@ -191,15 +191,15 @@ function wolfoMain(i: integer):
 				add {_target} and {_target} to {wolfo::vote::list::*}
 			close inventory of all players
 			clear {wolfo::role::list::TOWNSFOLK::*}
-			broadcast "&3&lWolfo &f&l» &fLe village s'est décidé ..."
+			broadcast "&3&lWolfo &7&l▪ &fLe village s'est décidé ..."
 			set {_result::*} to wolfoMostVoted()
 			# Dans tous les cas, si deux votes sont ex aequo, cette fonction
 			# retournera toujours quelque chose, faisant appel à l'aléatoire !
 			{_result::1} is not set:
-				broadcast "&3&lWolfo &f&l» &f... mais en fait non."
+				broadcast "&3&lWolfo &7&l▪ &f... mais en fait non."
 			else:
 				# On parse as offline player pour garder la casse des pseudos.
-				broadcast "&3&lWolfo &f&l» &f... et élimine &b%{_result::1} parsed as offline player%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
+				broadcast "&3&lWolfo &7&l▪ &f... et élimine &b%{_result::1} parsed as offline player%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
 				wolfoDraw("kill", "%{_result::1}%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
@@ -217,7 +217,7 @@ function wolfoKill(p: player):
 	hide {_p} from all players	
 	set {wolfo::players::life::%{_p}%} to "&cMort"	
 	teleport {_p} to wolfoGetLoc("GAME.LOCATIONS.END")	
-	send title "&3&lWolfo &f&l»" with subtitle "&cVous êtes mort !" to {_p} for 2 seconds
+	send title "&3&lWolfo &7&l▪" with subtitle "&cVous êtes mort !" to {_p} for 2 seconds
 	set game mode of {_p} to spectator
 	clear {_p}'s inventory
 	remove {_p} from {wolfo::players::alive::*}
@@ -238,13 +238,13 @@ function wolfoCheckWin():
 	{_winners::*} is set
 	clear {wolfo::game::start}
 	loop {_winners::*}:
-		send title "&3&lWolfo &f&l»" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds
+		send title "&3&lWolfo &7&l▪" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds
 		set {_role} to wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME", 2, {_p})
-		broadcast "&3&lWolfo &f&l» &a%loop-value% &fa gagné la partie avec le rôle %{_role}%&f !"
+		broadcast "&3&lWolfo &7&l▪ &a%loop-value% &fa gagné la partie avec le rôle %{_role}%&f !"
 	set {_players::*} to players
 	remove {_winners::*} from {_players::*}
 	loop {_players::*}:
-		send title "&3&lWolfo &f&l»" with subtitle "&cVous avez perdu !" to loop-value for 2 seconds
+		send title "&3&lWolfo &7&l▪" with subtitle "&cVous avez perdu !" to loop-value for 2 seconds
 	set {wolfo::timer} to 0
 	wait 1 second
 	set {wolfo::timer} to wolfoGetText("TIME.END", 1) parsed as integer

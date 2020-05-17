@@ -3,7 +3,7 @@
 
 on script load:
 	clear {wolfo::loading::error}
-	send "&3&lWolfo &f&l» &7Loading config ..." to ops
+	send "&3&lWolfo &7&l▪ &7Loading config ..." to ops
 	set {wolfo::loading} to now
 	clear {wolfo::config::*}
 	reload all yml from directory "plugins/Skript/scripts/Wolfo/lang/" using filename as id

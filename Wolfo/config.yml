@@ -1,8 +1,8 @@
 VERSION: '1.0'
 
 PREFIX:
-    GENERAL: '&3&lWolfo &f&l» &r'
-    TITLE: '&f&l» &3&lWolfo'
+    GENERAL: '&3&lWolfo &7&l▪ &r'
+    TITLE: '&7&l▪ &3&lWolfo &7&l▪'
 
 CONFIG:
     SELF_VOTE: 'off'

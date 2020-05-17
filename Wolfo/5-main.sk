@@ -2,9 +2,9 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&3&lWolfo &f&l» &7Loading main ..." to ops
+	send "&3&lWolfo &7&l▪ &7Loading main ..." to ops
 	set {wolfo::loading} to now
 	wolfoInitialize()
 
@@ -109,11 +109,11 @@ function wolfoCheckStart(p: player):
 		send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MISSINGCONFIG", 2, {_p}) to {_p}
 
 function wolfoStart():
-	send "&3&lWolfo &f&l» &fWolfo a été développé par &bXamez##8497&f et &bRomitou##9685&f. Si vous avez la moindre question, rejoignez notre Discord : https://discordapp.com/invite/37nvkpk !" to all players
+	send "&3&lWolfo &7&l▪ &fWolfo a été développé par &bXamez##8497&f et &bRomitou##9685&f. Si vous avez la moindre question, rejoignez notre Discord : https://discordapp.com/invite/37nvkpk !" to all players
 	{wolfo::debug::status} is true:
 		set {wolfo::players::list::*} to {wolfo::debug::list::*}
 		set {wolfo::players::alive::*} to {wolfo::debug::list::*}
-		send "&3&lWolfo &f&l» &fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée." to all players
+		send "&3&lWolfo &7&l▪ &fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée." to all players
 	else:
 		set {wolfo::players::list::*} to players
 		set {wolfo::players::alive::*} to players

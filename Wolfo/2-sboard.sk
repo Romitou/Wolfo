@@ -2,9 +2,9 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&3&lWolfo &f&l» &7Loading scoreboards ..." to ops
+	send "&3&lWolfo &7&l▪ &7Loading scoreboards ..." to ops
 	set {wolfo::loading} to now
 
 function wolfoSbPlayer(p: player, i: integer):
