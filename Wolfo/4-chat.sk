@@ -15,11 +15,12 @@ on chat:
 					stop
 		else:
 			if {wolfo::game::status} is "NIGHT":
-				if {wolfo::players::role_name::%player%} is "WEREWOLF" or "WEREWOLF_ALPHA":
-					loop {wolfo::players::role::WEREWOLF::*}:
-						send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value
+				if {wolfo::players::role_name::%player%} is {wolfo::vote::current}:
+					loop {wolfo::role::list::%{wolfo::vote::current}%::*}:
+						set {_role} to wolfoGetText("ROLES.%{wolfo::vote::current}%.NAME", 2, loop-value)
+						send "&8[&7Nuit&8] &8[%{_role}%&8] &7%player% &8» &7%message%" to loop-value
 				else:
-					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, {_p})
+					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, player)
 			else:
 				broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
 	else:

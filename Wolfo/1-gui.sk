@@ -42,7 +42,7 @@ function wolfoMenuRoles(p: player):
 			add 1 to {_loop}
 		set {_item} to wolfoGetText("%loop-node%.ITEM", 1) parsed as material
 		add wolfoGetText("%loop-node%.NBT", 1) to nbt of {_item} if {_item} is a player head
-		set {_lore::*} to wolfoGetMultipleText("%loop-node%.DESC", 2, {_p})
+		set {_lore::*} to wolfoGetObjects("%loop-node%.DESC", 2, {_p})
 		make a gui slot {_loop} of {_p} with {_item} named colored wolfoGetText("%loop-node%.NAME", 2, {_p}) with lore colored {_lore::*}
 		add 1 to {_loop}
 		wait 2 ticks
@@ -77,6 +77,7 @@ function wolfoMenuVote(role: text):
 					wolfoMenuVote({_role})
 			# WEREWOLF -------------------------------------------
 			else if {_role} is "WEREWOLF" or "TOWNSFOLK":
+				loop-value-1 != loop-value-2
 				if {wolfo::vote::players::%{_target}%::*} is not set:
 					set {_material} to {_target}'s skull named "&9%{_target}% &f- &7Aucun vote" with lore "" and "&7Personne n'a voté."
 				else:
@@ -87,8 +88,6 @@ function wolfoMenuVote(role: text):
 						set {_vote} to "votes"
 					set {_material} to {_target}'s skull named "&9%{_target}% &f- &b%size of {wolfo::vote::players::%{_target}%::*}% %{_vote}%" with lore "" and "&7Votants: %{wolfo::vote::players::%{_target}%::*}%"
 				make a gui slot {_loop} of {_voter} with {_material} to run:
-					if wolfoGetText("CONFIG.SELF_VOTE", 1) is "off":
-						stop if {_voter} = {_target}
 					if {wolfo::vote::voters::%{_voter}%} is not set:
 						set {wolfo::vote::voters::%{_voter}%} to {_target}
 					else:
@@ -104,19 +103,17 @@ function wolfoMenuVote(role: text):
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
+				loop-value-1 != loop-value-2
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7Protégez &b%{_target}%&7 du", "&7vote des &cLoup-Garous&7." and "" to run:
-					if wolfoGetText("CONFIG.SELF_VOTE", 1) is "off":
-						stop if {_voter} = {_target}
 					close {_voter}'s inventory
 					set {wolfo::timer} to 0
 					set {wolfo::results::DOCTOR} to {_target}
 					send join wolfoGetText("PREFIX.GENERAL", 1) and "Le joueur &b%{_target}%&f sera protégé." to {_voter}
 			# SEER -------------------------------------------
 			else if {_role} is "SEER" or "SEER_AURA":
+				loop-value-1 != loop-value-2
 				set {_type} to "le rôle" if {_role} is "SEER", else ("l'aura")
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7Découvrez %{_type}%" and "&7de &b%{_target}% &7! :D" and "" to run:
-					if wolfoGetText("CONFIG.SELF_VOTE", 1) is "off":
-						stop if {_voter} = {_target}
 					close {_voter}'s inventory
 					if {_role} is "SEER":
 						set {_reveal} to {wolfo::players::role::%{_target}%}
@@ -168,12 +165,12 @@ function wolfoMenu(p: player, type: text):
 		wolfoMenuDeco({_p}, {_title}, 3)
 		set {_loop} to 11
 		if {_type} is "SETUP":
-			set {_steps::*} to wolfoGetMultipleText("GAME.SETUP.STEPS", 1)
+			set {_steps::*} to wolfoGetObjects("GAME.SETUP.STEPS", 1)
 		loop yaml node list "%{_type}%" from "config":
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
 			set {_item} to wolfoGetText("%loop-node%", 1) parsed as material
-			set {_lore::*} to wolfoGetMultipleText("%loop-node%.LORE", 2, {_p})
+			set {_lore::*} to wolfoGetObjects("%loop-node%.LORE", 2, {_p})
 			{_type} is "SETUP":
 				{_steps::*} contains "%loop-node%"
 				add "&2✔ &aTerminé !" and "" to {_lore::*}
@@ -205,5 +202,5 @@ function wolfoLang(p: player, lang: text):
 		else:
 			set {wolfo::players::lang::%{_p}%} to {_lang}
 			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LANG.CHANGED", 2, {_p}), (colored wolfoGetText("LANGUAGES.PROPERTIES.%{_lang}%.NAME", 1) otherwise ("&b%{_lang}%")) and "&f." to {_p}
-			set {_texts::*} to wolfoGetMultipleText("MESSAGE.LANG.WARNING", 2, {_p})
+			set {_texts::*} to wolfoGetObjects("MESSAGE.LANG.WARNING", 2, {_p})
 			send colored {_texts::*} to {_p}
