@@ -54,6 +54,7 @@ function wolfoGiveRoles():
 		set {_nbt} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NBT", 1)
 		set {_name} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value)
 		set {_lore::*} to wolfoGetText("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
+		wolfoSb(loop-value)
 		# Cette syntaxe étant buggée, elle sera mise à jour dans une des prochaines versions.
 		# set slot 8 of {_p} to {_item} parsed as material with nbt "%{_nbt}%" named colored "&7Votre rôle: %{_name}%" with lore colored {_lore::*} # C'est pas beau mais ça sera réglé prochainement.
 		wait 4 ticks
@@ -122,6 +123,8 @@ function wolfoMostVoted() :: objects:
 		loop-value is {_top}
 		set {_p} to loop-index
 	# On retourne le joueur ainsi que son nombre de vote.
+	{_top} is set
+	{_p} is set
 	return {_p} parsed as offline player and {_top}
 
 function wolfoMain(i: integer):
@@ -133,7 +136,6 @@ function wolfoMain(i: integer):
 	if {_i} is 1:
 		{wolfo::game::start} is true
 		if {wolfo::game::status} is "NIGHT":
-			set {wolfo::game::round} to true
 			loop {wolfo::role::round::*}:
 				clear {wolfo::vote::*}
 				loop-value-1 is "CUPID":
@@ -199,6 +201,9 @@ function wolfoMain(i: integer):
 			else:
 				# On parse as offline player pour garder la casse des pseudos.
 				broadcast "&3&lWolfo &7&l▪ &f... et élimine &b%{_result::1}%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
+				{wolfo::players::role_name::%{_result::1}%} is "CRAZY":
+					wolfoCheckWin("CRAZY")
+					stop
 				wolfoDraw("kill", "%{_result::1}%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
@@ -219,6 +224,7 @@ function wolfoKill(p: player):
 	send title "&3&lWolfo &7&l▪" with subtitle "&cVous êtes mort !" to {_p} for 2 seconds
 	set game mode of {_p} to spectator
 	clear {_p}'s inventory
+	wolfoCheckWin()
 	remove {_p} from {wolfo::players::alive::*}
 	remove {_p} from {wolfo::role::list::%{wolfo::players::role_name::%{_p}%}%::*}
 
@@ -227,14 +233,19 @@ function wolfoKill(p: player):
 # si cette fonction ne fonctionne pas correctement, merci de nous
 # signaler sur le forum ou sur Discord ! Merci !
 
-function wolfoCheckWin():
-	if size of {wolfo::players::alive::*} is 0:
-		wolfoEnd()
-	else if size of {wolfo::players::alive::*} is 1:
-		add {wolfo::players::alive::*} to {_winners::*}
-	else if size of {wolfo::role::list::WEREWOLF::*} is 0:
-		add {wolfo::players::alive::*} to {_winners::*}
+function wolfoCheckWin(role: text = {_}):
+	{_role} is not set:
+		if size of {wolfo::players::alive::*} is 0:
+			wolfoEnd()
+		else if size of {wolfo::players::alive::*} is 1:
+			add {wolfo::players::alive::*} to {_winners::*}
+		else if size of {wolfo::role::list::WEREWOLF::*} is 0:
+			add {wolfo::players::alive::*} to {_winners::*}
+	else:
+		add {wolfo::role::list::%{_role}%::*} to {_winners::*}
 	{_winners::*} is set
+	set {wolfo::game::status} to "FINISH"
+	wolfoSb({wolfo::players::list::*})
 	clear {wolfo::game::start}
 	loop {_winners::*}:
 		send title "&3&lWolfo &7&l▪" with subtitle "&aVous avez gagné !" to loop-value for 2 seconds

@@ -122,7 +122,6 @@ function wolfoStart():
 		set {wolfo::players::alive::*} to players
 	loop {wolfo::players::list::*}:
 		teleport loop-value to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS.%loop-index%")
-	set {wolfo::game::automsg} to false
 	set time of world "world" to 12:00
 	loop {wolfo::players::list::*}:
 		clear {wolfo::cosmetic::%loop-value%::active}

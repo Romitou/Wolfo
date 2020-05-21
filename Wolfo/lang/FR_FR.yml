@@ -45,6 +45,7 @@ MESSAGE:
         DAY: '&eJour'
         NIGHT: '&9Nuit'
         VOTE: '&dVote'
+        FINISH: '&cTerminé'
     GAMETYPE:
         '0': '&7Attente ...'
         '1': '&aMini!'
