@@ -12,9 +12,7 @@ on script load:
 		send "&c[Wolfo] Error! Please check that the configuration or / and the language files are placed in the correct folders." to console
 		add 1 to {wolfo::loading::error}
 	else:
-		loop all loaded yml:
-			send "&8> %loop-value%" to ops
-			add loop-value to {wolfo::config::*}
+		add all loaded yml to {wolfo::config::*}
 	yml "config" is empty
 	send "&c[Wolfo] Error! The file containing the config could not be found." to console
 	add 1 to {wolfo::loading::error}
@@ -23,8 +21,8 @@ function wolfoGetText(request: text, type: integer, p: player = "") :: text:
 	broadcast "&8YML: &7GetText File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
 	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
-function wolfoGetMultipleText(request: text, type: integer, p: player = "") :: objects:
-	broadcast "&8YML: &7GetMultipleText File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
+function wolfoGetObjects(request: text, type: integer, p: player = "") :: objects:
+	broadcast "&8YML: &7GetObjects File: &b%{_type}% &7Request: &b%{_request}%" if {wolfo::debug::status} is true
 	return yml list {_request} from "config" if {_type} is 1, else yml list {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetLoc(request: text) :: location:
