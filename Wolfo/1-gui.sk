@@ -60,6 +60,8 @@ function wolfoMenuVote(role: text):
 		loop {wolfo::players::alive::*}:
 			while {_loop} is 16, 17, 18, 26, 27, 35, 36 or 37:
 				add 1 to {_loop}
+			if loop-value-1 = loop-value-2:
+				stop if {_role} is "WEREWOLF", "TOWNSFOLK", "DOCTOR", "SEER" or "SEER_AURA"
 			set {_voter} to loop-value-1
 			set {_target} to loop-value-2
 			# CUPID -------------------------------------------
@@ -77,7 +79,6 @@ function wolfoMenuVote(role: text):
 					wolfoMenuVote({_role})
 			# WEREWOLF -------------------------------------------
 			else if {_role} is "WEREWOLF" or "TOWNSFOLK":
-				loop-value-1 != loop-value-2
 				if {wolfo::vote::players::%{_target}%::*} is not set:
 					set {_material} to {_target}'s skull named "&9%{_target}% &f- &7Aucun vote" with lore "" and "&7Personne n'a voté."
 				else:
@@ -103,7 +104,6 @@ function wolfoMenuVote(role: text):
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
-				loop-value-1 != loop-value-2
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7Protégez &b%{_target}%&7 du", "&7vote des &cLoup-Garous&7." and "" to run:
 					close {_voter}'s inventory
 					set {wolfo::timer} to 0
@@ -111,7 +111,6 @@ function wolfoMenuVote(role: text):
 					send join wolfoGetText("PREFIX.GENERAL", 1) and "Le joueur &b%{_target}%&f sera protégé." to {_voter}
 			# SEER -------------------------------------------
 			else if {_role} is "SEER" or "SEER_AURA":
-				loop-value-1 != loop-value-2
 				set {_type} to "le rôle" if {_role} is "SEER", else ("l'aura")
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7Découvrez %{_type}%" and "&7de &b%{_target}% &7! :D" and "" to run:
 					close {_voter}'s inventory
@@ -204,3 +203,4 @@ function wolfoLang(p: player, lang: text):
 			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LANG.CHANGED", 2, {_p}), (colored wolfoGetText("LANGUAGES.PROPERTIES.%{_lang}%.NAME", 1) otherwise ("&b%{_lang}%")) and "&f." to {_p}
 			set {_texts::*} to wolfoGetObjects("MESSAGE.LANG.WARNING", 2, {_p})
 			send colored {_texts::*} to {_p}
+			wolfoSb({_p})
