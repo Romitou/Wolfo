@@ -44,7 +44,7 @@ function wolfoGiveRoles():
 	loop {wolfo::players::list::*}:
 		set {wolfo::players::role::%loop-value%} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value)
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
-		set {_desc::*} to wolfoGetMultipleText("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
+		set {_desc::*} to wolfoGetObjects("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
 		send title {_role} to loop-value for 2 seconds
 		send join wolfoGetText("PREFIX.GENERAL", 1, loop-value), wolfoGetText("MESSAGE.REVEAL", 2, loop-value) and wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value) to loop-value
 		add loop-value to {wolfo::role::list::%{_input::%loop-index%}%::*}
@@ -117,13 +117,12 @@ function wolfoMostVoted() :: objects:
 		add 1 to {_vote::%loop-value%}
 	set {_sorted::*} to sorted {_vote::*}
 	set {_top} to last element out of {_sorted::*}
-	if {_top} is not set:
-		stop
+	stop if {_top} is not set
 	loop {_vote::*}:
 		loop-value is {_top}
 		set {_p} to loop-index
 	# On retourne le joueur ainsi que son nombre de vote.
-	return {_p} and {_top}
+	return {_p} parsed as offline player and {_top}
 
 function wolfoMain(i: integer):
 	if {_i} is 0:
@@ -199,7 +198,7 @@ function wolfoMain(i: integer):
 				broadcast "&3&lWolfo &7&l▪ &f... mais en fait non."
 			else:
 				# On parse as offline player pour garder la casse des pseudos.
-				broadcast "&3&lWolfo &7&l▪ &f... et élimine &b%{_result::1} parsed as offline player%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
+				broadcast "&3&lWolfo &7&l▪ &f... et élimine &b%{_result::1}%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f."
 				wolfoDraw("kill", "%{_result::1}%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
