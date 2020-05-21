@@ -12,41 +12,41 @@ ANIMATION:
     SELECTION: ARROW
 
 LANGUAGES:
-    DEFAULT: FR_FR
+    DEFAULT: fr_fr
     PROPERTIES:
-        FR_FR:
+        fr_fr:
             NAME: '&9Français'
             ITEM: player head
             NBT: '{SkullOwner:{Id:"395a599f-9588-4fe2-ada9-07cd81262996",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEyNjlhMDY3ZWUzN2U2MzYzNWNhMWU3MjNiNjc2ZjEzOWRjMmRiZGRmZjk2YmJmZWY5OWQ4YjM1Yzk5NmJjIn19fQ=="}]}}}'
-        EN_US:
+        en_us:
             NAME: '&cEnglish'
             ITEM: player head
             NBT: '{SkullOwner:{Id:"ec3a65b7-41d5-40cf-8a0b-0256d065a57d",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjI0MWE2OTdmNmRmYjFjNTdjZGEzMjdiYWE2NzMyYTc4MjhjMzk4YmU0ZWJmZGJkMTY2YzIzMmJjYWUyYiJ9fX0="}]}}}'
 
 COSMETICS:
     PARTICLE:
-    - explosion;explosion;bone meal
-    - firework;firework;firework
-    - crit;crit;trident
-    - critmagic;critmagic;trident of sharpness 1
-    - smoke;smoke;campfire
-    - angryvillager;angryvillager;baked potato
-    - happyvillager;happyvillager;potato
-    - waterdrip;waterdrip;water bucket
-    - flame;flame;flint and steel
-    - lavadrip;lavadrip;lava bucket
-    - note;note;note block
-    - portal;portal;ender eye
-    - enchantmenttable;enchantmenttable;enchanting table
-    - cloud;cloud;nether star
-    - snowball;snowball;snowball
-    - slime;slime;slimeball
-    - heart;heart;apple
+    - explosion;bone meal
+    - firework;firework
+    - crit;trident
+    - critmagic;trident of sharpness 1
+    - smoke;campfire
+    - angryvillager;baked potato
+    - happyvillager;potato
+    - waterdrip;water bucket
+    - flame;flint and steel
+    - lavadrip;lava bucket
+    - note;note block
+    - portal;ender eye
+    - enchantmenttable;enchanting table
+    - cloud;nether star
+    - snowball;snowball
+    - slime;slimeball
+    - heart;apple
     EFFECT:
-    - wings;wings;elytra
-    - nyancat;nyancat;white wool
-    - rings;rings;string
-    - spiral;spiral;lead
+    - wings;elytra
+    - nyancat;white wool
+    - rings;string
+    - spiral;lead
 
 PERMISSION:
     ADMIN: lg.admin
