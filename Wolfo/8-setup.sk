@@ -21,26 +21,25 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 	else:
 		if {_loop} is 11:
 			wolfoSetLoc("GAME.LOCATIONS.MIDDLE", position of {_p})
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.MIDDLE", 0)
 		else if {_loop} is 12:
-			set {wolfo::setup::pos} to 1 if {wolfo::setup::pos} is not set
-			wolfoSetLoc("GAME.LOCATIONS.SPAWNPOINTS.%{wolfo::setup::pos}%", position of {_p})
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSETO", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
-			add 1 to {wolfo::setup::pos}
-			if {wolfo::setup::pos} is 5:
-				send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.SETUP_FINISHED1", 2, {_p}) to {_p}
+			set {_pos} to size of node list "GAME.LOCATIONS.SPAWNPOINTS" from "config"
+			wolfoSetLoc("GAME.LOCATIONS.SPAWNPOINTS.%{_pos}%", position of {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LOCATIONSETO", 2, {_p}) to {_p}
+			if {_pos} is higher than 4:
+				wolfoGetObjects("GAME.SETUP.STEPS", 1) do not contain "SETUP.SPAWNPOINT"
 				wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.SPAWNPOINT", 0)
 		else if {_loop} is 14:
 			wolfoSetLoc("GAME.LOCATIONS.BEGIN", position of {_p})
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.BEGIN", 0)		
 		else if {_loop} is 15:
 			wolfoSetLoc("GAME.LOCATIONS.END", position of {_p})
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) and "&7(%position of {_p}%)" to {_p}
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.LOCATIONSET", 2, {_p}) to {_p}
 			wolfoUpdateO("GAME.SETUP.STEPS", "SETUP.END", 0)
-		set {_size} to size of wolfoGetMultipleText("GAME.SETUP.STEPS", 1)
-		if size of wolfoGetMultipleText("GAME.SETUP.STEPS", 1) is 4:
+		set {_size} to size of wolfoGetObjects("GAME.SETUP.STEPS", 1)
+		if size of wolfoGetObjects("GAME.SETUP.STEPS", 1) is 4:
 			wolfoSetText("GAME.SETUP.FINISH", "finished")
 			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.SETUP_FINISHED2", 2, {_p}) to {_p}
 			wolfoDraw("center", "")
