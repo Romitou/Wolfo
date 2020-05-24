@@ -8,6 +8,7 @@ on script load:
 	set {wolfo::loading} to now
 
 function wolfoSbPlayer(p: player, i: integer):
+	wolfoDebug("Update scoreboard to %{_p}% with type %{_i}%")
 	if {_i} is 0:
 		set title of {_p}'s scoreboard to wolfoGetText("PREFIX.TITLE", 1)
 		set line 12 of {_p}'s scoreboard to "&1"
@@ -23,6 +24,7 @@ function wolfoSbPlayer(p: player, i: integer):
 	wolfoSb(all players)
 
 function wolfoSb(p: objects):
+	wolfoDebug("Update scoreboard to %{_p::*}%")
 	set {_status} to {wolfo::game::status}
 	set {_day} to {wolfo::game::day}
 	loop {_p::*}:
