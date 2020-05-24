@@ -7,12 +7,12 @@ on script load:
 on chat:
 	replace all "&" with "§" in message if player is op
 	cancel event
+	wolfoDebug("%player% send a message.")
 	if {wolfo::game::start} is set:
 		if {wolfo::players::life::%player%} is "&cMort":
-			loop {wolfo::players::life::*}:
+			loop {wolfo::players::list::*}:
 				if {wolfo::players::life::%loop-value%} is "&cMort":
 					send "&8[&7Mort&8] &7%player% &8» &7%message%" to loop-value
-					stop
 		else:
 			if {wolfo::game::status} is "NIGHT":
 				if {wolfo::players::role_name::%player%} is {wolfo::vote::current}:
