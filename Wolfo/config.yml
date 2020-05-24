@@ -48,9 +48,6 @@ COSMETICS:
     - rings;string
     - spiral;lead
 
-PERMISSION:
-    ADMIN: lg.admin
-
 TIME:
     START: '10'
     VOTE: '30'
