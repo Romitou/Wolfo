@@ -2,14 +2,15 @@
 # Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
 
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&3&lWolfo &f&l» &7Loading scoreboards ..." to ops
+	send "&3&lWolfo &7&l▪ &7Loading scoreboards ..." to ops
 	set {wolfo::loading} to now
 
 function wolfoSbPlayer(p: player, i: integer):
+	wolfoDebug("Update scoreboard to %{_p}% with type %{_i}%")
 	if {_i} is 0:
-		set title of {_p}'s scoreboard to wolfoGetText("PREFIX.TITLE", 2, {_p})
+		set title of {_p}'s scoreboard to wolfoGetText("PREFIX.TITLE", 1)
 		set line 12 of {_p}'s scoreboard to "&1"
 		set line 11 of {_p}'s scoreboard to "&3&l» &f&lPartie:"
 		set line 10 of {_p}'s scoreboard to "&2"
@@ -23,6 +24,7 @@ function wolfoSbPlayer(p: player, i: integer):
 	wolfoSb(all players)
 
 function wolfoSb(p: objects):
+	wolfoDebug("Update scoreboard to %{_p::*}%")
 	set {_status} to {wolfo::game::status}
 	set {_day} to {wolfo::game::day}
 	loop {_p::*}:

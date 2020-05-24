@@ -1,5 +1,5 @@
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
 	{wolfo::loading::error} is set:
 		broadcast "&cOops! %{wolfo::loading::error}% errors were encountered while loading."
@@ -7,24 +7,24 @@ on script load:
 		send "&7Please visit https://github.com/Romitou/Wolfo/wiki for help." to console
 	else:
 		set {_version} to wolfoGetText("VERSION", 1)
-		broadcast join "&3&lWolfo &f&l» &aWolfo started without intern errors! " and "&7(v%{_version}%)"
+		broadcast join "&3&lWolfo &7&l▪ &aWolfo started without intern errors! " and "&7(v%{_version}%)"
 
 command /debug [<text>]:
 	trigger:
 		player is not op:
-			send "&3&lWolfo &f&l» &7You're not an &coperator&7."
+			send "&3&lWolfo &7&l▪ &7You're not an &coperator&7."
 		else:
 			arg-1 is "debug":
 				if {wolfo::debug::status} is set:
-					send "&3&lWolfo &f&l» &7The developement mode is &cdisabled&7."
+					send "&3&lWolfo &7&l▪ &7The developement mode is &cdisabled&7."
 					clear {wolfo::debug::status}
 				else:
-					send "&3&lWolfo &f&l» &7The developement mode is &aenabled&7."
+					send "&3&lWolfo &7&l▪ &7The developement mode is &aenabled&7."
 					set {wolfo::debug::status} to true
 			else if arg-1 is "addplayer":
 				set {_r} to random element out of players
 				add {_r} to {wolfo::debug::list::*}
-				send "&3&lWolfo &f&l» &b%{_r}%&7 is &aadded &7to developement mode."
+				send "&3&lWolfo &7&l▪ &b%{_r}%&7 is &aadded &7to developement mode."
 			else:
 				send "&8&m                  &r&8[ &9Bug report and details of Wolfo &8]&m                  &r"
 				send "&bGenerated at: &7%now%"
