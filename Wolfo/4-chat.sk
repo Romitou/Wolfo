@@ -1,25 +1,26 @@
 on script load:
-	send join "&3&lWolfo &f&l» &8Took %difference between now and {wolfo::loading}%." to ops
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
-	send "&3&lWolfo &f&l» &7Loading chat ..." to ops
+	send "&3&lWolfo &7&l▪ &7Loading chat ..." to ops
 	set {wolfo::loading} to now
 
 on chat:
 	replace all "&" with "§" in message if player is op
 	cancel event
+	wolfoDebug("%player% send a message.")
 	if {wolfo::game::start} is set:
 		if {wolfo::players::life::%player%} is "&cMort":
-			loop {wolfo::players::life::*}:
+			loop {wolfo::players::list::*}:
 				if {wolfo::players::life::%loop-value%} is "&cMort":
 					send "&8[&7Mort&8] &7%player% &8» &7%message%" to loop-value
-					stop
 		else:
 			if {wolfo::game::status} is "NIGHT":
-				if {wolfo::players::role_name::%player%} is "WEREWOLF" or "WEREWOLF_ALPHA":
-					loop {wolfo::players::role::WEREWOLF::*}:
-						send "&8[&7Nuit&8] &8[&cLoup-garou&8] &7%player% &8» &7%message%" to loop-value
+				if {wolfo::players::role_name::%player%} is {wolfo::vote::current}:
+					loop {wolfo::role::list::%{wolfo::vote::current}%::*}:
+						set {_role} to wolfoGetText("ROLES.%{wolfo::vote::current}%.NAME", 2, loop-value)
+						send "&8[&7Nuit&8] &8[%{_role}%&8] &7%player% &8» &7%message%" to loop-value
 				else:
-					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, {_p})
+					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, player)
 			else:
 				broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
 	else:

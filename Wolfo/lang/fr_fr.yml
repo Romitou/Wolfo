@@ -34,7 +34,7 @@ MESSAGE:
     COSMETICS:
         ON1: '&fNous avons activé tes particules, j''espère que tes '
         ON2: '&fte vont bien ! :D'
-        OFF: 'Oh non ... Déjà ? Si tu veux les réactiver, rends-toi dans le menu cosmétiques.'
+        STOP: 'Oh non ... Déjà ? Si tu veux les réactiver, rends-toi dans le menu cosmétiques.'
     PRIVACY:
         CLOSED: '&fLes opérateurs ont &cfermé&f cette partie.'
         WHITELISTED: '&fLes opérateurs ont &6réservé&f cette partie à certains joueurs.'
@@ -45,6 +45,7 @@ MESSAGE:
         DAY: '&eJour'
         NIGHT: '&9Nuit'
         VOTE: '&dVote'
+        FINISH: '&cTerminé'
     GAMETYPE:
         '0': '&7Attente ...'
         '1': '&aMini!'
@@ -86,15 +87,17 @@ MESSAGE:
     ROLEDESC: 'Description de votre rôle :'
     MUTED: 'Votre rôle ne vous permet pas parler durant la nuit.'
     GOODLEFT: 'Vous partez déjà ? On s''amuse tout de suite moins sans vous.'
-    LOCATIONSET: 'Parfait ! Votre position a été enregistrée. '
-    LOCATIONSETO: 'Parfait ! Votre position a été ajoutée. '
-    SETUP_FINISHED1: '&fVous avez &aterminé&f la configuration minimale. Vous pouvez continuer l''installation ou ajouter plus de points d''apparitions.'
+    LOCATIONSET: 'Votre position a été &aenregistrée&f.'
+    LOCATIONSETO: 'Votre position a été &aajoutée&f.'
     SETUP_FINISHED2: '&fVous avez &aterminé&f la configuration, bon jeu !'
     NOTENOUGH1: '&cIl manque '
     NOTENOUGH2: ' &cjoueur(s) avant de pouvoir lancer la partie.'
     NOTENOUGH: '&fIl n''y a &cpas assez de joueur&f pour lancer une partie. Si vous avez des amis, invitez-les et réessayez.'
     TOOMANY: '&fWow! Il y a beaucoup de monde, vous &cne pouvez pas&f rejoindre cette partie.'
     REVEAL: 'Vous êtes désormais '
+    LANGUAGE:
+        AUTOCHANGED: 'Wolfo a synchronisé votre langue en jeu avec la langue de votre configuration Minecraft. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
+        NOTFOUND: 'Wolfo a tenté de synchroniser votre langue en jeu avec celle de votre configuration Minecraft, mais les opérateurs n''ont pas ajouté votre langue. Elle a été définie sur la langue par défaut. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
     VICTORY:
         TITLE: '&fVoici les conditions de victoire :'
         MSG:
@@ -308,6 +311,7 @@ SETUP:
         - '&bde la partie&7 à votre position.'
         - '&7Veillez à qu''elle peux être'
         - '&7vue par tous les joueurs autour.'
+        - ''
     SPAWNPOINT:
         NAME: '&ePoints d''apparition'
         LORE:
@@ -341,3 +345,4 @@ SETUP:
         - '&cmort&7 à votre position.'
         - '&7Les joueurs morts apparaîtrons'
         - '&7à cet emplacement.'
+        - ''
