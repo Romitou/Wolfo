@@ -22,6 +22,6 @@ on chat:
 				else:
 					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, player)
 			else:
-				broadcast "&8[&fJour&8] &7%player% &8» &7%message%"
+				send "&8[&fJour&8] &7%player% &8» &7%message%" to {wolfo::players::list::*}
 	else:
-		broadcast "&7%player% &8» &7%message%"
+		send "&7%player% &8» &7%message%" to {wolfo::players::list::*}
