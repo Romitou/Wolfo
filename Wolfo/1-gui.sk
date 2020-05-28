@@ -106,10 +106,12 @@ function wolfoMenuVote(role: text):
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
+				{wolfo::DOCTOR} != {_target}
 				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7Protégez &b%{_target}%&7 du", "&7vote des &cLoup-Garous&7." and "" to run:
 					close {_voter}'s inventory
 					set {wolfo::timer} to 0
 					set {wolfo::results::DOCTOR} to {_target}
+					set {wolfo::DOCTOR} to {_target}
 					send join wolfoGetText("PREFIX.GENERAL", 1) and "Le joueur &b%{_target}%&f sera protégé." to {_voter}
 			# SEER -------------------------------------------
 			else if {_role} is "SEER" or "SEER_AURA":
