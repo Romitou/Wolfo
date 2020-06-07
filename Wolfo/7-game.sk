@@ -99,7 +99,9 @@ function wolfoTime():
 function wolfoResult() :: objects:
 	set {_config} to wolfoGetConfig()
 	set {_voted} to {wolfo::results::WEREWOLF}
+	set {_shooted} to {wolfo::results::SHOOTER}
 	wolfoDebug("%{_voted}% was voted by Werewolfs.")
+	wolfoDebug("%{_shooted}% was shooted by Shooter.")
 	if {wolfo::results::DOCTOR} is {_voted}:
 		clear {_voted}
 	if {wolfo::results::WITCH} is true:
@@ -110,10 +112,17 @@ function wolfoResult() :: objects:
 		wolfoDebug("%{_voted}% was eliminated. (%{wolfo::players::role_name::%{_voted}%}%)")
 		send "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f." to {wolfo::players::list::*}
 		clear {wolfo::results::*}
-		return {_voted}
-	else:
+		add {_voted} to {_results::*}
+	if {_shooted} is set:
+		wolfoDebug("%{_voted}% was shooted. (%{wolfo::players::role_name::%{_voted}%}%)")
+		send "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f." to {wolfo::players::list::*}
+		clear {wolfo::results::*}
+		add {_shooted} to {_results::*}
+	if size of {_results::*} is 0:
 		send "&3&lWolfo &7&l▪ &f... et personne n'est mort !" to {wolfo::players::list::*}
 		clear {wolfo::results::*}
+	else:
+		return {_results::*}
 
 function wolfoMostVoted() :: objects:
 	# On mélange préalablement la liste
@@ -147,7 +156,11 @@ function wolfoMain(i: integer):
 			loop {wolfo::role::round::*}:
 				clear {wolfo::vote::*}
 				loop-value-1 is "CUPID":
-					{wolfo::game::day} is 0
+					{wolfo::game::day} is not 0
+					stop 1 loop
+				loop-value-1 is "SHOOTER":
+					{wolfo::role::SHOOTER::bullets} >= 2
+					stop 1 loop
 				size of {wolfo::role::list::%loop-value-1%::*} is not 0
 				wolfoDebug("Vote of %loop-value-1% role.")
 				set {wolfo::vote::current} to loop-value-1
