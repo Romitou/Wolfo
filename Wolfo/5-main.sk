@@ -42,7 +42,7 @@ function wolfoJoin(p: player):
 
 function wolfoLeave(p: player):
 	loop all players:
-		send join wolfoGetText("PREFIX.GENERAL", 1, loop-player), "&b%{_p}% ", wolfoGetText("MESSAGE.LEFT", 2, loop-player) and " &8(&7%amount of all players%&8/&75&8)" to loop-player
+		send join wolfoGetText("PREFIX.GENERAL", 1, loop-player), "&b%{_p}% ", wolfoGetText("MESSAGE.LEFT", 2, loop-player) and " &8(&7%amount of all players - 1%&8/&75&8)" to loop-player
 	wolfoSbPlayer({_p}, 1)
 	remove {_p} from {wolfo::role::list::%{wolfo::players::role_name::%{_p}%}%::*}
 	remove {_p} from {wolfo::players::list::*}
