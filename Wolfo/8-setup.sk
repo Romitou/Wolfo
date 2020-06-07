@@ -11,13 +11,13 @@ function wolfoMenuAction(p: player, loop: integer, action: text):
 			wolfoCheckStart({_p})
 		else if {_loop} is 13:
 			wolfoSetText("GAME.PRIVACY", "CLOSED")
-			broadcast join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.CLOSED", 2, {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.CLOSED", 2, {_p}) to {wolfo::players::list::*}
 		else if {_loop} is 14:
 			wolfoSetText("GAME.PRIVACY", "WHITELISTED")
-			broadcast join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.WHITELISTED", 2, {_p}) to {wolfo::players::list::*}
 		else if {_loop} is 15:
 			wolfoSetText("GAME.PRIVACY", "OPEN")
-			broadcast join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.OPEN", 2, {_p})
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.PRIVACY.OPEN", 2, {_p}) to {wolfo::players::list::*}
 	else:
 		if {_loop} is 11:
 			wolfoSetLoc("GAME.LOCATIONS.MIDDLE", position of {_p})
