@@ -106,20 +106,20 @@ function wolfoResult() :: objects:
 		clear {_voted}
 	if {wolfo::results::WITCH} is true:
 		clear {_voted}
-	broadcast "&3&lWolfo &7&l▪ &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." if {wolfo::results::SEER} is set
-	broadcast "&3&lWolfo &7&l▪ &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." if {wolfo::results::SEER_AURA} is set
+	send "&3&lWolfo &7&l▪ &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." to {wolfo::players::list::*} if {wolfo::results::SEER} is set
+	send "&3&lWolfo &7&l▪ &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." to {wolfo::players::list::*} if {wolfo::results::SEER_AURA} is set
 	if {_voted} is set:
 		wolfoDebug("%{_voted}% was eliminated. (%{wolfo::players::role_name::%{_voted}%}%)")
-		broadcast "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f."
+		send "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f." to {wolfo::players::list::*}
 		clear {wolfo::results::*}
 		add {_voted} to {_results::*}
 	if {_shooted} is set:
 		wolfoDebug("%{_voted}% was shooted. (%{wolfo::players::role_name::%{_voted}%}%)")
-		broadcast "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f."
+		send "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f." to {wolfo::players::list::*}
 		clear {wolfo::results::*}
 		add {_shooted} to {_results::*}
 	if size of {_results::*} is 0:
-		broadcast "&3&lWolfo &7&l▪ &f... et personne n'est mort !"
+		send "&3&lWolfo &7&l▪ &f... et personne n'est mort !" to {wolfo::players::list::*}
 		clear {wolfo::results::*}
 	else:
 		return {_results::*}
