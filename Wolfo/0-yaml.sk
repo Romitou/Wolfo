@@ -1,6 +1,3 @@
-# Ce script contient toutes les informations nécessaires pour faire fonctionner les autres scripts.
-# Merci de ne pas modifier son nom afin de garder une hiérachie et charger les autres scripts convenablement.
-
 on script load:
 	clear {wolfo::loading::error}
 	send "&3&lWolfo &7&l▪ &7Loading config ..." to ops
