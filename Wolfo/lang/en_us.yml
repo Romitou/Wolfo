@@ -22,6 +22,7 @@ COSMETICS:
         NYANCAT: '&dN&by&aa&6n &cc&aa&dt'
         RINGS: '&6Rings'
         SPIRAL: '&9Spiral'
+
 MESSAGE:
     PERMISSION:
         MESSAGE: '&fYou &cdon''t have the necessary privileges&f to perform this action.'
@@ -94,17 +95,16 @@ MESSAGE:
     REVEAL: 'You are now '
     LANGUAGE:
         AUTOCHANGED: 'Wolfo has synchronized your in-game language with the language of your Minecraft configuration. If you want to change it, go to the languages menu.'
-        NOTFOUND: 'Wolfo a tenté de synchroniser votre langue en jeu avec celle de votre configuration Minecraft, mais les opérateurs n''ont pas ajouté votre langue. Elle a été définie sur la langue par défaut. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
+        NOTFOUND: 'Wolfo tried to synchronize your in-game language with your Minecraft setup, but the operators didn''t add your language. It was set to the default language. If you want to change it, go to the languages menu.'
     VICTORY:
-        - '&fHere are the conditions for victory:'
-        -  ''
-        -  '  &f» &bAll villages are dead.'
-        -  '  &f» &bAll werewolves are dead.'
-        -  '  &f» &6Crazy&b is killed by the village.'
-        -  '  &f» &bThe target of the headhunter is killed by the village.'
-        -  "|4-"
-        -  ""
-        - ''
+        TITLE: '&fHere are the conditions for victory:'
+        MSG:
+            - ''
+            - '  &f» &bAll villages are dead.'
+            - '  &f» &bAll werewolves are dead.'
+            - '  &f» &6Crazy&b is killed by the village.'
+            - '  &f» &bThe target of the headhunter is killed by the village.'
+            - ''
     COMMANDS:
         TITLE: '&fHere is the list of commands:'
         MSG:
@@ -184,7 +184,7 @@ ROLES:
             - ''
             - '&8➥ &7Your team: &6Village'
     SEER:
-        NAME: '&aPsychic'
+        NAME: '&aAura'
         DESC:
             - ''
             - '&8➥ &7Every night, you have the opportunity'
@@ -253,7 +253,7 @@ AURA:
     WEREWOLF: '&cobscur'
     TOWNSFOLK: '&aclear'
     WW_TF: '&9unknown'
-    SOLO: 'lonely'
+    SOLO: '&7lonely'
 MANAGE:
     FORCESTART:
         NAME: '&aStart the game'
