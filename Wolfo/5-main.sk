@@ -21,7 +21,7 @@ function wolfoHelp(msg: text, p: player):
 function wolfoJoin(p: player):
 	set {wolfo::players::lang::%{_p}%} to wolfoGetText("LANGUAGES.DEFAULT", 1) if {wolfo::players::lang::%{_p}%} is not set
 	loop all players:
-		send join wolfoGetText("PREFIX.GENERAL", 1, loop-player), "&b%{_p}% ", wolfoGetText("MESSAGE.JOINED", 2, loop-player) and " &8(&7%amount of all players%&8/&75&8)" to loop-player
+		send join wolfoGetText("PREFIX.GENERAL", 2, loop-player), "&b%{_p}% ", wolfoGetText("MESSAGE.JOINED", 2, loop-player) and " &8(&7%amount of all players%&8/&75&8)" to loop-player
 	set {_p}'s xp to 0
 	teleport {_p} to wolfoGetLoc("GAME.LOCATIONS.BEGIN")
 	set {_p}'s gamemode to adventure

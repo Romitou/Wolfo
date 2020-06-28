@@ -71,7 +71,7 @@ function wolfoMenuVote(role: text):
 				if {wolfo::results::CUPID::*} do not contain {_target}:
 					set {_material} to {_target}'s skull named "&9%{_target}% &f- &7❤" with lore ""
 				else:
-					set {_material} to {_target}'s skull named "&9%{_target}% &f- &c❤" with lore "", "&2✔ &aSélectionné !" and ""
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- &c❤" with lore "", wolfoGetText("MESSAGE.SELECTIONNED", 2, {_voter}) and ""
 				make a gui slot {_loop} of {_voter} with {_material} to run:
 					if {wolfo::results::CUPID::*} contains {_target}:
 						remove {_target} from {wolfo::results::CUPID::*}
@@ -82,14 +82,13 @@ function wolfoMenuVote(role: text):
 			# WEREWOLF -------------------------------------------
 			else if {_role} is "WEREWOLF" or "TOWNSFOLK":
 				if {wolfo::vote::players::%{_target}%::*} is not set:
-					set {_material} to {_target}'s skull named "&9%{_target}% &f- &7Aucun vote" with lore "" and "&7Personne n'a voté."
+					set {_novote} to wolfoGetText("MESSAGE.NO_VOTE", 2, {_voter})
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- %{_novote}%" with lore "" and wolfoGetText("MESSAGE.NO_VOTER", 2, {_voter})
 				else:
 					set {_size} to size of {wolfo::vote::players::%{_target}%::*}
-					if {_size} = 1:
-						set {_vote} to "vote"
-					else:
-						set {_vote} to "votes"
-					set {_material} to {_target}'s skull named "&9%{_target}% &f- &b%size of {wolfo::vote::players::%{_target}%::*}% %{_vote}%" with lore "" and "&7Votants: %{wolfo::vote::players::%{_target}%::*}%"
+					set {_vote} to wolfoGetText("MESSAGE.VOTE", 2, {_voter})
+					set {_voting} to wolfoGetText("MESSAGE.VOTING", 2, {_voter})
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- &b%size of {wolfo::vote::players::%{_target}%::*}% %{_vote}%" with lore "" and "%{_voting}%: %{wolfo::vote::players::%{_target}%::*}%"
 				make a gui slot {_loop} of {_voter} with {_material} to run:
 					if {wolfo::vote::voters::%{_voter}%} is not set:
 						set {wolfo::vote::voters::%{_voter}%} to {_target}
@@ -100,9 +99,11 @@ function wolfoMenuVote(role: text):
 					add {_target} to {wolfo::vote::list::*}
 					set {wolfo::vote::voters::%{_voter}%} to {_target}
 					{_role} is "WEREWOLF":
-						send join wolfoGetText("PREFIX.GENERAL", 1) and "Ton vote contre &b%{_target}%&f a été &aenregistré&f. J'espère que tu as fait le bon choix." to {_voter}
+						send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.VOTE_COUNTED", 2, {_voter}) to {_voter}
 					else:
-						send join wolfoGetText("PREFIX.GENERAL", 1) and "&b%{_voter}%&7 vote contre &b%{_target}%&7..." to all players
+						loop {wolfo::players::list::*}:
+							set {_against} to wolfoGetText("MESSAGE.VOTE_AGAINST", 2, loop-value-3)
+							send join wolfoGetText("PREFIX.GENERAL", 1) and "&b%{_voter}%&7 %{_against}% &b%{_target}%&7..." to loop-value-3
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
