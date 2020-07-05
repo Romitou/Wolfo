@@ -252,8 +252,8 @@ ROLES:
             - ''
             - '&8➥ &7You have &two potions'
             - '&7One allows a player to succeed,'
-            - '&7the other allows you to kill a player. You'
-            - '&7can only be used once.'
+            - '&7the other allows you to kill a player.'
+            - '&7Can only be used once.'
             - ''
             - '&8➥ &7Your team: &6Village'
 AURA:
