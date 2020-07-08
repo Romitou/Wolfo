@@ -154,7 +154,16 @@ MESSAGE:
                 - '&7potion pour sauver un joueur.'
                 - ''
             SUCCESS: 'Vous avez sauvé ce joueur avec succès.'
-            
+    SCOREBOARD:
+        STATUS: 'Statut'
+        SIZEPLAYERS: 'Connectés'
+        CONFIG: 'Configuration'
+        DAY: 'Jour'
+        YOUR_ROLE: 'Votre rôle'
+        YOUR_STATUS: 'Votre statut'
+        GAME: 'Partie'
+        PLAYER1: 'Joueur'
+        PLAYER2: 'joueur'
     LANGUAGE:
         AUTOCHANGED: 'Wolfo a synchronisé votre langue en jeu avec la langue de votre configuration Minecraft. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
         NOTFOUND: 'Wolfo a tenté de synchroniser votre langue en jeu avec celle de votre configuration Minecraft, mais les opérateurs n''ont pas ajouté votre langue. Elle a été définie sur la langue par défaut. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
