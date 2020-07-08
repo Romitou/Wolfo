@@ -102,6 +102,59 @@ MESSAGE:
     VOTING: '&7votant'
     VOTE_COUNTED: 'Votre vote a bien été pris en compte.'
     VOTE_AGAINST: 'vote contre'
+    VOTE_PROTECTED: 'Ce joueur a bien été protégé.'
+    WAS_VOTED: 'a été voté'
+    WORDS:
+        IS: 'est'
+        OF: 'de'
+        SUR: 'on'
+        PROTECT: 'Protégez' # Impératif présent
+        DISCOVER: 'Découvrez' # Impératif présent
+        SHOOT: 'Tirez une balle' # Impératif présent
+        ROLE: 'le rôle' # Déterminant défini
+        AURA: 'le aura' # Déterminant défini
+    WEREWOLF_VOTE: '&7vote des &cLoup-Garous&7.'
+    BY_WEREWOLF: '&7par les &cLoup-Garous&7.'
+    SHOOTED: 'Vous avez &ctiré'
+    NO_WEREWOLF_VOTE: 'Les &cLoup-Garous &fn''ont pas voté.'
+    POTIONS:
+        SELECT:
+            NAME: '&aSélectionner cette option'
+            LORE:
+                - ''
+                - '&7Vous utiliserez une de vos'
+                - '&7deux potions en faisant cela.'
+                - ''
+                
+        USED:
+            NAME: '&cPotion déjà utilisée'
+            LORE:
+                - ''
+                - '&7Vous avez déjà utilisé cette potion.'
+                - ''
+        STRENGTH:
+            NAME: '&cPotion de force'
+            DESC:
+                - ''
+                - '&7Votre vote comptera &btriple&7 au vote des'
+                - '&7villageois en utilisant cette potion.'
+                - ''
+            SUCCESS: 'Votre vote au jour prochain comptera &btriple&f, même s''il ne sera comptabilisé que comme une voix.'
+            
+        REGENERATION:
+            NAME: '&dPotion de régénération'
+            DESC:
+                - ''
+                - '&7Vous pourrez sauver ce joueur'
+                - '&7en utilisant cette potion.'
+                - ''
+            USED:
+                - ''
+                - '&7Vous avez déjà utilisé cette'
+                - '&7potion pour sauver un joueur.'
+                - ''
+            SUCCESS: 'Vous avez sauvé ce joueur avec succès.'
+            
     LANGUAGE:
         AUTOCHANGED: 'Wolfo a synchronisé votre langue en jeu avec la langue de votre configuration Minecraft. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
         NOTFOUND: 'Wolfo a tenté de synchroniser votre langue en jeu avec celle de votre configuration Minecraft, mais les opérateurs n''ont pas ajouté votre langue. Elle a été définie sur la langue par défaut. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
