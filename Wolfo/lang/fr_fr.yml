@@ -117,6 +117,19 @@ MESSAGE:
     BY_WEREWOLF: '&7par les &cLoup-Garous&7.'
     SHOOTED: 'Vous avez &ctiré'
     NO_WEREWOLF_VOTE: 'Les &cLoup-Garous &fn''ont pas voté.'
+    ALLOW_ACCESS: 'Autoriser l''accès à'
+    DENY_ACCESS: 'Refuser l''accès à'
+    ADD_WHITELIST: 'Ajouter ce joueur à la liste'
+    REMOVE_WHITELIST: 'Retirer ce joueur de la liste'
+    NO_PLAYER: 'Aucun joueur'
+    TP_NOT_ENOUGH: 'Il n''y a pas assez de points de téléportation !'
+    DEVELOPER_MODE: '&fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée.'
+    PROJECT:
+        TEXT: 'Wolfo a été développé par plusieurs contributeurs. Merci à :'
+        LIST:
+            - '&7Romitou#9685'
+            - '&7Xamez#8497'
+            - '&7TitiLaPierre#3934'
     POTIONS:
         SELECT:
             NAME: '&aSélectionner cette option'

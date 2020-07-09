@@ -100,13 +100,18 @@ function wolfoWhitelist(executor: player, target: text, action: integer):
 		else if {_action} is not set:
 			if {_target} is set:
 				if {_check::*} do not contain {_target}:
-					send formatted join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.NOT_WHITELISTED", 2, {_executor}) and "          <cmd:/wolfo whitelist %{_target}% 1><tooltip:&aAjouter %{_target}% la liste !>&a[Accorder l'accès à %{_target}%]&r" to {_executor}
+					set {_add} to wolfoGetText("MESSAGE.ADD_WHITELIST", 2, {_executor})
+					set {_allow} to wolfoGetText("MESSAGE.ALLOW_ACCESS", 2, {_executor})
+					send formatted join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.NOT_WHITELISTED", 2, {_executor}) and "          <cmd:/wolfo whitelist %{_target}% 1><tooltip:&a%{_add}%>&a[%{_allow}% %{_target}%]&r" to {_executor}
 				else:
-					send formatted join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.WHITELISTED", 2, {_executor}) and "          <cmd:/wolfo whitelist %{_target}% 2><tooltip:&cRetirer %{_target}% de la liste !>&c[Révoquer l'accès de %{_target}%]&r" to {_executor}
+
+					set {_remove} to wolfoGetText("MESSAGE.REMOVE_WHITELIST", 2, {_executor})
+					set {_deny} to wolfoGetText("MESSAGE.DENY_ACCESS", 2, {_executor})
+					send formatted join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.WHITELISTED", 2, {_executor}) and "          <cmd:/wolfo whitelist %{_target}% 2><tooltip:&c%{_remove}%>&c[%{_deny}% %{_target}%]&r" to {_executor}
 			else:
 				send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.WHITELIST.LIST.1", 2, {_executor}) to {_executor}
 				if {_check::*} is not set:
-					add "&8Aucun joueur." to {_check::*}
+					add wolfoGetText("MESSAGE.NO_PLAYER", 2, {_executor}) to {_check::*}
 				loop {_check::*}:
 					send "&b[&6%loop-index%&b] &f%loop-value%" to {_executor}
 				send wolfoGetText("MESSAGE.WHITELIST.LIST.2", 2, {_executor}) to {_executor}
@@ -125,19 +130,21 @@ function wolfoCheckStart(p: player):
 				wolfoTimer(5)
 				send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.START.PREPARE", 2, {_p}) to all players
 			else:
-				send join wolfoGetText("PREFIX.GENERAL", 1) and "&cIl n'y a pas assez de points de téléportation ! (%{_pos}%/%size of all players%)" to {_p}
+				set {_notenough} to wolfoGetText("MESSAGE.TP_NOT_ENOUGH", 2, {_p})
+				send join wolfoGetText("PREFIX.GENERAL", 1) and "&c%{_notenough}% (%{_pos}%/%size of all players%)" to {_p}
 	else:
 		send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MISSINGCONFIG", 2, {_p}) to {_p}
 
 function wolfoStart():
-	send "&3&lWolfo &7&l▪ &fWolfo a été développé par &bXamez##8497&f et &bRomitou##9685&f. Si vous avez la moindre question, rejoignez notre Discord : https://discordapp.com/invite/37nvkpk !" to all players
 	{wolfo::debug::status} is true:
 		set {wolfo::players::list::*} to {wolfo::debug::list::*}
 		set {wolfo::players::alive::*} to {wolfo::debug::list::*}
-		send "&3&lWolfo &7&l▪ &fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée." to all players
+		send wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.DEVELOPER_MODE", 2, {_p}) to {wolfo::players::list::*}
 	else:
 		set {wolfo::players::list::*} to players
 		set {wolfo::players::alive::*} to players
+	send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.PROJECT.TEXT", 2, {_p}) to {wolfo::players::list::*}
+	send join wolfoGetObjects("MESSAGE.PROJECT.LIST") by ", " to {wolfo::players::list::*}
 	loop {wolfo::players::list::*}:
 		teleport loop-value to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS.%loop-index%")
 		wolfoDebug("Teleport %loop-value%.")
