@@ -66,7 +66,7 @@ function wolfoGiveRoles():
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
 		set {_desc::*} to wolfoGetObjects("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
 		send title {_role} to loop-value for 2 seconds
-		send join wolfoGetText("PREFIX.GENERAL", 1, loop-value), wolfoGetText("MESSAGE.REVEAL", 2, loop-value) and wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value) to loop-value
+		send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.REVEAL", 2, loop-value) and wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value) to loop-value
 		add loop-value to {wolfo::role::list::%{_input::%loop-index%}%::*}
 		clear loop-value's inventory
 		set slot 4 of loop-value to a book named wolfoGetText("ITEM.VOTE", 2, loop-value)
@@ -87,13 +87,13 @@ function wolfoVote(p: player):
 	else if {wolfo::vote::current} is {wolfo::players::role_name::%{_p}%}:
 		wolfoMenuVote({wolfo::vote::current})
 	else:
-		send "&3&lWolfo &7&l▪ &fDésolé, ce n'est pas ton tour." to {_p}
+		send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.INVALID_TURN", 2, {_p}) to {_p}
 
 function wolfoTime():
 	if {wolfo::game::start} is true:
 		if {wolfo::game::status} is "DAY":
 			clear {wolfo::vote::*}
-			send "&3&lWolfo &7&l▪ &fLa nuit tombe ..." to {wolfo::players::list::*}
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.ROUND.NIGHT", 2, {_p}) to {wolfo::players::list::*}
 			# On utilise un between pour être sûr que le while s'arrête correctement
 			# quand l'heure ne tombe pas sur un nombre juste.
 			while time of "world" isn't between 0:00 and 01:00:
@@ -103,7 +103,7 @@ function wolfoTime():
 			wolfoMain(1)
 		else:
 			clear {wolfo::vote::*}
-			send "&3&lWolfo &7&l▪ &fLe jour se lève ..." to {wolfo::players::list::*}	
+			send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.ROUND.DAY", 2, {_p}) to {wolfo::players::list::*}	
 			# On utilise un between pour être sûr que le while s'arrête correctement
 			# quand l'heure ne tombe pas sur un nombre juste.
 			while time of "world" isn't between 12:00 and 13:00:
@@ -125,8 +125,21 @@ function wolfoResult() :: objects:
 		clear {_voted}
 	if {wolfo::results::WITCH} is true:
 		clear {_voted}
-	send "&3&lWolfo &7&l▪ &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." to {wolfo::players::list::*} if {wolfo::results::SEER} is set
-	send "&3&lWolfo &7&l▪ &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." to {wolfo::players::list::*} if {wolfo::results::SEER_AURA} is set
+	set {_prefix} to wolfoGetText("PREFIX.GENERAL", 1)
+	{wolfo::results::SEER} is set:
+		loop {wolfo::players::list::*}:
+			set {_name} to wolfoGetText("ROLES.SEER.NAME", 2, loop-value)
+			set {_the} to wolfoGetText("MESSAGE.WORDS.THE_F", 2, loop-value)
+			set {_role} to wolfoGetText("MESSAGE.WORDS.ROLE", 2, loop-value)
+			set {_discovered} to wolfoGetText("MESSAGE.WORDS.ROLE", 2, loop-value)
+			send join {_prefix} and "... %{_the}% %{_name}% %{_discovered}% %{_role}% %{wolfo::results::SEER}%&f..." to {wolfo::players::list::*}
+	{wolfo::results::SEER_AURA} is set:
+		loop {wolfo::players::list::*}:
+			set {_name} to wolfoGetText("ROLES.SEER_AURA.NAME", 2, loop-value)
+			set {_the} to wolfoGetText("MESSAGE.WORDS.THE_F", 2, loop-value)
+			set {_aura} to wolfoGetText("MESSAGE.WORDS.AURA", 2, loop-value)
+			set {_discovered} to wolfoGetText("MESSAGE.WORDS.ROLE", 2, loop-value)
+			send join {_prefix} and "... %{_the}% %{_name}% %{_discovered}% %{_aura}% %{wolfo::results::SEER_AURA}%&f..." to {wolfo::players::list::*}
 	if {_voted} is set:
 		wolfoDebug("%{_voted}% was eliminated. (%{wolfo::players::role_name::%{_voted}%}%)")
 		send "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f." to {wolfo::players::list::*}
@@ -138,6 +151,7 @@ function wolfoResult() :: objects:
 		clear {wolfo::results::*}
 		add {_shooted} to {_results::*}
 	if size of {_results::*} is 0:
+		send join wolfoGetText("PREFIX.GENERAL", 1) and "... "
 		send "&3&lWolfo &7&l▪ &f... et personne n'est mort !" to {wolfo::players::list::*}
 		clear {wolfo::results::*}
 	else:

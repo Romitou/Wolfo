@@ -104,15 +104,20 @@ MESSAGE:
     VOTE_AGAINST: 'vote contre'
     VOTE_PROTECTED: 'Ce joueur a bien été protégé.'
     WAS_VOTED: 'a été voté'
+    NOBODY_DEAD: 'personne n''est mort !'
+    DISCOVERD: 'a découvert'
     WORDS:
         IS: 'est'
         OF: 'de'
         SUR: 'on'
+        AND: 'et'
+        THE_F: 'la' # Féminin
+        THE_M: 'le' # Masculin
         PROTECT: 'Protégez' # Impératif présent
         DISCOVER: 'Découvrez' # Impératif présent
         SHOOT: 'Tirez une balle' # Impératif présent
         ROLE: 'le rôle' # Déterminant défini
-        AURA: 'le aura' # Déterminant défini
+        AURA: 'l''aura' # Déterminant défini
     WEREWOLF_VOTE: '&7vote des &cLoup-Garous&7.'
     BY_WEREWOLF: '&7par les &cLoup-Garous&7.'
     SHOOTED: 'Vous avez &ctiré'
@@ -124,6 +129,10 @@ MESSAGE:
     NO_PLAYER: 'Aucun joueur'
     TP_NOT_ENOUGH: 'Il n''y a pas assez de points de téléportation !'
     DEVELOPER_MODE: '&fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée.'
+    INVALID_TURN: 'Désolé, ce n''est pas ton tour.'
+    ROUND:
+        DAY: 'Le jour se lève ...'
+        NIGHT: 'La nuit tombe ...'
     PROJECT:
         TEXT: 'Wolfo a été développé par plusieurs contributeurs. Merci à :'
         LIST:
