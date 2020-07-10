@@ -16,14 +16,16 @@
 #
 # Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
 #
+options:
+	wolfo_directory: plugins/Skript/scripts/Wolfo
 
 on script load:
 	clear {wolfo::loading::error}
 	send "&3&lWolfo &7&l▪ &7Loading config ..." to ops
 	set {wolfo::loading} to now
 	clear {wolfo::config::*}
-	reload all yml from directory "plugins/Skript/scripts/Wolfo/lang/" using filename as id
-	reload all yml from directory "plugins/Skript/scripts/Wolfo/" using filename as id
+	reload all yml from directory "{@wolfo_directory}" using filename as id
+	reload all yml from directory "{@wolfo_directory}/lang/" using filename as id
 	size of loaded yml is below 2:
 		send "&c[Wolfo] Error! Please check that the configuration or / and the language files are placed in the correct folders." to console
 		add 1 to {wolfo::loading::error}

@@ -151,8 +151,8 @@ function wolfoResult() :: objects:
 		clear {wolfo::results::*}
 		add {_shooted} to {_results::*}
 	if size of {_results::*} is 0:
-		send join wolfoGetText("PREFIX.GENERAL", 1) and "... "
-		send "&3&lWolfo &7&l▪ &f... et personne n'est mort !" to {wolfo::players::list::*}
+		send join {_prefix} and "... " to {wolfo::players::list::*}
+		send join {_prefix} and "&f... et personne n'est mort !" to {wolfo::players::list::*}
 		clear {wolfo::results::*}
 	else:
 		return {_results::*}
