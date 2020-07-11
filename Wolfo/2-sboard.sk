@@ -43,7 +43,6 @@ function wolfoSbPlayer(p: player, i: integer):
 
 function wolfoSb(p: objects):
 	wolfoDebug("Update scoreboard to %{_p::*}%")
-	set {_status} to {wolfo::game::status}
 	set {_day} to {wolfo::game::day}
 	loop {_p::*}:
 		set {_status} to wolfoGetText("MESSAGE.SCOREBOARD.STATUS", 2, loop-value)
