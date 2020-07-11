@@ -134,7 +134,7 @@ function wolfoMenuVote(role: text):
 					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.VOTE_PROTECTED", 2, {_voter}) to {_voter}
 			# SEER -------------------------------------------
 			else if {_role} is "SEER" or "SEER_AURA":
-				set {_type} to wolfoGetText("MESSAGE.WORDS.ROLE", 2, {_voter}) if {_role} is "SEER", else (wolfoGetText("MESSAGE.WORDS.AURA", 2, {_voter}))
+				set {_type} to wolfoGetText("MESSAGE.WORDS.ROLE", 2, {_voter}) if {_role} is "SEER" otherwise (wolfoGetText("MESSAGE.WORDS.AURA", 2, {_voter}))
 				set {_discover} to wolfoGetText("MESSAGE.WORDS.DISCOVER", 2, {_voter})
 				set {_of} to wolfoGetText("MESSAGE.WORDS.OF", 2, {_voter})
 				set {_is} to wolfoGetText("MESSAGE.WORDS.IS", 2, {_voter})
@@ -173,26 +173,32 @@ function wolfoMenuVote(role: text):
 				else:
 					set {_wasvoted} to wolfoGetText("MESSAGE.WAS_VOTED", 2, {_voter})
 					make a gui slot 22 of {_voter} with {_result::1}'s skull named "&9%{_result::1}%" with lore "", "&b%{_result::1}%&7 %{_wasvoted}%", wolfoGetText("MESSAGE.BY_WEREWOLF", 2, {_voter}) and ""
-					make a gui slot 20 of {_voter} with potion of regeneration named wolfoGetText("MESSAGE.POTIONS.REGENERATION.NAME", 2, {_voter}) with lore wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.DESC", 2, {_voter})
-					make a gui slot 24 of {_voter} with potion of strength named wolfoGetText("MESSAGE.POTIONS.STRENGHT.NAME", 2, {_voter}) with lore wolfoGetObjects("MESSAGE.POTIONS.STRENGHT.DESC", 2, {_voter})
+					set {_regeneration::*} to wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.DESC", 2, {_voter})
+					set {_strength::*} to wolfoGetObjects("MESSAGE.POTIONS.STRENGTH.DESC", 2, {_voter})
+					make a gui slot 20 of {_voter} with potion of regeneration named wolfoGetText("MESSAGE.POTIONS.REGENERATION.NAME", 2, {_voter}) with lore {_regeneration::*}
+					make a gui slot 24 of {_voter} with potion of strength named wolfoGetText("MESSAGE.POTIONS.STRENGTH.NAME", 2, {_voter}) with lore {_strength::*}
 					if {wolfo::potions::1} is not set:
-						make a gui slot 29 of {_voter} with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", 2, {_voter}) with lore wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.LORE", 2, {_voter}) to run:
+						set {_regeneration::*} to wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.LORE", 2, {_voter})
+						make a gui slot 29 of {_voter} with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", 2, {_voter}) with lore {_regeneration::*} to run:
 							send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.POTIONS.REGENERATION.SUCCESS", 2, {_voter}) to {_voter}
 							close {_voter}'s inventory
 							set {wolfo::timer} to 0
 							set {wolfo::results::WITCH} to true
 							set {wolfo::potions::1} to true
 					else:
-						make a gui slot 29 of {_voter} with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", 2, {_voter}) with lore wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", 2, {_voter})
+						set {_used::*} to wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", 2, {_voter})
+						make a gui slot 29 of {_voter} with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", 2, {_voter}) with lore {_used::*}
 					if {wolfo::potions::2} is not set:
-						make a gui slot 33 of {_voter} with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", 2, {_voter}) with lore wolfoGetObjects("MESSAGE.POTIONS.SELECT.LORE", 2, {_voter}) to run:
+						set {_select::*} to wolfoGetObjects("MESSAGE.POTIONS.SELECT.LORE", 2, {_voter})
+						make a gui slot 33 of {_voter} with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", 2, {_voter}) with lore {_select::*} to run:
 							send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.POTIONS.STRENGHT.SUCCESS", 2, {_voter}) to {_voter}
 							close {_voter}'s inventory
 							set {wolfo::timer} to 0
 							set {wolfo::results::WITCH} to true
 							set {wolfo::potions::2} to true
 					else:
-						make a gui slot 33 of {_voter} with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", 2, {_voter}) with lore wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", 2, {_voter})
+						set {_used::*} to wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", 2, {_voter})
+						make a gui slot 33 of {_voter} with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", 2, {_voter}) with lore {_used::*}
 			add 1 to {_loop}
 
 function wolfoMenu(p: player, type: text):
