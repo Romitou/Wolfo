@@ -88,7 +88,8 @@ function wolfoTime():
 	if {wolfo::game::start} is true:
 		if {wolfo::game::status} is "DAY":
 			clear {wolfo::vote::*}
-			send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ROUND.NIGHT", {_p}) to {wolfo::players::list::*}
+			loop {wolfo::players::list::*}:
+				send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ROUND.NIGHT", loop-value) to loop-value
 			# On utilise un between pour être sûr que le while s'arrête correctement
 			# quand l'heure ne tombe pas sur un nombre juste.
 			while time of "world" isn't between 0:00 and 01:00:
@@ -98,7 +99,8 @@ function wolfoTime():
 			wolfoMain(1)
 		else:
 			clear {wolfo::vote::*}
-			send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ROUND.DAY", {_p}) to {wolfo::players::list::*}	
+			loop {wolfo::players::list::*}:
+				send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ROUND.DAY", loop-value) to loop-value
 			# On utilise un between pour être sûr que le while s'arrête correctement
 			# quand l'heure ne tombe pas sur un nombre juste.
 			while time of "world" isn't between 12:00 and 13:00:
@@ -154,8 +156,7 @@ function wolfoResult() :: objects:
 			set {_dead} to wolfoGetText("MESSAGE.NOBODY_DEAD", loop-value)
 			send join {_prefix} and "&f... %{_dead}%" to loop-value
 		clear {wolfo::results::*}
-	else:
-		return {_results::*}
+	return {_results::*}
 
 function wolfoMostVoted() :: objects:
 	# On mélange préalablement la liste

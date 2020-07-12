@@ -141,7 +141,7 @@ MESSAGE:
     DEVELOPER_MODE: '&fLe &cmode développeur&f est activé. Le déroulement de cette
         partie sera en conséquent modifiée.'
     INVALID_TURN: 'Désolé, ce n''est pas ton tour.'
-    NOT_PLAYED: 'n''a pas joué ...'
+    NOT_PLAYED: '&f n''a pas joué ...'
     VILLAGE_HAS_VOTED: 'Le village a voté ...'
     NO_TARGET: '... contre personne.'
     ACTIONBAR:

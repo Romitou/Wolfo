@@ -71,130 +71,132 @@ on inventory close:
 function wolfoMenuVote(role: text):
 	wolfoDebug("Opening vote menu to %{_role}% role")
 	loop {wolfo::role::list::%{_role}%::*}:
-		unformat all gui slots of loop-value-1
-		set {_name} to wolfoGetText("ROLES.%{_role}%.NAME", loop-value-1)
-		wolfoMenuDeco(loop-value-1, {_name}, 6)
+		set {_voter} to loop-value-1
+		unformat all gui slots of {_voter}
+		set {_name} to wolfoGetText("ROLES.%{_role}%.NAME", {_voter})
+		wolfoMenuDeco({_voter}, {_name}, 6)
 		set {_loop} to 11
 		loop {wolfo::players::alive::*}:
+			set {_target} to loop-value-2
 			while {_loop} is 16, 17, 18, 26, 27, 35, 36 or 37:
 				add 1 to {_loop}
 			# CUPID -------------------------------------------
 			if {_role} is "CUPID":
-				if {wolfo::results::CUPID::*} do not contain loop-value-2:
-					set {_material} to loop-value-2's skull named "&9%loop-value-2% &f- &7❤" with lore ""
+				if {wolfo::results::CUPID::*} do not contain {_target}:
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- &7❤" with lore ""
 				else:
-					set {_material} to loop-value-2's skull named "&9%loop-value-2% &f- &c❤" with lore "", wolfoGetText("MESSAGE.SELECTIONNED", loop-value-1) and ""
-				make a gui slot {_loop} of loop-value-1 with {_material} to run:
-					if {wolfo::results::CUPID::*} contains loop-value-2:
-						remove loop-value-2 from {wolfo::results::CUPID::*}
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- &c❤" with lore "", wolfoGetText("MESSAGE.SELECTIONNED", {_voter}) and ""
+				make a gui slot {_loop} of {_voter} with {_material} to run:
+					if {wolfo::results::CUPID::*} contains {_target}:
+						remove {_target} from {wolfo::results::CUPID::*}
 					else:
 						size of {wolfo::results::CUPID::*} is not 2
-						add loop-value-2 to {wolfo::results::CUPID::*}
+						add {_target} to {wolfo::results::CUPID::*}
 					wolfoMenuVote({_role})
 			# WEREWOLF -------------------------------------------
 			else if {_role} is "WEREWOLF" or "TOWNSFOLK":
-				if {wolfo::vote::players::%loop-value-2%::*} is not set:
-					set {_novote} to wolfoGetText("MESSAGE.NO_VOTE", loop-value-1)
-					set {_material} to loop-value-2's skull named "&9%loop-value-2% &f- %{_novote}%" with lore "" and wolfoGetText("MESSAGE.NO_VOTER", loop-value-1)
+				if {wolfo::vote::players::%{_target}%::*} is not set:
+					set {_novote} to wolfoGetText("MESSAGE.NO_VOTE", {_voter})
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- %{_novote}%" with lore "" and wolfoGetText("MESSAGE.NO_VOTER", {_voter})
 				else:
-					set {_size} to size of {wolfo::vote::players::%loop-value-2%::*}
-					set {_vote} to wolfoGetText("MESSAGE.VOTE", loop-value-1)
-					set {_voting} to wolfoGetText("MESSAGE.VOTING", loop-value-1)
-					set {_material} to loop-value-2's skull named "&9%loop-value-2% &f- &b%size of {wolfo::vote::players::%loop-value-2%::*}% %{_vote}%" with lore "" and "%{_voting}%: %{wolfo::vote::players::%loop-value-2%::*}%"
-				make a gui slot {_loop} of loop-value-1 with {_material} to run:
-					if {wolfo::vote::voters::%loop-value-1%} is not set:
-						set {wolfo::vote::voters::%loop-value-1%} to loop-value-2
+					set {_size} to size of {wolfo::vote::players::%{_target}%::*}
+					set {_vote} to wolfoGetText("MESSAGE.VOTE", {_voter})
+					set {_voting} to wolfoGetText("MESSAGE.VOTING", {_voter})
+					set {_material} to {_target}'s skull named "&9%{_target}% &f- &b%size of {wolfo::vote::players::%{_target}%::*}% %{_vote}%" with lore "" and "%{_voting}%: %{wolfo::vote::players::%{_target}%::*}%"
+				make a gui slot {_loop} of {_voter} with {_material} to run:
+					if {wolfo::vote::voters::%{_voter}%} is not set:
+						set {wolfo::vote::voters::%{_voter}%} to {_target}
 					else:
-						remove loop-value-1 from {wolfo::vote::players::%{wolfo::vote::voters::%loop-value-1%}%::*}
-						remove loop-value-2 from {wolfo::vote::list::*}
-					add loop-value-1 to {wolfo::vote::players::%loop-value-2%::*}
-					add loop-value-2 to {wolfo::vote::list::*}
-					set {wolfo::vote::voters::%loop-value-1%} to loop-value-2
+						remove {_voter} from {wolfo::vote::players::%{wolfo::vote::voters::%{_voter}%}%::*}
+						remove {_target} from {wolfo::vote::list::*}
+					add {_voter} to {wolfo::vote::players::%{_target}%::*}
+					add {_target} to {wolfo::vote::list::*}
+					set {wolfo::vote::voters::%{_voter}%} to {_target}
 					{_role} is "WEREWOLF":
-						send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.VOTE_COUNTED", loop-value-1) to loop-value-1
+						send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.VOTE_COUNTED", {_voter}) to {_voter}
 					else:
 						loop {wolfo::players::list::*}:
 							set {_against} to wolfoGetText("MESSAGE.VOTE_AGAINST", loop-value-3)
-							send join wolfoGetText("PREFIX.GENERAL") and "&b%loop-value-1%&7 %{_against}% &b%loop-value-2%&7..." to loop-value-3
+							send join wolfoGetText("PREFIX.GENERAL") and "&b%{_voter}%&7 %{_against}% &b%{_target}%&7..." to loop-value-3
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
-				{wolfo::role::DOCTOR::lastprotect} != loop-value-2
-				set {_protect} to wolfoGetText("MESSAGE.WORDS.PROTECT", loop-value-1)
-				set {_wwvote} to wolfoGetText("MESSAGE.WEREWOLF_VOTE", loop-value-1)
-				make a gui slot {_loop} of loop-value-1 with loop-value-2's skull named "&9%loop-value-2%" with lore "", "&%{_protect}% &b%loop-value-2%&7 du", {_wwvote} and "" to run:
-					close loop-value-1's inventory
+				{wolfo::role::DOCTOR::lastprotect} != {_target}
+				set {_protect} to wolfoGetText("MESSAGE.WORDS.PROTECT", {_voter})
+				set {_wwvote} to wolfoGetText("MESSAGE.WEREWOLF_VOTE", {_voter})
+				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&%{_protect}% &b%{_target}%&7 du", {_wwvote} and "" to run:
+					close {_voter}'s inventory
 					set {wolfo::timer} to 0
-					set {wolfo::results::DOCTOR} to loop-value-2
-					set {wolfo::role::DOCTOR::lastprotect} to loop-value-2
-					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.VOTE_PROTECTED", loop-value-1) to loop-value-1
+					set {wolfo::results::DOCTOR} to {_target}
+					set {wolfo::role::DOCTOR::lastprotect} to {_target}
+					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.VOTE_PROTECTED", {_voter}) to {_voter}
 			# SEER -------------------------------------------
 			else if {_role} is "SEER" or "SEER_AURA":
-				set {_type} to wolfoGetText("MESSAGE.WORDS.ROLE", loop-value-1) if {_role} is "SEER" otherwise (wolfoGetText("MESSAGE.WORDS.AURA", loop-value-1))
-				set {_discover} to wolfoGetText("MESSAGE.WORDS.DISCOVER", loop-value-1)
-				set {_of} to wolfoGetText("MESSAGE.WORDS.OF", loop-value-1)
-				set {_is} to wolfoGetText("MESSAGE.WORDS.IS", loop-value-1)
-				make a gui slot {_loop} of loop-value-1 with loop-value-2's skull named "&9%loop-value-2%" with lore "", "&7%{_discover}% %{_type}%" and "&7%{_of}% &b%loop-value-2% &7! :D" and "" to run:
-					close loop-value-1's inventory
+				set {_type} to wolfoGetText("MESSAGE.WORDS.ROLE", {_voter}) if {_role} is "SEER" otherwise (wolfoGetText("MESSAGE.WORDS.AURA", {_voter}))
+				set {_discover} to wolfoGetText("MESSAGE.WORDS.DISCOVER", {_voter})
+				set {_of} to wolfoGetText("MESSAGE.WORDS.OF", {_voter})
+				set {_is} to wolfoGetText("MESSAGE.WORDS.IS", {_voter})
+				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7%{_discover}% %{_type}%" and "&7%{_of}% &b%{_target}% &7! :D" and "" to run:
+					close {_voter}'s inventory
 					if {_role} is "SEER":
-						set {_reveal} to {wolfo::players::role::%loop-value-2%}
+						set {_reveal} to {wolfo::players::role::%{_target}%}
 					else if {_role} is "SEER_AURA":
-						set {_aura} to wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value-2%}%.AURA")
-						set {_reveal} to wolfoGetText("AURA.%{_aura}%", loop-value-1)
-					send join wolfoGetText("PREFIX.GENERAL") and "Wow, %{_type}% &f%{_of}% &b%loop-value-2%&f %{_is}% : %{_reveal}%&f." to loop-value-1
-					set {wolfo::vote::voters::%loop-value-1%} to true
+						set {_aura} to wolfoGetText("ROLES.%{wolfo::players::role_name::%{_target}%}%.AURA")
+						set {_reveal} to wolfoGetText("AURA.%{_aura}%", {_voter})
+					send join wolfoGetText("PREFIX.GENERAL") and "Wow, %{_type}% &f%{_of}% &b%{_target}%&f %{_is}% : %{_reveal}%&f." to {_voter}
+					set {wolfo::vote::voters::%{_voter}%} to true
 					set {wolfo::results::%{_role}%} to {_reveal}
 					set {wolfo::timer} to 0
 			# SHOOTER -------------------------------------------
 			else if {_role} is "SHOOTER":
-				set {_shoot} to wolfoGetText("MESSAGE.WORDS.SHOOT", loop-value-1)
-				set {_on} to wolfoGetText("MESSAGE.WORDS.ON1", loop-value-1)
-				set {_shooted} to wolfoGetText("MESSAGE.SHOOTED", loop-value-1)
-				make a gui slot {_loop} of loop-value-1 with loop-value-2's skull named "&9%loop-value-2%" with lore "", "&7%{_shoot}%" and "&7%{_on}% &b%loop-value-2%" and "" to run:
-					close loop-value-1's inventory
+				set {_shoot} to wolfoGetText("MESSAGE.WORDS.SHOOT", {_voter})
+				set {_on} to wolfoGetText("MESSAGE.WORDS.ON1", {_voter})
+				set {_shooted} to wolfoGetText("MESSAGE.SHOOTED", {_voter})
+				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7%{_shoot}%" and "&7%{_on}% &b%{_target}%" and "" to run:
+					close {_voter}'s inventory
 					add 1 to {wolfo::role::SHOOTER::bullets}
-					send join wolfoGetText("PREFIX.GENERAL") and "&7%{_shooted}% &7%{_on}% &b%loop-value-2%&f." to loop-value-1
-					set {wolfo::vote::voters::%loop-value-1%} to true
-					set {wolfo::results::%{_role}%} to loop-value-2
+					send join wolfoGetText("PREFIX.GENERAL") and "&7%{_shooted}% &7%{_on}% &b%{_target}%&f." to {_voter}
+					set {wolfo::vote::voters::%{_voter}%} to true
+					set {wolfo::results::%{_role}%} to {_target}
 					set {wolfo::timer} to 0
 			# WITCH -------------------------------------------
 			# Désolé, cette partie sera optimisée plus tard.
 			else if {_role} is "WITCH":
 				set {_result::*} to wolfoMostVoted()
 				if {_result::*} is not set:
-					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.NO_WEREWOLF_VOTE", loop-value-1) to loop-value-1
+					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.NO_WEREWOLF_VOTE", {_voter}) to {_voter}
 					set {wolfo::timer} to 0
 				else if size of {wolfo::potions::*} is 2:
 					set {wolfo::timer} to 0
 				else:
-					set {_wasvoted} to wolfoGetText("MESSAGE.WAS_VOTED", loop-value-1)
-					make a gui slot 22 of loop-value-1 with {_result::1}'s skull named "&9%{_result::1}%" with lore "", "&b%{_result::1}%&7 %{_wasvoted}%", wolfoGetText("MESSAGE.BY_WEREWOLF", loop-value-1) and ""
-					set {_regeneration::*} to wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.DESC", loop-value-1)
-					set {_strength::*} to wolfoGetObjects("MESSAGE.POTIONS.STRENGTH.DESC", loop-value-1)
-					make a gui slot 20 of loop-value-1 with potion of regeneration named wolfoGetText("MESSAGE.POTIONS.REGENERATION.NAME", loop-value-1) with lore {_regeneration::*}
-					make a gui slot 24 of loop-value-1 with potion of strength named wolfoGetText("MESSAGE.POTIONS.STRENGTH.NAME", loop-value-1) with lore {_strength::*}
+					set {_wasvoted} to wolfoGetText("MESSAGE.WAS_VOTED", {_voter})
+					make a gui slot 22 of {_voter} with {_result::1}'s skull named "&9%{_result::1}%" with lore "", "&b%{_result::1}%&7 %{_wasvoted}%", wolfoGetText("MESSAGE.BY_WEREWOLF", {_voter}) and ""
+					set {_regeneration::*} to wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.DESC", {_voter})
+					set {_strength::*} to wolfoGetObjects("MESSAGE.POTIONS.STRENGTH.DESC", {_voter})
+					make a gui slot 20 of {_voter} with potion of regeneration named wolfoGetText("MESSAGE.POTIONS.REGENERATION.NAME", {_voter}) with lore {_regeneration::*}
+					make a gui slot 24 of {_voter} with potion of strength named wolfoGetText("MESSAGE.POTIONS.STRENGTH.NAME", {_voter}) with lore {_strength::*}
 					if {wolfo::potions::1} is not set:
-						set {_regeneration::*} to wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.LORE", loop-value-1)
-						make a gui slot 29 of loop-value-1 with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", loop-value-1) with lore {_regeneration::*} to run:
-							send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.POTIONS.REGENERATION.SUCCESS", loop-value-1) to loop-value-1
-							close loop-value-1's inventory
+						set {_regeneration::*} to wolfoGetObjects("MESSAGE.POTIONS.REGENERATION.LORE", {_voter})
+						make a gui slot 29 of {_voter} with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", {_voter}) with lore {_regeneration::*} to run:
+							send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.POTIONS.REGENERATION.SUCCESS", {_voter}) to {_voter}
+							close {_voter}'s inventory
 							set {wolfo::timer} to 0
 							set {wolfo::results::WITCH} to true
 							set {wolfo::potions::1} to true
 					else:
-						set {_used::*} to wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", loop-value-1)
-						make a gui slot 29 of loop-value-1 with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", loop-value-1) with lore {_used::*}
+						set {_used::*} to wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", {_voter})
+						make a gui slot 29 of {_voter} with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", {_voter}) with lore {_used::*}
 					if {wolfo::potions::2} is not set:
-						set {_select::*} to wolfoGetObjects("MESSAGE.POTIONS.SELECT.LORE", loop-value-1)
-						make a gui slot 33 of loop-value-1 with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", loop-value-1) with lore {_select::*} to run:
-							send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.POTIONS.STRENGHT.SUCCESS", loop-value-1) to loop-value-1
-							close loop-value-1's inventory
+						set {_select::*} to wolfoGetObjects("MESSAGE.POTIONS.SELECT.LORE", {_voter})
+						make a gui slot 33 of {_voter} with light green dye named wolfoGetText("MESSAGE.POTIONS.SELECT", {_voter}) with lore {_select::*} to run:
+							send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.POTIONS.STRENGHT.SUCCESS", {_voter}) to {_voter}
+							close {_voter}'s inventory
 							set {wolfo::timer} to 0
 							set {wolfo::results::WITCH} to true
 							set {wolfo::potions::2} to true
 					else:
-						set {_used::*} to wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", loop-value-1)
-						make a gui slot 33 of loop-value-1 with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", loop-value-1) with lore {_used::*}
+						set {_used::*} to wolfoGetObjects("MESSAGE.POTIONS.USED.LORE", {_voter})
+						make a gui slot 33 of {_voter} with gray dye named wolfoGetText("MESSAGE.POTIONS.USED.NAME", {_voter}) with lore {_used::*}
 			add 1 to {_loop}
 
 function wolfoMenu(p: player, type: text):

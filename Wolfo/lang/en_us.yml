@@ -80,7 +80,7 @@ MESSAGE:
     WHITELISTED: '&fThis player is &authorized&f to play on this server.'
     NOT_WHITELISTED: '&fThis player is &cnot allowed&f to play on this server. '
     ALREADYSTOP: '&cThe game''s already stopped.'
-    MISSINGCONFIG: '&fThe configuration of the game &cn''is not finished&f. &7(more info on /wolfo setup)'
+    MISSINGCONFIG: '&fThe game configuration &cisn''t finished&f. &7(more info on /wolfo setup)'
     ALREADYSETUP: '&cThe game is already configured.'
     ENDGAME: 'Game''s over.'
     ROLEDESC: 'Description of your role :'
@@ -137,7 +137,7 @@ MESSAGE:
     TP_NOT_ENOUGH: 'There''s not enough teleportation points.'
     DEVELOPER_MODE: '&fThe &cdeveloper mode&f is activated. This game will therefore be modified.'
     INVALID_TURN: 'Sorry, it''s not your turn.'
-    NOT_PLAYED: 'didn''t played'
+    NOT_PLAYED: '&f didn''t played ...'
     VILLAGE_HAS_VOTED: 'The village has voted ...'
     NO_TARGET: '... against nobody.'
     ACTIONBAR:
