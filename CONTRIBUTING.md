@@ -1,36 +1,36 @@
-# Contribuer à Woflo
-🌐 Would you like to read this document in English? Please visit [this link](https://github.com/Romitou/Wolfo/blob/master/CONTRIBUTING_EN.md).
+# Contribute to Woflo
+🌐 Would you like to read this document in French? Please visit [this link](https://github.com/Romitou/Wolfo/blob/master/CONTRIBUTING_FR.md).
 
-Bienvenue ! Nous sommes très heureux pour l'intérêt que vous portez à ce projet.
-Sachez que nous sommes bienveillants et nous espérons recevoir votre contribution.
+Welcome! We are very happy for your interest in this project.
+Please know that we are very sympathetic and we look forward to receiving your contribution.
  
-Même si vous n'êtes que nouveau en Skript, vous pouvez contribuer au même titre qu'un développeur avancé.
-En effet, certaines simples contributions peuvent s'avérer très utiles si vous ne maîtrisez pas Skript.
+Even if you are only new to Skript, you can contribute as an advanced developer.
+Indeed, some simple contributions can be very useful if you do not master Skript.
 
-## 💡 Suggérer vos idées et vos propositions d'amélioration
-Vos retours restent au coeur de nos préoccupations. Afin que notre projet plaise au plus de monde possible, vos retours sont les meilleurs moyens de nous améliorer. Nous adorions que vous nous en faites part.
+## 💡 Suggesting your ideas and suggestions for improvement
+Your feedback remains at the heart of our concerns. In order for our project to please as many people as possible, your feedback is the best way to improve us. We love to hear from you.
 
-## 🌐 Traduire et améliorer la précision des textes de la configuration
-Nous n'avons pas beaucoup de temps pour vérifier l'orthographe et la conjugaison de nos phrases. Si vous êtes un pro de la langue française, votre aide sera évidemment la bienvenue.
+## 🌐 Translating and improving the accuracy of the configuration texts
+We don't have a lot of time to check the spelling and conjugation of our sentences. If you are a French language pro, your help will obviously be welcome.
 
-Nous souhaitons que ce projet puisse être exploité par le maximum de personne possible. Pour cela, nous publions ce script sur différentes plateformes de différents pays.
+We hope that this project can be used by as many people as possible. To do so, we are publishing this script on different platforms in different countries.
 
-## 🐛 Effectuer différents tests sur votre serveur (afin de trouver des bugs)
-Cette contribution est une des plus importantes : corriger des dysfonctionnements. Si vous réussissez à trouver quelque chose qui ne fonctionne pas comme il le devrait, n'hésitez pas à ouvrir une rapport de bug.
+## 🐛 Perform different tests on your server (in order to find bugs)
+This contribution is one of the most important: correcting malfunctions. If you manage to find something that doesn't work as it should, don't hesitate to open a bug report.
 
-## 👥 Contribuer au code
-Vous souhaitez ajouter des fonctionnalités, corriger des bugs ou tout simplement modifier le code ? Vous pouvez passer par GitHub pour proposer vos modifications. Voici un court tutoriel pour vous aider.
+## 👥 Contribute to the code
+You want to add features, fix bugs or simply modify the code? You can go through GitHub to propose your modifications. Here is a short tutorial to help you.
 
-### 1. Créer une copie du code (= fork)
-Pour cela, rien de plus simple ! Appuyez sur le bouton `Fork` situé en haut à droite à côté du bouton `Star`. Cette action permettra de cloner le code sur votre compte, toutes les modifications que vous allez effectuer n'auront aucune influence sur le code principal.
+### 1. create a copy of the code (= fork)
+For that, nothing could be simpler! Press the `Fork` button located in the upper right hand corner next to the `Star` button. This action will clone the code to your account, any changes you make will have no influence on the main code.
 
-### 2. Éditer le code
-Nous vous conseillons d'utiliser un éditeur comme Visual Studio Code qui intègre directement le terminal Git pour effectuer vos modifications en quelques clics. Vous pouvez de même utiliser GitHub Desktop si vous n'avez pas d'éditeurs incluant Git. Une fois qu'un fichier a été modifié, vous devez le `commit` en fournissant un nom court du sujet des modifications (ex: `Fix scoreboard players`). Une fois que tous vos `commits` sont enregistrés, vous devrez `push` vos modifications (= envoyer vos modifications).
+### 2. Edit Code
+We recommend that you use an editor like Visual Studio Code that integrates directly with the Git terminal to make your changes in a few clicks. You can also use GitHub Desktop if you don't have an editor that includes Git. Once a file has been edited, you need to "commit" it by providing a short name for the subject of the changes (e.g., `Fix scoreboard players`). Once all your `commits` are saved, you'll need to push your changes (= send your changes).
 
-### 3. Proposer vos modifications
-Vous avez modifié tous vos fichiers et vous souhaitez soumettre vos modifications ? Rien de plus simple : cliquez sur l'onglet `Pull requests` puis sur `New pull request`. Changez la `base repository` en `Romitou/Wolfo` et `base` en `dev`. Vérifier que le `head repository` corresponde au votre et que `compare` corresponde à `dev`. Vous ne voyez pas ces termes ? Cliquez sur `compare across forks`. Cliquez ensuite sur `Create pull request`, ajoutez un titre et une description à vous changements et envoyez. Parfait !
+### 3. Submit your changes
+You have modified all your files and you wish to submit your changes? Nothing could be easier: click on the `Pull requests` tab and then on `New pull request`. Change the `base repository` to `Romitou/Wolfo` and `base` to `dev`. Check that the `head repository` matches yours and `compare` matches `dev`. Don't you see these terms? Click `compare across forks`. Then click `Create pull request`, add a title and description to your changes and submit. Great!
 
-### 4. Revue du code
-Nous aurons peut-être remarqué des choses à modifier sur votre code. **2 personnes minimum** devront approuver vos changements. Si quelque chose est à modifier, pas de panique ! Ce n'est pas grave, vous devrez modifier votre code en fonction des revues en suivant le même tutoriel (`2. Éditer le code`). Une fois tout bon, vos modifications seront publiées, félicitations !
+### 4. Code Review
+We may have noticed some things to change about your code. **2 people minimum** will have to approve your changes. If something needs to be changed, don't panic! It doesn't matter, you will have to modify your code according to the reviews by following the same tutorial (`2. Editing the code`). Once all good, your changes will be published, congratulations!
 
-**Remarque: si vous avez la moindre question, n'hésitez surtout pas à venir nous voir sur note [Discord](https://discord.gg/37nvkpk).**
+**Note: if you have any question, don't hesitate to come and see us on note [Discord](https://discord.gg/37nvkpk).**
