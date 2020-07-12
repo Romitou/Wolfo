@@ -1,3 +1,4 @@
+---
 COSMETICS:
     PARTICLE:
         EXPLOSION: '&7Explosion'
@@ -93,16 +94,113 @@ MESSAGE:
     NOTENOUGH: '&fThere are &cnot enough players&f to start a game. If you have friends, invite them and try again.'
     TOOMANY: '&fWow! There are a lot of people, you can''t join this game.'
     REVEAL: 'You are now '
-    SELECTIONNED: '&2✔ &aSelected !'
+    DEAD: '&cYou are dead!'
+    SELECTIONNED: '&2✔ &aSelected!'
     VOTE: 'vote(s)'
     NO_VOTE: '&7No vote'
     NO_VOTER: '&7No one voted.'
     VOTING: '&7voting'
     VOTE_COUNTED: 'Your vote has been counted.'
     VOTE_AGAINST: 'vote against'
-    LANGUAGE:
-        AUTOCHANGED: 'Wolfo has synchronized your in-game language with the language of your Minecraft configuration. If you want to change it, go to the languages menu.'
-        NOTFOUND: 'Wolfo tried to synchronize your in-game language with your Minecraft setup, but the operators didn''t add your language. It was set to the default language. If you want to change it, go to the languages menu.'
+    VOTE_PROTECTED: 'This player has been protected.'
+    WAS_VOTED: 'was voted'
+    NOBODY_DEAD: 'no one died!'
+    DISCOVERD: 'discovered'
+    DEAD_WITH_ROLE: 'is &cdead&f. His role was'
+    WON_WITH_ROLE: 'won the game with the role '
+    ROLE_WAS: 'His role was'
+    YOU_WON: '&aYou have won!'
+    YOU_LOOSE: '&cYou have lost.'
+    WORDS:
+        IS: 'is'
+        OF: 'of'
+        ON1: 'on'
+        AND: 'and'
+        WITH: 'with'
+        THE_F: 'the'
+        THE_M: 'the'
+        ELIMINATE: 'eliminate'
+        PROTECT: 'Protect'
+        DISCOVER: 'Discover'
+        SHOOT: 'Shoot a bullet'
+        ROLE: 'the role'
+        AURA: 'the aura'
+    WEREWOLF_VOTE: '&cWerewolves&7 vote.'
+    BY_WEREWOLF: '&7by &cWerewolves&7.'
+    SHOOTED: 'You have &cshooted'
+    NO_WEREWOLF_VOTE: '&cWerewolves &fdidn''t vote.'
+    ALLOW_ACCESS: 'Allow access to'
+    DENY_ACCESS: 'Deny access to'
+    ADD_WHITELIST: 'Add this player to the list'
+    REMOVE_WHITELIST: 'Remove this player from the list'
+    NO_PLAYER: 'No one player'
+    TP_NOT_ENOUGH: 'There''s not enough teleportation points.'
+    DEVELOPER_MODE: '&fThe &cdeveloper mode&f is activated. This game will therefore be modified.'
+    INVALID_TURN: 'Sorry, it''s not your turn.'
+    NOT_PLAYED: 'didn''t played'
+    VILLAGE_HAS_VOTED: 'The village has voted ...'
+    NO_TARGET: '... against nobody.'
+    ACTIONBAR:
+        ROLE_VOTE: 'Turn of: '
+        DEBATE: 'Discussion'
+        VOTE: 'Vote'
+        START: 'Starting'
+        CLOSE: 'Game closing'
+    LIFE:
+        DEAD: '&cDead'
+        ALIVE: '&aAlive'
+    ROUND:
+        DAY: 'The day dawns ...'
+        NIGHT: 'Night falls ...'
+    PROJECT:
+        TEXT: 'Wolfo is developed by multiple contributors. Thanks to:'
+        LIST:
+            - '&7Romitou#9685'
+            - '&7Xamez#8497'
+            - '&7TitiLaPierre#3934'
+    POTIONS:
+        SELECT:
+            NAME: '&aSelect this option'
+            LORE:
+                - ''
+                - '&7You''ll use one of your'
+                - '&7two potions by doing this.'
+                - ''
+
+        USED:
+            NAME: '&cAlready used potion'
+            LORE:
+                - ''
+                - '&7You have already used this potion.'
+                - ''
+        STRENGTH:
+            NAME: '&cStrength potion'
+            DESC:
+                - ''
+                - '&7Your vote will count &btriple&7 at villager vote'
+                - '&7by using this potion.'
+                - ''
+            SUCCESS: 'Your vote next day will count as &btriple&f, even though it will only count as one vote.'
+
+        REGENERATION:
+            NAME: '&dRegeneration potion'
+            DESC:
+                - ''
+                - '&7You will be able to save this player'
+                - '&7by using this potion.'
+                - ''
+            SUCCESS: 'You have successfully saved this player.'
+    SCOREBOARD:
+        STATUS: 'Status'
+        SIZEPLAYERS: 'Connected'
+        CONFIG: 'Configuration'
+        DAY: 'Day'
+        YOUR_ROLE: 'Your role'
+        YOUR_STATUS: 'Your status'
+        GAME: 'Game'
+        PLAYER1: 'Player'
+        PLAYER2: 'player'
+    FINISHED: '&2✔ &aFinished !'
     VICTORY:
         TITLE: '&fHere are the conditions for victory:'
         MSG:

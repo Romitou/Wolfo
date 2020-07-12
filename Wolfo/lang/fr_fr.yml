@@ -192,11 +192,6 @@ MESSAGE:
                 - '&7Vous pourrez sauver ce joueur'
                 - '&7en utilisant cette potion.'
                 - ''
-            USED:
-                - ''
-                - '&7Vous avez déjà utilisé cette'
-                - '&7potion pour sauver un joueur.'
-                - ''
             SUCCESS: 'Vous avez sauvé ce joueur avec succès.'
     SCOREBOARD:
         STATUS: 'Statut'
