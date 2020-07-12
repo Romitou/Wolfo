@@ -235,7 +235,7 @@ ROLES:
         - '&8➥ &7Au début de la partie, un'
         - '&7joueur sera choisi aléatoirement.'
         - '&7Si ce joueur est &btué par le'
-        - '&bvillage&7, il gagnera la partie.'
+        - '&bvillage&7, vous gagnerez la partie.'
         - ''
         - '&8➥ &7Votre équipe: &aSolo'
     DOCTOR:
