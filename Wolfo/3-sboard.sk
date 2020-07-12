@@ -44,7 +44,7 @@ function wolfoSb(p: objects):
 	set {_day} to {wolfo::game::day}
 	loop {_p::*}:
 		set line 9 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.STATUS", loop-value), "&f&l: &7" and wolfoGetText("MESSAGE.TIME.%{wolfo::game::status}%", loop-value)
-		set line 8 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.SIZEPLAYERS", loop-value), "&f&l: &7" and size of players if {wolfo::game::status} is "WAIT", else size of {wolfo::players::alive::*}
+		set line 8 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.SIZEPLAYERS", loop-value), "&f&l: &7" and "%size of players%" if {wolfo::game::status} is "WAIT", else "%size of {wolfo::players::alive::*}%"
 		set line 7 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.CONFIG", loop-value), "&f&l: &7" and wolfoGetText("MESSAGE.GAMETYPE.%wolfoGetConfig()%", loop-value)
 		set line 6 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.DAY", loop-value), "&f&l: &7" and "n°%{_day}%"
 		set line 2 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.YOUR_ROLE", loop-value), "&f&l: &7" and wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME", loop-value)
