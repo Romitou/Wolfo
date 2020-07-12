@@ -261,7 +261,7 @@ function wolfoMain(i: integer):
 			# retournera toujours quelque chose, faisant appel à l'aléatoire !
 			{_result::2} is not set:
 				loop {wolfo::players::list::*}:
-					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.NO_VOTE", loop-value) to loop-value
+					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.NO_TARGET", loop-value) to loop-value
 			else:
 				# On parse as offline player pour garder la casse des pseudos.
 				loop {wolfo::players::list::*}:

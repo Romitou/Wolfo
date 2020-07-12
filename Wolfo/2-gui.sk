@@ -148,7 +148,7 @@ function wolfoMenuVote(role: text):
 			# SHOOTER -------------------------------------------
 			else if {_role} is "SHOOTER":
 				set {_shoot} to wolfoGetText("MESSAGE.WORDS.SHOOT", loop-value-1)
-				set {_on} to wolfoGetText("MESSAGE.WORDS.ON", loop-value-1)
+				set {_on} to wolfoGetText("MESSAGE.WORDS.ON1", loop-value-1)
 				set {_shooted} to wolfoGetText("MESSAGE.SHOOTED", loop-value-1)
 				make a gui slot {_loop} of loop-value-1 with loop-value-2's skull named "&9%loop-value-2%" with lore "", "&7%{_shoot}%" and "&7%{_on}% &b%loop-value-2%" and "" to run:
 					close loop-value-1's inventory
