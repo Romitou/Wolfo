@@ -130,6 +130,9 @@ MESSAGE:
     TP_NOT_ENOUGH: 'Il n''y a pas assez de points de téléportation !'
     DEVELOPER_MODE: '&fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée.'
     INVALID_TURN: 'Désolé, ce n''est pas ton tour.'
+    LIFE:
+        DEAD: '&cMort'
+        ALIVE: '&aEn vie'
     ROUND:
         DAY: 'Le jour se lève ...'
         NIGHT: 'La nuit tombe ...'
@@ -186,6 +189,7 @@ MESSAGE:
         GAME: 'Partie'
         PLAYER1: 'Joueur'
         PLAYER2: 'joueur'
+    FINISHED: '&2✔ &aTerminé !'
     LANGUAGE:
         AUTOCHANGED: 'Wolfo a synchronisé votre langue en jeu avec la langue de votre configuration Minecraft. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
         NOTFOUND: 'Wolfo a tenté de synchroniser votre langue en jeu avec celle de votre configuration Minecraft, mais les opérateurs n''ont pas ajouté votre langue. Elle a été définie sur la langue par défaut. Si vous souhaitez la modifier, rendez-vous dans le menu des langues.'
