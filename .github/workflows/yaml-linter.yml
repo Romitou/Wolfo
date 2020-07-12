@@ -1,6 +1,6 @@
 ---
 name: YAML Linter
-on: [ push, pull_request ]
+on: [push, pull_request]
 jobs:
   yaml-lint:
     runs-on: ubuntu-latest

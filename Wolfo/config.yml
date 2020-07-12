@@ -25,28 +25,28 @@ LANGUAGES:
 
 COSMETICS:
     PARTICLE:
-    - explosion;bone meal
-    - firework;firework
-    - crit;trident
-    - critmagic;trident of sharpness 1
-    - smoke;campfire
-    - angryvillager;baked potato
-    - happyvillager;potato
-    - waterdrip;water bucket
-    - flame;flint and steel
-    - lavadrip;lava bucket
-    - note;note block
-    - portal;ender eye
-    - enchantmenttable;enchanting table
-    - cloud;nether star
-    - snowball;snowball
-    - slime;slimeball
-    - heart;apple
+        - explosion;bone meal
+        - firework;firework
+        - crit;trident
+        - critmagic;trident of sharpness 1
+        - smoke;campfire
+        - angryvillager;baked potato
+        - happyvillager;potato
+        - waterdrip;water bucket
+        - flame;flint and steel
+        - lavadrip;lava bucket
+        - note;note block
+        - portal;ender eye
+        - enchantmenttable;enchanting table
+        - cloud;nether star
+        - snowball;snowball
+        - slime;slimeball
+        - heart;apple
     EFFECT:
-    - wings;elytra
-    - nyancat;white wool
-    - rings;string
-    - spiral;lead
+        - wings;elytra
+        - nyancat;white wool
+        - rings;string
+        - spiral;lead
 
 TIME:
     START: '10'
