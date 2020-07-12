@@ -40,7 +40,7 @@ function wolfoDebug(log: text):
 	send join "&8[DEBUG] &7" and {_log} to ops
 	log {_log} to "debug.log" 
 
-function wolfoGetText(request: text, type: integer, p: player = "") :: text:
+functio:n wolfoGetText(request: text, type: integer, p: player = "") :: text:
 	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetObjects(request: text, type: integer, p: player = "") :: objects:
