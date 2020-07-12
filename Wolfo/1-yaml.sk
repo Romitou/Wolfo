@@ -40,30 +40,30 @@ function wolfoDebug(log: text):
 	send join "&8[DEBUG] &7" and {_log} to ops
 	log {_log} to "debug.log" 
 
-functio:n wolfoGetText(request: text, type: integer, p: player = "") :: text:
-	return yml value {_request} from "config" if {_type} is 1, else yml value {_request} from "%{wolfo::players::lang::%{_p}%}%"
+function wolfoGetText(req: text, p: player = "") :: text:
+	return yml value {_req} from "config" if {_p} is "", else yml value {_req} from {wolfo::players::lang::%{_p}%}
 
-function wolfoGetObjects(request: text, type: integer, p: player = "") :: objects:
-	return yml list {_request} from "config" if {_type} is 1, else yml list {_request} from "%{wolfo::players::lang::%{_p}%}%"
+function wolfoGetObjects(req: text, p: player = "") :: objects:
+	return yml list {_req} from "config" if {_p} is "", else yml list {_req} from {wolfo::players::lang::%{_p}%}
 
-function wolfoGetLoc(request: text) :: location:
-	return yml value {_request} from "config"
+function wolfoGetLoc(req: text) :: location:
+	return yml value {_req} from "config"
 
-function wolfoSetText(request: text, value: text):
-	set yaml value {_request} from "config" to {_value}
+function wolfoSetText(req: text, value: text):
+	set yaml value {_req} from "config" to {_value}
 	save yaml "config"
 
-function wolfoSetLoc(request: text, value: location):
-	set yaml value {_request} from "config" to {_value}
+function wolfoSetLoc(req: text, value: location):
+	set yaml value {_req} from "config" to {_value}
 	save yaml "config"
 
-function wolfoUpdateO(request: text, value: text, type: integer):
-	set {_list::*} to yaml list {_request} from "config"
+function wolfoUpdateO(req: text, value: text, type: integer):
+	set {_list::*} to yaml list {_req} from "config"
 	if {_type} is 0:
 		if {_list::*} doesn't contain {_value}:
 			add {_value} to {_list::*}
 		else:
 			remove {_value} from {_list::*}
-		delete yaml list {_request} from "config" if {_list::*} is not set
-	set yaml list {_request} from "config" to {_list::*}
+		delete yaml list {_req} from "config" if {_list::*} is not set
+	set yaml list {_req} from "config" to {_list::*}
 	save yaml "config"
