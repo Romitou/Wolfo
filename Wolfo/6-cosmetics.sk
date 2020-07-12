@@ -33,9 +33,9 @@ function wolfoDraw(type: text, p: text):
 	if {_type} is "selected":
 		stopEffect id "wolfo-%{_type}%"
 		set {_loc} to location at x-coordinate of {_p}, y-coordinate of {_p} + 2, z-coordinate of {_p} in world "world"
-		if {wolfo::players::spawn::%{_p}%} is 3 or 4 or 5 or 9 or 10 or 11 or 15 or 16 or 17 or 21 or 22 or 23:
+		if {wolfo::players::spawn::%{_p}%} is 3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22 or 23:
 			set {_angle} to 45
-		if {wolfo::players::spawn::%{_p}%} is 6 or 7 or 8 or 18 or 19 or 20:
+		if {wolfo::players::spawn::%{_p}%} is 6, 7, 8, 18, 19 or 20:
 			set {_angle} to 90
 		else:
 			set {_angle} to 0

@@ -41,10 +41,10 @@ function wolfoDebug(log: text):
 	log {_log} to "debug.log" 
 
 function wolfoGetText(req: text, p: player = "") :: text:
-	return yml value {_req} from "config" if {_p} is "", else yml value {_req} from {wolfo::players::lang::%{_p}%}
+	return yml value {_req} from "config" if {_p} is "", else yml value {_req} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetObjects(req: text, p: player = "") :: objects:
-	return yml list {_req} from "config" if {_p} is "", else yml list {_req} from {wolfo::players::lang::%{_p}%}
+	return yml list {_req} from "config" if {_p} is "", else yml list {_req} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetLoc(req: text) :: location:
 	return yml value {_req} from "config"

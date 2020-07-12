@@ -95,6 +95,7 @@ MESSAGE:
     NOTENOUGH: '&fIl n''y a &cpas assez de joueur&f pour lancer une partie. Si vous avez des amis, invitez-les et réessayez.'
     TOOMANY: '&fWow! Il y a beaucoup de monde, vous &cne pouvez pas&f rejoindre cette partie.'
     REVEAL: 'Vous êtes désormais '
+    DEAD: '&cVous êtes mort !'
     SELECTIONNED: '&2✔ &aSélectionné !'
     VOTE: 'vote(s)'
     NO_VOTE: '&7Aucun vote'
@@ -106,13 +107,20 @@ MESSAGE:
     WAS_VOTED: 'a été voté'
     NOBODY_DEAD: 'personne n''est mort !'
     DISCOVERD: 'a découvert'
+    DEAD_WITH_ROLE: 'est &cmort&f. Son rôle était'
+    WON_WITH_ROLE: 'a gagné la partie avec le rôle '
+    ROLE_WAS: 'Son rôle était'
+    YOU_WON: '&aVous avez gagné !'
+    YOU_LOOSE: '&cVous avez perdu.'
     WORDS:
         IS: 'est'
         OF: 'de'
         SUR: 'on'
         AND: 'et'
+        WITH: 'avec'
         THE_F: 'la' # Féminin
         THE_M: 'le' # Masculin
+        ELIMINATE: 'élimine' # Infinitif
         PROTECT: 'Protégez' # Impératif présent
         DISCOVER: 'Découvrez' # Impératif présent
         SHOOT: 'Tirez une balle' # Impératif présent
@@ -130,6 +138,15 @@ MESSAGE:
     TP_NOT_ENOUGH: 'Il n''y a pas assez de points de téléportation !'
     DEVELOPER_MODE: '&fLe &cmode développeur&f est activé. Le déroulement de cette partie sera en conséquent modifiée.'
     INVALID_TURN: 'Désolé, ce n''est pas ton tour.'
+    NOT_PLAYED: 'n''a pas joué ...'
+    VILLAGE_HAS_VOTED: 'Le village a voté ...'
+    NO_VOTE: '... contre personne.'
+    ACTIONBAR:
+        ROLE_VOTE: 'Tour du rôle '
+        DEBATE: 'Discussion'
+        VOTE: 'Vote'
+        START: 'Démarrage'
+        CLOSE: 'Fermeture de la partie'
     LIFE:
         DEAD: '&cMort'
         ALIVE: '&aEn vie'
