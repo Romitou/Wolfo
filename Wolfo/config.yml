@@ -7,7 +7,7 @@ PREFIX:
 CONFIG:
     SELF_VOTE: 'off'
 
-# Inutilisé (pour le moment)
+# Unused (at this time)
 ANIMATION:
     SELECTION: ARROW
 

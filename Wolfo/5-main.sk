@@ -26,7 +26,7 @@ on script load:
 
 function wolfoInitialize():
 	set {wolfo::game::status} to "WAIT" if {wolfo::game::status} is not set
-	set {wolfo::game::day} to "0" if {wolfo::game::day} is not set
+	set {wolfo::game::day} to 0 if {wolfo::game::day} is not set
 
 function wolfoHelp(msg: text, p: player):
 	send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.%{_msg}%.TITLE", {_p}) to {_p}
@@ -117,7 +117,7 @@ function wolfoWhitelist(executor: player, target: text, action: integer):
 				send wolfoGetText("MESSAGE.WHITELIST.LIST.2", {_executor}) to {_executor}
 
 function wolfoCheckStart(p: player):
-	if wolfoGetText("GAME.SETUP.FINISH") is "finished": # C'est moche, mais ça sera corrigé dans les prochaines versions. :)
+	if wolfoGetText("GAME.SETUP.FINISH") is "finished":
 		if {wolfo::debug::status} is true:
 			wolfoTimer(5)
 			stop

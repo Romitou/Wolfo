@@ -17,15 +17,15 @@
 # Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
 #
 
+# Many code in this file isn't used for the moment.
+# We will enhance this part of Wolfo soon!
+
 on script load:
 	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
 	send "&3&lWolfo &7&l▪ &7Loading cosmetics ..." to ops
 	set {wolfo::loading} to now
 
-
-# Certaines fonctions ne sont pas encore utilisées,
-# elles le seront dans une future mise à jour. :)
 function wolfoDraw(type: text, p: text):
 	if {_type} is "erase":
 		stopEffect id "wolfo-%{_p}%"
@@ -73,10 +73,6 @@ function wolfoDraw(type: text, p: text):
 	else if {_type} is "center":
 		wolfoGetLoc("GAME.LOCATIONS.MIDDLE") is set
 		drawAtom particle1 "redstone", particle2 "flame", center wolfoGetLoc("GAME.LOCATIONS.MIDDLE"), id "wolfo-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
-
-# D'autres cosmétiques seront ajoutées dans les
-# futures versions. Vous pouvez nous faire part de
-# vos idées sur le forum ou sur notre Discord.
 
 function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:

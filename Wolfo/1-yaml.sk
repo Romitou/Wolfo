@@ -16,6 +16,7 @@
 #
 # Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
 #
+
 options:
 	wolfo_directory: plugins/Skript/scripts/Wolfo
 

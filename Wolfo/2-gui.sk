@@ -17,25 +17,23 @@
 # Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
 #
 
+# Many code in this file needs to be cleaned up.
+# We're currently working on it!
+
 on script load:
 	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
 	send "&3&lWolfo &7&l▪ &7Loading GUI ..." to ops
 	set {wolfo::loading} to now
 
-
-# Cette partie va bientôt être recodée.
-# Bug connu: clignotement de l'inventaire (comportement normal)
-# Le menu va être revu dans les prochaines versions.
 function wolfoMenuDeco(p: player, t: text, i: integer = 6):
 	wolfoDebug("Opening menu to %{_p}% with name %{_t}%")
-	if {wolfo::vote::open} is true:
-		if {wolfo::role::list::TOWNSFOLK::*} do not contain {_p}:
-			open virtual chest inventory with {_i} rows named wolfoGetText("ROLES.TOWNSFOLK.NAME", {_p}) to {_p}
-			add {_p} to {wolfo::role::list::TOWNSFOLK::*}
-			wolfoMenuVote("TOWNSFOLK")
+	{wolfo::vote::open} is true:
+		{wolfo::role::list::TOWNSFOLK::*} do not contain {_p}
+		open virtual chest inventory with {_i} rows named wolfoGetText("ROLES.TOWNSFOLK.NAME", {_p}) to {_p}
+		add {_p} to {wolfo::role::list::TOWNSFOLK::*}
+		wolfoMenuVote("TOWNSFOLK")
 	else:
-		# Même remarque pour cette syntaxe.
 		open virtual chest inventory with {_i} rows named "%{_t}%" to {_p}
 	if {_i} = 3:
 		make a gui slot 1, 2, 3, 4, 5, 6, 7, 9, 10, 16, 17, 19, 20, 21, 23, 24 and 25 of {_p} with light blue stained glass pane named "&f"
@@ -67,7 +65,6 @@ function wolfoMenuRoles(p: player):
 on inventory close:
 	remove player from {wolfo::role::list::TOWNSFOLK::*}
 
-# Le menu va être revu dans les prochaines versions.
 function wolfoMenuVote(role: text):
 	wolfoDebug("Opening vote menu to %{_role}% role")
 	loop {wolfo::role::list::%{_role}%::*}:
