@@ -42,9 +42,11 @@ function wolfoDebug(log: text):
 	log {_log} to "debug.log" 
 
 function wolfoGetText(req: text, p: player = "") :: text:
+	{_p} is set # Avoid skript-yaml errors when the player is disconnected
 	return yml value {_req} from "config" if {_p} is "", else yml value {_req} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetObjects(req: text, p: player = "") :: objects:
+	{_p} is set # Avoid skript-yaml errors when the player is disconnected
 	return yml list {_req} from "config" if {_p} is "", else yml list {_req} from "%{wolfo::players::lang::%{_p}%}%"
 
 function wolfoGetLoc(req: text) :: location:
