@@ -320,7 +320,7 @@ function wolfoCheckWin(role: text = ""):
 	loop {_winners::*}:
 		send title wolfoGetText("PREFIX.TITLE") with subtitle wolfoGetText("MESSAGE.YOU_WON", loop-value-1) to loop-value-1 for 2 seconds
 		loop {wolfo::players::list::*}:
-			send join wolfoGetText("PREFIX.TITLE"), "&a%loop-value-1% &f", wolfoGetText("MESSAGE.WON_WITH_ROLE", loop-value-2) and wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value-1%}%.NAME", loop-value-2) to loop-value-2
+			send join wolfoGetText("PREFIX.GENERAL"), "&a%loop-value-1% &f", wolfoGetText("MESSAGE.WON_WITH_ROLE", loop-value-2) and wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value-1%}%.NAME", loop-value-2) to loop-value-2
 	set {_players::*} to players
 	remove {_winners::*} from {_players::*}
 	loop {_players::*}:
