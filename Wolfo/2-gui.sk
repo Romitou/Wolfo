@@ -118,10 +118,13 @@ function wolfoMenuVote(role: text):
 					wolfoMenuVote({_role})
 			# DOCTOR -------------------------------------------
 			else if {_role} is "DOCTOR":
-				{wolfo::role::DOCTOR::lastprotect} != {_target}
+				
 				set {_protect} to wolfoGetText("MESSAGE.WORDS.PROTECT", {_voter})
 				set {_wwvote} to wolfoGetText("MESSAGE.WEREWOLF_VOTE", {_voter})
-				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&%{_protect}% &b%{_target}%&7 du", {_wwvote} and "" to run:
+				make a gui slot {_loop} of {_voter} with {_target}'s skull named "&9%{_target}%" with lore "", "&7%{_protect}% &b%{_target}%&7 du", {_wwvote} and "" to run:
+					{wolfo::role::DOCTOR::lastprotect} is {_target}:
+						send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ALREADY_PROTECTED", {_voter}) to {_voter}
+						stop
 					close {_voter}'s inventory
 					set {wolfo::timer} to 0
 					set {wolfo::results::DOCTOR} to {_target}
