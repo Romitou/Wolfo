@@ -1,3 +1,22 @@
+#
+# This file is part of Wolfo.
+#
+# Wolfo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Wolfo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Wolfo.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
+#
+
 on script load:
 	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
@@ -6,17 +25,12 @@ on script load:
 	wolfoDraw("center", "")
 
 function wolfoGetConfig() :: integer:
-	set {_p} to size of all players
-	if {_p} is between 5 and 12:
-		return 1
-	else if {_p} is between 13 and 17:
-		return 2
-	else if {_p} is between 18 and 26:
-		return 3
-	else if {_p} is greater than or equal to 25:
-		return 4
-	else:
-		return 1
+	set {_p} to size of players
+	return 1 if {_p} is between 5 and 12
+	return 2 if {_p} is between 13 and 17
+	return 3 if {_p} is between 18 and 26
+	return 4 if {_p} is greater than or equal to 25
+	return 1
 
 function wolfoGetConfigRoles() :: objects:
 	clear {wolfo::role::round::*}
@@ -43,22 +57,21 @@ function wolfoGetConfigRoles() :: objects:
 function wolfoGiveRoles():
 	set {_input::*} to wolfoGetConfigRoles()
 	loop {wolfo::players::list::*}:
-		set {wolfo::players::role::%loop-value%} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value)
+		set {wolfo::players::role::%loop-value%} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", loop-value)
 		set {wolfo::players::role_name::%loop-value%} to {_input::%loop-index%}
-		set {_desc::*} to wolfoGetObjects("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
+		set {_desc::*} to wolfoGetObjects("ROLES.%{_input::%loop-index%}%.DESC", loop-value)
 		send title {_role} to loop-value for 2 seconds
-		send join wolfoGetText("PREFIX.GENERAL", 1, loop-value), wolfoGetText("MESSAGE.REVEAL", 2, loop-value) and wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value) to loop-value
+		send join wolfoGetText("PREFIX.GENERAL"), wolfoGetText("MESSAGE.REVEAL", loop-value) and wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", loop-value) to loop-value
 		add loop-value to {wolfo::role::list::%{_input::%loop-index%}%::*}
 		clear loop-value's inventory
-		set slot 4 of loop-value to a book named wolfoGetText("ITEM.VOTE", 2, loop-value)
-		set {_item} to wolfoGetText("ROLES.%{_input::%loop-index%}%.ITEM", 1) parsed as item
-		set {_nbt} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NBT", 1)
-		set {_name} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", 2, loop-value)
-		set {_lore::*} to wolfoGetText("ROLES.%{_input::%loop-index%}%.DESC", 2, loop-value)
+		set slot 4 of loop-value to a book named wolfoGetText("ITEM.VOTE", loop-value)
+		# We're currently working on this.
+		# set {_item} to wolfoGetText("ROLES.%{_input::%loop-index%}%.ITEM") parsed as item
+		# set {_nbt} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NBT")
+		# set {_name} to wolfoGetText("ROLES.%{_input::%loop-index%}%.NAME", loop-value)
+		# set {_lore::*} to wolfoGetText("ROLES.%{_input::%loop-index%}%.DESC", loop-value)
 		wolfoSb(loop-value)
 		wolfoDebug("%loop-value% got the %{wolfo::players::role::%loop-value%}% role (%{_input::%loop-index%}%)")
-		# Cette syntaxe étant buggée, elle sera mise à jour dans une des prochaines versions.
-		# set slot 8 of {_p} to {_item} parsed as material with nbt "%{_nbt}%" named colored "&7Votre rôle: %{_name}%" with lore colored {_lore::*} # C'est pas beau mais ça sera réglé prochainement.
 		wait 4 ticks
 	wolfoMain(0)
 
@@ -68,15 +81,14 @@ function wolfoVote(p: player):
 	else if {wolfo::vote::current} is {wolfo::players::role_name::%{_p}%}:
 		wolfoMenuVote({wolfo::vote::current})
 	else:
-		send "&3&lWolfo &7&l▪ &fDésolé, ce n'est pas ton tour." to {_p}
+		send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.INVALID_TURN", {_p}) to {_p}
 
 function wolfoTime():
 	if {wolfo::game::start} is true:
 		if {wolfo::game::status} is "DAY":
 			clear {wolfo::vote::*}
-			send "&3&lWolfo &7&l▪ &fLa nuit tombe ..." to {wolfo::players::list::*}
-			# On utilise un between pour être sûr que le while s'arrête correctement
-			# quand l'heure ne tombe pas sur un nombre juste.
+			loop {wolfo::players::list::*}:
+				send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ROUND.NIGHT", loop-value) to loop-value
 			while time of "world" isn't between 0:00 and 01:00:
 				add 50 ticks to time of "world"
 				wait a tick
@@ -84,9 +96,8 @@ function wolfoTime():
 			wolfoMain(1)
 		else:
 			clear {wolfo::vote::*}
-			send "&3&lWolfo &7&l▪ &fLe jour se lève ..." to {wolfo::players::list::*}	
-			# On utilise un between pour être sûr que le while s'arrête correctement
-			# quand l'heure ne tombe pas sur un nombre juste.
+			loop {wolfo::players::list::*}:
+				send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.ROUND.DAY", loop-value) to loop-value
 			while time of "world" isn't between 12:00 and 13:00:
 				add 50 ticks to time of "world"	
 				wait a tick	
@@ -99,25 +110,50 @@ function wolfoTime():
 function wolfoResult() :: objects:
 	set {_config} to wolfoGetConfig()
 	set {_voted} to {wolfo::results::WEREWOLF}
+	set {_shooted} to {wolfo::results::SHOOTER}
 	wolfoDebug("%{_voted}% was voted by Werewolfs.")
+	wolfoDebug("%{_shooted}% was shooted by Shooter.")
 	if {wolfo::results::DOCTOR} is {_voted}:
 		clear {_voted}
 	if {wolfo::results::WITCH} is true:
 		clear {_voted}
-	send "&3&lWolfo &7&l▪ &f... la &aVoyante&f a aperçu un rôle %{wolfo::results::SEER}%&f..." to {wolfo::players::list::*} if {wolfo::results::SEER} is set
-	send "&3&lWolfo &7&l▪ &f... la &2Voyante Aura&f a aperçu une aura %{wolfo::results::SEER_AURA}%&f." to {wolfo::players::list::*} if {wolfo::results::SEER_AURA} is set
+	set {_prefix} to wolfoGetText("PREFIX.GENERAL")
+	{wolfo::results::SEER} is set:
+		loop {wolfo::players::list::*}:
+			set {_name} to wolfoGetText("ROLES.SEER.NAME", loop-value)
+			set {_the} to wolfoGetText("MESSAGE.WORDS.THE_F", loop-value)
+			set {_role} to wolfoGetText("MESSAGE.WORDS.ROLE", loop-value)
+			set {_discovered} to wolfoGetText("MESSAGE.DISCOVERED", loop-value)
+			send join {_prefix} and "... %{_the}% %{_name}%&f %{_discovered}% %{_role}% %{wolfo::results::SEER}%&f..." to loop-value
+	{wolfo::results::SEER_AURA} is set:
+		loop {wolfo::players::list::*}:
+			set {_name} to wolfoGetText("ROLES.SEER_AURA.NAME", loop-value)
+			set {_the} to wolfoGetText("MESSAGE.WORDS.THE_F", loop-value)
+			set {_aura} to wolfoGetText("MESSAGE.WORDS.AURA", loop-value)
+			set {_discovered} to wolfoGetText("MESSAGE.DISCOVERED", loop-value)
+			send join {_prefix} and "... %{_the}% %{_name}%&f %{_discovered}% %{_aura}% %{wolfo::results::SEER_AURA}%&f..." to loop-value
 	if {_voted} is set:
 		wolfoDebug("%{_voted}% was eliminated. (%{wolfo::players::role_name::%{_voted}%}%)")
-		send "&3&lWolfo &7&l▪ &f... et &b%{_voted}%&f est &cmort&f. Son rôle était %{wolfo::players::role::%{_voted}%}%&f." to {wolfo::players::list::*}
+		loop {wolfo::players::list::*}:
+			set {_dead} to wolfoGetText("MESSAGE.DEAD_WITH_ROLE", loop-value)
+			send join {_prefix} and "&f... &b%{_voted}%&f %{_dead}% %{wolfo::players::role::%{_voted}%}%&f." to loop-value
 		clear {wolfo::results::*}
-		return {_voted}
-	else:
-		send "&3&lWolfo &7&l▪ &f... et personne n'est mort !" to {wolfo::players::list::*}
+		add {_voted} to {_results::*}
+	if {_shooted} is set:
+		wolfoDebug("%{_voted}% was shooted. (%{wolfo::players::role_name::%{_voted}%}%)")
+		loop {wolfo::players::list::*}:
+			set {_dead} to wolfoGetText("MESSAGE.DEAD_WITH_ROLE", loop-value)
+			send join {_prefix} and "&f... &b%{_voted}%&f %{_dead}% %{wolfo::players::role::%{_voted}%}%&f." to loop-value
 		clear {wolfo::results::*}
+		add {_shooted} to {_results::*}
+	if size of {_results::*} is 0:
+		loop {wolfo::players::list::*}:
+			set {_dead} to wolfoGetText("MESSAGE.NOBODY_DEAD", loop-value)
+			send join {_prefix} and "&f... %{_dead}%" to loop-value
+		clear {wolfo::results::*}
+	return {_results::*}
 
 function wolfoMostVoted() :: objects:
-	# On mélange préalablement la liste
-	# pour être sûr du hazard. :)
 	wolfoDebug("Take the voted list: %{wolfo::vote::list::*}%")
 	loop shuffled {wolfo::vote::list::*}:
 		add 1 to {_vote::%loop-value%}
@@ -127,7 +163,6 @@ function wolfoMostVoted() :: objects:
 	loop {_vote::*}:
 		loop-value is {_top}
 		set {_p} to loop-index
-	# On retourne le joueur ainsi que son nombre de vote.
 	wolfoDebug("Return if set: %{_top}% %{_p}%")
 	{_top} is set
 	{_p} is set
@@ -147,17 +182,20 @@ function wolfoMain(i: integer):
 			loop {wolfo::role::round::*}:
 				clear {wolfo::vote::*}
 				loop-value-1 is "CUPID":
-					{wolfo::game::day} is 0
+					{wolfo::game::day} is not 0
+					stop 1 loop
+				loop-value-1 is "SHOOTER":
+					{wolfo::role::SHOOTER::bullets} >= 2
+					stop 1 loop
 				size of {wolfo::role::list::%loop-value-1%::*} is not 0
 				wolfoDebug("Vote of %loop-value-1% role.")
 				set {wolfo::vote::current} to loop-value-1
 				wolfoMenuVote(loop-value-1)
 				{wolfo::game::start} is true
-				set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as integer
+				set {wolfo::timer} to wolfoGetText("TIME.VOTE") parsed as integer
 				while {wolfo::timer} is higher than or equal to 0:
 					loop {wolfo::players::list::*}:
-						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", 2, loop-value-2)
-						send action bar join "&8[&7%{wolfo::timer}%&8] &3Tour du rôle " and {_name} to loop-value-2
+						send action bar join "&8[&7%{wolfo::timer}%&8] &3", wolfoGetText("MESSAGE.ACTIONBAR.ROLE_VOTE", loop-value-2) and wolfoGetText("ROLES.%loop-value-1%.NAME", loop-value-2) to loop-value-2
 					remove 1 from {wolfo::timer}
 					wait 1 second
 				loop-value-1 is "CUPID":
@@ -169,8 +207,7 @@ function wolfoMain(i: integer):
 					set {wolfo::results::WEREWOLF} to {_result::1}
 				{wolfo::results::%loop-value-1%} is not set:
 					loop {wolfo::players::list::*}:
-						set {_name} to wolfoGetText("ROLES.%loop-value-1%.NAME", 2, loop-value-2)
-						message join wolfoGetText("PREFIX.GENERAL", 1) and "&fLe rôle %{_name}%&f n'a pas joué ..." to loop-value-2
+						send join wolfoGetText("PREFIX.GENERAL"), wolfoGetText("ROLES.%loop-value-1%.NAME", loop-value-2) and wolfoGetText("MESSAGE.NOT_PLAYED", loop-value-2) to loop-value-2
 				close {wolfo::role::list::%loop-value-1%::*}'s inventory
 			wolfoTime()
 		else if {wolfo::game::status} is "DAY":
@@ -182,41 +219,45 @@ function wolfoMain(i: integer):
 					wolfoDraw("kill", "%loop-value%")
 			wolfoCheckWin()
 			{wolfo::game::start} is true
-			set {wolfo::timer} to wolfoGetText("TIME.DEBATE", 1) parsed as integer
+			set {wolfo::timer} to wolfoGetText("TIME.DEBATE") parsed as integer
 			while {wolfo::timer} is higher than or equal to 0:
-				wait 1 second
-				send action bar "&8[&7%{wolfo::timer}%&8] &3Discussion" to all players
+				loop {wolfo::players::list::*}:
+					send action bar join "&8[&7%{wolfo::timer}%&8] &3" and wolfoGetText("MESSAGE.ACTIONBAR.DEBATE", loop-value) to loop-value
 				remove 1 from {wolfo::timer}
+				wait 1 second
 			clear {wolfo::vote::*}
 			clear {wolfo::results::*}
 			clear {wolfo::role::list::TOWNSFOLK::*}
 			{wolfo::game::start} is true
 			set {wolfo::vote::open} to true
 			wolfoDebug("Townsfolk vote open.")
-			set {wolfo::timer} to wolfoGetText("TIME.VOTE", 1) parsed as integer
+			set {wolfo::timer} to wolfoGetText("TIME.VOTE") parsed as integer
 			while {wolfo::timer} is higher than or equal to 0:
-				wait 1 second
-				send action bar "&8[&7%{wolfo::timer}%&8] &3Vote des villageois" to all players
+				loop {wolfo::players::list::*}:
+					send action bar join "&8[&7%{wolfo::timer}%&8] &3" and wolfoGetText("MESSAGE.ACTIONBAR.VOTE", loop-value) to loop-value
 				remove 1 from {wolfo::timer}
+				wait 1 second
 			set {wolfo::vote::open} to false
-			# Support des rôles personnalisés dans une mise à jour future.
-			# Il sera possible d'ajouter ou de modifier les rôles, ce qui n'est pas encore possible ici.
 			{wolfo::potions::2} is true:
 				set {_target} to {wolfo::vote::voters::%{wolfo::role::list::WITCH::1}%}
 				add {_target} and {_target} to {wolfo::vote::list::*}
-			close inventory of all players
+			close inventory of players
 			clear {wolfo::role::list::TOWNSFOLK::*}
 			{wolfo::game::start} is true
-			send "&3&lWolfo &7&l▪ &fLe village s'est décidé ..." to {wolfo::players::list::*}
+			loop {wolfo::players::list::*}:
+				send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.VILLAGE_HAS_VOTED", loop-value) to loop-value
 			set {_result::*} to wolfoMostVoted()
 			wolfoDebug("wolfoMain: %{_result::*}% was voted.")
-			# Dans tous les cas, si deux votes sont ex aequo, cette fonction
-			# retournera toujours quelque chose, faisant appel à l'aléatoire !
 			{_result::2} is not set:
-				send "&3&lWolfo &7&l▪ &f... mais en fait non." to {wolfo::players::list::*}
+				loop {wolfo::players::list::*}:
+					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.NO_TARGET", loop-value) to loop-value
 			else:
-				# On parse as offline player pour garder la casse des pseudos.
-				send "&3&lWolfo &7&l▪ &f... et élimine &b%{_result::1}%&f avec &6%{_result::2}% voix&f. Son rôle était %{wolfo::players::role::%{_result::1}%}%&f." to {wolfo::players::list::*}
+				loop {wolfo::players::list::*}:
+					set {_eliminate} to wolfoGetText("MESSAGE.WORDS.ELIMINATE", loop-value)
+					set {_with} to wolfoGetText("MESSAGE.WORDS.WITH", loop-value)
+					set {_vote} to wolfoGetText("MESSAGE.WORDS.VOTE", loop-value)
+					set {_rolewas} to wolfoGetText("MESSAGE.ROLE_WAS", loop-value)
+					send join wolfoGetText("PREFIX.GENERAL") and "... %{_eliminate}% &b%{_result::1}%&f %{_with}% &6%{_result::2}% %{_vote}%(s)&f. %{_rolewas}% %{wolfo::players::role::%{_result::1}%}%&f." to loop-value
 				{wolfo::players::role_name::%{_result::1}%} is "CRAZY":
 					wolfoCheckWin("CRAZY")
 					stop
@@ -228,27 +269,25 @@ function wolfoMain(i: integer):
 function wolfoTimer(time: integer):
 	set {wolfo::timer} to {_time}
 	while {wolfo::timer} is higher than or equal to 0:
-		send action bar "&8[&7%{wolfo::timer}%&8] &3Décompte avant début" to all players
+		loop {wolfo::players::list::*}:
+			send action bar join "&8[&7%{wolfo::timer}%&8] &3" and wolfoGetText("MESSAGE.ACTIONBAR.START", loop-value) to loop-value
 		remove 1 from {wolfo::timer}
 		wait 1 second
 	wolfoStart()
 
 function wolfoKill(p: player):	
-	hide {_p} from all players	
-	set {wolfo::players::life::%{_p}%} to "&cMort"	
+	hide {_p} from players	
+	set {wolfo::players::life::%{_p}%} to "DEAD"	
 	teleport {_p} to wolfoGetLoc("GAME.LOCATIONS.END")	
-	send title "&3&lWolfo &7&l▪" with subtitle "&cVous êtes mort !" to {_p} for 2 seconds
+	send title wolfoGetText("PREFIX.TITLE") with subtitle wolfoGetText("MESSAGE.DEAD", {_p}) to {_p} for 2 seconds
 	set game mode of {_p} to spectator
 	clear {_p}'s inventory
-	wolfoCheckWin()
 	remove {_p} from {wolfo::players::alive::*}
 	remove {_p} from {wolfo::role::list::%{wolfo::players::role_name::%{_p}%}%::*}
+	wolfoCheckWin()
 
-
-# Cette partie est particulièrement sensible au niveau des bugs,
-# si cette fonction ne fonctionne pas correctement, merci de nous
-# signaler sur le forum ou sur Discord ! Merci !
-
+# This checker to determinate who won the game is not finished.
+# Feel free to open an issue if you meet a problem.
 function wolfoCheckWin(role: text = ""):
 	{_role} is "":
 		if size of {wolfo::players::alive::*} is 0:
@@ -264,19 +303,19 @@ function wolfoCheckWin(role: text = ""):
 	wolfoSb({wolfo::players::list::*})
 	clear {wolfo::game::start}
 	loop {_winners::*}:
-		send title "&3&lWolfo &7&l▪" with subtitle "&aVous avez gagné !" to loop-value-1 for 2 seconds
+		send title wolfoGetText("PREFIX.TITLE") with subtitle wolfoGetText("MESSAGE.YOU_WON", loop-value-1) to loop-value-1 for 2 seconds
 		loop {wolfo::players::list::*}:
-			set {_role} to wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value-1%}%.NAME", 2, loop-value-2)
-			send "&3&lWolfo &7&l▪ &a%loop-value-1% &fa gagné la partie avec le rôle %{_role}%&f !" to {wolfo::players::list::*}
+			send join wolfoGetText("PREFIX.GENERAL"), "&a%loop-value-1% &f", wolfoGetText("MESSAGE.WON_WITH_ROLE", loop-value-2) and wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value-1%}%.NAME", loop-value-2) to loop-value-2
 	set {_players::*} to players
 	remove {_winners::*} from {_players::*}
 	loop {_players::*}:
-		send title "&3&lWolfo &7&l▪" with subtitle "&cVous avez perdu !" to loop-value-1 for 2 seconds
+		send title wolfoGetText("PREFIX.TITLE") with subtitle wolfoGetText("MESSAGE.YOU_LOOSE", loop-value-1) to loop-value-1 for 2 seconds
 	set {wolfo::timer} to 0
-	wait 2 seconds # Sera amélioré prochainement. 
-	set {wolfo::timer} to wolfoGetText("TIME.END", 1) parsed as integer
+	wait 2 seconds # Will be fixed soon.
+	set {wolfo::timer} to wolfoGetText("TIME.END") parsed as integer
 	while {wolfo::timer} is higher than or equal to 0:
-		wait 1 second
-		send action bar "&8[&7%{wolfo::timer}%&8] &3Fermeture de la partie" to all players
+		loop {wolfo::players::list::*}:
+			send action bar join "&8[&7%{wolfo::timer}%&8] &3" and wolfoGetText("MESSAGE.ACTIONBAR.CLOSE", loop-value) to loop-value
 		remove 1 from {wolfo::timer}
+		wait 1 second
 	wolfoEnd()

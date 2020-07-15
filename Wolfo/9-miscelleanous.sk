@@ -1,3 +1,22 @@
+#
+# This file is part of Wolfo.
+#
+# Wolfo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Wolfo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Wolfo.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
+#
+
 on script load:
 	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
@@ -6,8 +25,7 @@ on script load:
 		send "&7Please consult the console for more information about errors." to ops
 		send "&7Please visit https://github.com/Romitou/Wolfo/wiki for help." to console
 	else:
-		set {_version} to wolfoGetText("VERSION", 1)
-		broadcast join "&3&lWolfo &7&l▪ &aWolfo started without intern errors! " and "&7(v%{_version}%)"
+		broadcast join "&3&lWolfo &7&l▪ &aWolfo started without intern errors! &7v" and wolfoGetText("VERSION")
 
 command /debug [<text>]:
 	trigger:
@@ -29,7 +47,7 @@ command /debug [<text>]:
 				send "&8&m                  &r&8[ &9Bug report and details of Wolfo &8]&m                  &r"
 				send "&bGenerated at: &7%now%"
 				send "&bDetailled report:"
-				set {_debug} to "&bErrors: &7%{wolfo::loading::error}%||&bStarting: &7%{wolfo::game::start}%||&bStatus: &7%{wolfo::game::status}%||&bRoles names: &7%{wolfo::players::role_name::*}%||&bPlayers in game: &7%{wolfo::players::list::*}%||&bPlayers: &7%all players%||&bAlive players: &7%{wolfo::players::alive::*}%||&bDay: &7%{wolfo::game::day}%||&bLoading:&7 %{wolfo::loading}%||&bRound: &7%{wolfo::role::round::*}%||&bActual:&7 %{wolfo::current}%||&bVotes: &7%{wolfo::vote::*}%||&bResults: &7%{wolfo::results::*}%||&bLovers: &7%{wolfo::game::lovers::*}%||&bTimer: &7%{wolfo::timer}%||&bDevelopment mode: &7%{wolfo::debug::status}%"
+				set {_debug} to "&bErrors: &7%{wolfo::loading::error}%||&bStarting: &7%{wolfo::game::start}%||&bStatus: &7%{wolfo::game::status}%||&bRoles names: &7%{wolfo::players::role_name::*}%||&bPlayers in game: &7%{wolfo::players::list::*}%||&bPlayers: &7%players%||&bAlive players: &7%{wolfo::players::alive::*}%||&bDay: &7%{wolfo::game::day}%||&bLoading:&7 %{wolfo::loading}%||&bRound: &7%{wolfo::role::round::*}%||&bActual:&7 %{wolfo::current}%||&bVotes: &7%{wolfo::vote::*}%||&bResults: &7%{wolfo::results::*}%||&bLovers: &7%{wolfo::game::lovers::*}%||&bTimer: &7%{wolfo::timer}%||&bDevelopment mode: &7%{wolfo::debug::status}%"
 				replace all "<none>" with "&7no data" in {_debug}
 				loop {_debug} split at "||":
 					send "  &f● %loop-value%"

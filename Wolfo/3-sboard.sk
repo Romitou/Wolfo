@@ -1,0 +1,50 @@
+#
+# This file is part of Wolfo.
+#
+# Wolfo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Wolfo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Wolfo.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
+#
+
+on script load:
+	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
+	send "" to ops
+	send "&3&lWolfo &7&l▪ &7Loading scoreboards ..." to ops
+	set {wolfo::loading} to now
+
+function wolfoSbPlayer(p: player, i: integer):
+	wolfoDebug("Update scoreboard to %{_p}% with type %{_i}%")
+	if {_i} is 0:
+		set title of {_p}'s scoreboard to wolfoGetText("PREFIX.TITLE")
+		set line 12 of {_p}'s scoreboard to "&1"
+		set line 11 of {_p}'s scoreboard to join "&3&l» &f&l", wolfoGetText("MESSAGE.SCOREBOARD.GAME", {_p}) and ":"
+		set line 10 of {_p}'s scoreboard to "&2"
+		set line 5 of {_p}'s scoreboard to "&3"
+		set line 4 of {_p}'s scoreboard to join "&3&l» &f&l", wolfoGetText("MESSAGE.SCOREBOARD.PLAYER1", {_p}) and ":"
+		set line 3 of {_p}'s scoreboard to "&4"
+	if {_i} is 1:
+		clear scoreboard of {_p}
+	wait 1 tick
+	wolfoSb(players)
+
+function wolfoSb(p: objects):
+	wolfoDebug("Update scoreboard to %{_p::*}%")
+	set {_day} to {wolfo::game::day}
+	loop {_p::*}:
+		set line 9 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.STATUS", loop-value), "&f&l: &7" and wolfoGetText("MESSAGE.TIME.%{wolfo::game::status}%", loop-value)
+		set line 8 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.SIZEPLAYERS", loop-value), "&f&l: &7" and ("%size of players%" if {wolfo::game::status} is "WAIT", else ("%size of {wolfo::players::alive::*}%"))
+		set line 7 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.CONFIG", loop-value), "&f&l: &7" and wolfoGetText("MESSAGE.GAMETYPE.%wolfoGetConfig()%", loop-value)
+		set line 6 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.DAY", loop-value), "&f&l: &7" and "n°%{_day}%"
+		set line 2 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.YOUR_ROLE", loop-value), "&f&l: &7" and wolfoGetText("ROLES.%{wolfo::players::role_name::%loop-value%}%.NAME", loop-value)
+		set line 1 of loop-value's scoreboard to join " &3● &b", wolfoGetText("MESSAGE.SCOREBOARD.YOUR_STATUS", loop-value), "&f&l: &7" and wolfoGetText("MESSAGE.LIFE.%{wolfo::players::life::%loop-value%}%", loop-value)

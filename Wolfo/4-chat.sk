@@ -1,3 +1,22 @@
+#
+# This file is part of Wolfo.
+#
+# Wolfo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Wolfo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Wolfo.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
+#
+
 on script load:
 	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
@@ -9,19 +28,23 @@ on chat:
 	cancel event
 	wolfoDebug("%player% send a message.")
 	if {wolfo::game::start} is set:
-		if {wolfo::players::life::%player%} is "&cMort":
+		if {wolfo::players::life::%player%} is "DEAD":
 			loop {wolfo::players::list::*}:
-				if {wolfo::players::life::%loop-value%} is "&cMort":
-					send "&8[&7Mort&8] &7%player% &8» &7%message%" to loop-value
+				{wolfo::players::life::%loop-value%} is "DEAD"
+				set {_stat} to wolfoGetText("MESSAGE.LIFE.DEAD", loop-value)
+				send "&8[&7%{_stat}%&8] &7%player% &8» &7%message%" to loop-value
 		else:
 			if {wolfo::game::status} is "NIGHT":
 				if {wolfo::players::role_name::%player%} is {wolfo::vote::current}:
 					loop {wolfo::role::list::%{wolfo::vote::current}%::*}:
-						set {_role} to wolfoGetText("ROLES.%{wolfo::vote::current}%.NAME", 2, loop-value)
-						send "&8[&7Nuit&8] &8[%{_role}%&8] &7%player% &8» &7%message%" to loop-value
+						set {_role} to wolfoGetText("ROLES.%{wolfo::vote::current}%.NAME", loop-value)
+						set {_day} to wolfoGetText("MESSAGE.TIME.%{wolfo::game::status}%", loop-value)
+						send "&8[&7%{_day}%s&8] &8[%{_role}%&8] &7%player% &8» &7%message%" to loop-value
 				else:
-					send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.MUTED", 2, player)
+					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.MUTED", player)
 			else:
-				send "&8[&fJour&8] &7%player% &8» &7%message%" to {wolfo::players::list::*}
+				loop {wolfo::players::list::*}:
+					set {_day} to wolfoGetText("MESSAGE.TIME.%{wolfo::game::status}%", loop-value)
+					send "&8[&f%{_day}%&8] &7%player% &8» &7%message%" to loop-value
 	else:
 		send "&7%player% &8» &7%message%" to {wolfo::players::list::*}
