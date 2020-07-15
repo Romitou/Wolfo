@@ -108,12 +108,13 @@ MESSAGE:
     VOTE_PROTECTED: 'Ce joueur a bien été protégé.'
     WAS_VOTED: 'a été voté'
     NOBODY_DEAD: 'personne n''est mort !'
-    DISCOVERD: 'a découvert'
+    DISCOVERED: 'a découvert'
     DEAD_WITH_ROLE: 'est &cmort&f. Son rôle était'
     WON_WITH_ROLE: 'a gagné la partie avec le rôle '
     ROLE_WAS: 'Son rôle était'
     YOU_WON: '&aVous avez gagné !'
     YOU_LOOSE: '&cVous avez perdu.'
+    ALREADY_PROTECTED: 'Ce joueur a déjà été protégé.'
     WORDS:
         IS: 'est'
         OF: 'de'
@@ -122,12 +123,13 @@ MESSAGE:
         WITH: 'avec'
         THE_F: 'la'
         THE_M: 'le'
-        ELIMINATE: 'élimine'
+        ELIMINATE: 'et élimine'
         PROTECT: 'Protégez'
         DISCOVER: 'Découvrez'
         SHOOT: 'Tirez une balle'
         ROLE: 'le rôle'
         AURA: 'l''aura'
+        VOTE: 'vote'
     WEREWOLF_VOTE: '&7vote des &cLoup-Garous&7.'
     BY_WEREWOLF: '&7par les &cLoup-Garous&7.'
     SHOOTED: 'Vous avez &ctiré'
@@ -156,12 +158,7 @@ MESSAGE:
     ROUND:
         DAY: 'Le jour se lève ...'
         NIGHT: 'La nuit tombe ...'
-    PROJECT:
-        TEXT: 'Wolfo a été développé par plusieurs contributeurs. Merci à :'
-        LIST:
-            - '&7Romitou#9685'
-            - '&7Xamez#8497'
-            - '&7TitiLaPierre#3934'
+    THANKS: 'Wolfo a été développé par plusieurs contributeurs. Merci à :'
     POTIONS:
         SELECT:
             NAME: '&aSélectionner cette option'

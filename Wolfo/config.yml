@@ -1,5 +1,10 @@
 VERSION: 1.15-alpha
 
+AUTHORS:
+    - 'Romitou#9685'
+    - 'Xamez#8497'
+    - 'TitiLaPierre#3934'
+
 PREFIX:
     GENERAL: '&3&lWolfo &7&l▪ &r'
     TITLE: '&7&l▪ &3&lWolfo &7&l▪'

@@ -142,11 +142,10 @@ function wolfoStart():
 	else:
 		set {wolfo::players::list::*} to players
 		set {wolfo::players::alive::*} to players
+	set {_authors::*} to wolfoGetObjects("AUTHORS")
 	loop {wolfo::players::list::*}:
-		send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.DEVELOPER_MODE", loop-value) to {wolfo::players::list::*} if {wolfo::debug::status} is true
-		send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.PROJECT.TEXT", loop-value) to {wolfo::players::list::*}
-		set {_project::*} to wolfoGetObjects("MESSAGE.PROJECT.LIST", loop-value)
-		send colored join {_project::*} by ", " to {wolfo::players::list::*}
+		send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.DEVELOPER_MODE", loop-value) to loop-value if {wolfo::debug::status} is true
+		send join wolfoGetText("PREFIX.GENERAL"), wolfoGetText("MESSAGE.THANKS", loop-value) and "&7 %{_authors::*}%" to loop-value
 		teleport loop-value to wolfoGetLoc("GAME.LOCATIONS.SPAWNPOINTS.%loop-index%")
 		wolfoDebug("Teleport %loop-value%.")
 	set time of world "world" to 12:00

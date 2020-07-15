@@ -123,15 +123,15 @@ function wolfoResult() :: objects:
 			set {_name} to wolfoGetText("ROLES.SEER.NAME", loop-value)
 			set {_the} to wolfoGetText("MESSAGE.WORDS.THE_F", loop-value)
 			set {_role} to wolfoGetText("MESSAGE.WORDS.ROLE", loop-value)
-			set {_discovered} to wolfoGetText("MESSAGE.WORDS.ROLE", loop-value)
-			send join {_prefix} and "... %{_the}% %{_name}% %{_discovered}% %{_role}% %{wolfo::results::SEER}%&f..." to loop-value
+			set {_discovered} to wolfoGetText("MESSAGE.DISCOVERED", loop-value)
+			send join {_prefix} and "... %{_the}% %{_name}%&f %{_discovered}% %{_role}% %{wolfo::results::SEER}%&f..." to loop-value
 	{wolfo::results::SEER_AURA} is set:
 		loop {wolfo::players::list::*}:
 			set {_name} to wolfoGetText("ROLES.SEER_AURA.NAME", loop-value)
 			set {_the} to wolfoGetText("MESSAGE.WORDS.THE_F", loop-value)
 			set {_aura} to wolfoGetText("MESSAGE.WORDS.AURA", loop-value)
-			set {_discovered} to wolfoGetText("MESSAGE.WORDS.ROLE", loop-value)
-			send join {_prefix} and "... %{_the}% %{_name}% %{_discovered}% %{_aura}% %{wolfo::results::SEER_AURA}%&f..." to loop-value
+			set {_discovered} to wolfoGetText("MESSAGE.DISCOVERED", loop-value)
+			send join {_prefix} and "... %{_the}% %{_name}%&f %{_discovered}% %{_aura}% %{wolfo::results::SEER_AURA}%&f..." to loop-value
 	if {_voted} is set:
 		wolfoDebug("%{_voted}% was eliminated. (%{wolfo::players::role_name::%{_voted}%}%)")
 		loop {wolfo::players::list::*}:
@@ -253,7 +253,7 @@ function wolfoMain(i: integer):
 					send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.NO_TARGET", loop-value) to loop-value
 			else:
 				loop {wolfo::players::list::*}:
-					set {_eliminate} to wolfoGetText("MESSAGE.ELEMINATE", loop-value)
+					set {_eliminate} to wolfoGetText("MESSAGE.WORDS.ELIMINATE", loop-value)
 					set {_with} to wolfoGetText("MESSAGE.WORDS.WITH", loop-value)
 					set {_vote} to wolfoGetText("MESSAGE.WORDS.VOTE", loop-value)
 					set {_rolewas} to wolfoGetText("MESSAGE.ROLE_WAS", loop-value)
