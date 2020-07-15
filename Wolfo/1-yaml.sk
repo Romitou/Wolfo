@@ -1,0 +1,72 @@
+#
+# This file is part of Wolfo.
+#
+# Wolfo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Wolfo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Wolfo.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
+#
+
+options:
+	wolfo_directory: plugins/Skript/scripts/Wolfo
+
+on script load:
+	clear {wolfo::loading::error}
+	send "&3&lWolfo &7&l▪ &7Loading config ..." to ops
+	set {wolfo::loading} to now
+	clear {wolfo::config::*}
+	reload all yml from directory "{@wolfo_directory}" using filename as id
+	reload all yml from directory "{@wolfo_directory}/lang/" using filename as id
+	size of loaded yml is below 2:
+		send "&c[Wolfo] Error! Please check that the configuration or / and the language files are placed in the correct folders." to console
+		add 1 to {wolfo::loading::error}
+	else:
+		add all loaded yml to {wolfo::config::*}
+	yml "config" is empty
+	send "&c[Wolfo] Error! The file containing the config could not be found." to console
+	add 1 to {wolfo::loading::error}
+
+function wolfoDebug(log: text):
+	{wolfo::debug::status} is true
+	send join "&8[DEBUG] &7" and {_log} to ops
+	log {_log} to "debug.log" 
+
+function wolfoGetText(req: text, p: player = "") :: text:
+	{_p} is set # Avoid skript-yaml errors when the player is disconnected
+	return yml value {_req} from "config" if {_p} is "", else yml value {_req} from "%{wolfo::players::lang::%{_p}%}%"
+
+function wolfoGetObjects(req: text, p: player = "") :: objects:
+	{_p} is set # Avoid skript-yaml errors when the player is disconnected
+	return yml list {_req} from "config" if {_p} is "", else yml list {_req} from "%{wolfo::players::lang::%{_p}%}%"
+
+function wolfoGetLoc(req: text) :: location:
+	return yml value {_req} from "config"
+
+function wolfoSetText(req: text, value: text):
+	set yaml value {_req} from "config" to {_value}
+	save yaml "config"
+
+function wolfoSetLoc(req: text, value: location):
+	set yaml value {_req} from "config" to {_value}
+	save yaml "config"
+
+function wolfoUpdateO(req: text, value: text, type: integer):
+	set {_list::*} to yaml list {_req} from "config"
+	if {_type} is 0:
+		if {_list::*} doesn't contain {_value}:
+			add {_value} to {_list::*}
+		else:
+			remove {_value} from {_list::*}
+		delete yaml list {_req} from "config" if {_list::*} is not set
+	set yaml list {_req} from "config" to {_list::*}
+	save yaml "config"

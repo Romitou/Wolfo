@@ -1,4 +1,9 @@
-VERSION: '1.0'
+VERSION: 1.15-alpha
+
+AUTHORS:
+    - 'Romitou#9685'
+    - 'Xamez#8497'
+    - 'TitiLaPierre#3934'
 
 PREFIX:
     GENERAL: '&3&lWolfo &7&l▪ &r'
@@ -7,7 +12,7 @@ PREFIX:
 CONFIG:
     SELF_VOTE: 'off'
 
-# Inutilisé (pour le moment)
+# Unused (at this time)
 ANIMATION:
     SELECTION: ARROW
 
@@ -25,28 +30,28 @@ LANGUAGES:
 
 COSMETICS:
     PARTICLE:
-    - explosion;bone meal
-    - firework;firework
-    - crit;trident
-    - critmagic;trident of sharpness 1
-    - smoke;campfire
-    - angryvillager;baked potato
-    - happyvillager;potato
-    - waterdrip;water bucket
-    - flame;flint and steel
-    - lavadrip;lava bucket
-    - note;note block
-    - portal;ender eye
-    - enchantmenttable;enchanting table
-    - cloud;nether star
-    - snowball;snowball
-    - slime;slimeball
-    - heart;apple
+        - explosion;bone meal
+        - firework;firework
+        - crit;trident
+        - critmagic;trident of sharpness 1
+        - smoke;campfire
+        - angryvillager;baked potato
+        - happyvillager;potato
+        - waterdrip;water bucket
+        - flame;flint and steel
+        - lavadrip;lava bucket
+        - note;note block
+        - portal;ender eye
+        - enchantmenttable;enchanting table
+        - cloud;nether star
+        - snowball;snowball
+        - slime;slimeball
+        - heart;apple
     EFFECT:
-    - wings;elytra
-    - nyancat;white wool
-    - rings;string
-    - spiral;lead
+        - wings;elytra
+        - nyancat;white wool
+        - rings;string
+        - spiral;lead
 
 TIME:
     START: '10'

@@ -1,12 +1,31 @@
+#
+# This file is part of Wolfo.
+#
+# Wolfo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Wolfo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Wolfo.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright 2020 - Romitou <romitou@protonmail.com> and contributors
+#
+
+# Many code in this file isn't used for the moment.
+# We will enhance this part of Wolfo soon!
+
 on script load:
 	send join "&3&lWolfo &7&l▪ &8Took %difference between now and {wolfo::loading}%." to ops
 	send "" to ops
 	send "&3&lWolfo &7&l▪ &7Loading cosmetics ..." to ops
 	set {wolfo::loading} to now
 
-
-# Certaines fonctions ne sont pas encore utilisées,
-# elles le seront dans une future mise à jour. :)
 function wolfoDraw(type: text, p: text):
 	if {_type} is "erase":
 		stopEffect id "wolfo-%{_p}%"
@@ -14,13 +33,13 @@ function wolfoDraw(type: text, p: text):
 	if {_type} is "selected":
 		stopEffect id "wolfo-%{_type}%"
 		set {_loc} to location at x-coordinate of {_p}, y-coordinate of {_p} + 2, z-coordinate of {_p} in world "world"
-		if {wolfo::players::spawn::%{_p}%} is 3 or 4 or 5 or 9 or 10 or 11 or 15 or 16 or 17 or 21 or 22 or 23:
+		if {wolfo::players::spawn::%{_p}%} is 3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22 or 23:
 			set {_angle} to 45
-		if {wolfo::players::spawn::%{_p}%} is 6 or 7 or 8 or 18 or 19 or 20:
+		if {wolfo::players::spawn::%{_p}%} is 6, 7, 8, 18, 19 or 20:
 			set {_angle} to 90
 		else:
 			set {_angle} to 0
-		set {_name} to wolfoGetText("ANIMATION.SELECTION", 1)
+		set {_name} to wolfoGetText("ANIMATION.SELECTION")
 		drawImage file "%{_name}%.png", center {_loc}, id "wolfo-%{_type}%", pixelStepX 2, pixelStepY 2, scale 12, visibleRange 50, xR 0, yR {_angle}, zR 0, disX 0, disY 4, disZ 0, tps 0, second 2
 	else if {_type} is "kill":
 		wolfoKill({_p})
@@ -38,51 +57,47 @@ function wolfoDraw(type: text, p: text):
 			wait a tick
 		wait 8 ticks
 		chance of 50%:
-			play sound "entity.wither.death" with volume 10 and pitch 1 at {_p} for all players
+			play sound "entity.wither.death" with volume 10 and pitch 1 at {_p} for players
 		else:
-			play sound "entity.wither.spawn" with volume 10 and pitch 1 at {_p} for all players
+			play sound "entity.wither.spawn" with volume 10 and pitch 1 at {_p} for players
 		strike lightning effect at location of {_p}
 		wait 2 ticks
 		stopEffect id "wolfo-rayon-%{_p}%"
 		stopEffect id "wolfo-sphere-%{_p}%"
 	else if {_type} is "spawn":
-		hide {_p} from all players
+		hide {_p} from players
 		drawWarpRings style 2, particle "redstone", RGB 80, 255, 255, center location of {_p}, id "wolfo-%{_type}%", rainbowMode true, scan true, height 2, radius 1, ringCount 40, ringDensity 20, visibleRange 32, pulseDelay 1
 		wait 2 second
 		stopEffect id "wolfo-%{_type}%"
-		reveal {_p} to all players
+		reveal {_p} to players
 	else if {_type} is "center":
 		wolfoGetLoc("GAME.LOCATIONS.MIDDLE") is set
 		drawAtom particle1 "redstone", particle2 "flame", center wolfoGetLoc("GAME.LOCATIONS.MIDDLE"), id "wolfo-%{_type}%", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15
 
-# D'autres cosmétiques seront ajoutées dans les
-# futures versions. Vous pouvez nous faire part de
-# vos idées sur le forum ou sur notre Discord.
-
 function wolfoCosmetic(type: integer, p: player):
 	if {_type} is 1 or 2:
 		if {_type} is 1:
-			set {_title} to wolfoGetText("GUI.EFFECT_SELECT", 2, {_p})
-			add wolfoGetObjects("COSMETICS.EFFECT", 1) to {_p::*}
+			set {_title} to wolfoGetText("GUI.EFFECT_SELECT", {_p})
+			add wolfoGetObjects("COSMETICS.EFFECT") to {_p::*}
 			set {_eff} to "EFFECT"
 		else if {_type} is 2:
 			if {wolfo::cosmetic::%{_p}%::1} is "nyancat":
 				clear {wolfo::cosmetic::%{_p}%::2}
 				wolfoCosmetic(3, {_p})
 				stop
-			set {_title} to wolfoGetText("GUI.PARTICLE_SELECT", 2, {_p})
-			add wolfoGetObjects("COSMETICS.PARTICLE", 1) to {_p::*}
+			set {_title} to wolfoGetText("GUI.PARTICLE_SELECT", {_p})
+			add wolfoGetObjects("COSMETICS.PARTICLE") to {_p::*}
 			set {_eff} to "PARTICLE"
 		wolfoMenuDeco({_p}, {_title}, 5)
-		make a gui slot 41 of {_p} with (wolfoGetText("OTHER_ITEMS.LANG", 1) parsed as item) named colored wolfoGetText("ITEM.LANG", 2, {_p}) to run {_p} command "/wolfo lang"
+		make a gui slot 41 of {_p} with (wolfoGetText("OTHER_ITEMS.LANG") parsed as item) named colored wolfoGetText("ITEM.LANG", {_p}) to run {_p} command "/wolfo lang"
 		set {_loop} to 11
 		loop {_p::*}:
 			while {_loop} is 16, 17, 18, 26, 27 or 28:
 				add 1 to {_loop}
 			set {_value::*} to loop-value split at ";"
-			make a gui slot {_loop} of {_p} with {_value::2} parsed as material named colored wolfoGetText("COSMETICS.%{_eff}%.%{_value::1} in upper case%", 2, {_p}) to run:
+			make a gui slot {_loop} of {_p} with {_value::2} parsed as material named colored wolfoGetText("COSMETICS.%{_eff}%.%{_value::1} in upper case%", {_p}) to run:
 				set {wolfo::cosmetic::%{_p}%::%{_type}%} to {_value::1}
-				set {wolfo::cosmetic::%{_p}%::%{_type}%::name} to join wolfoGetText("COSMETICS.%{_eff}%.%{_value::1} in upper case%", 2, {_p}) and " "
+				set {wolfo::cosmetic::%{_p}%::%{_type}%::name} to join wolfoGetText("COSMETICS.%{_eff}%.%{_value::1} in upper case%", {_p}) and " "
 				close {_p}'s inventory
 				add 1 to {_type}
 				wolfoCosmetic({_type}, {_p})
@@ -100,15 +115,15 @@ function wolfoCosmetic(type: integer, p: player):
 			drawRings particle "%{_particle}%", center {_p}, id "wolfo-%{_p}%", randomRotation true, animated true, radius 1, ringCount 3, ringDensity 1, visibleRange 30
 		if {_type} is "spiral":
 			drawComplexSpiral particle "%{_particle}%", center {_p}, id "wolfo-%{_p}%", rainbowMode true, clockwise true, scan true, radius 1, density 50, height 6, effectMod .05, start 0, visibleRange 30
-		set slot 0 of {_p} to a barrier named wolfoGetText("ITEM.COSM_OFF", 2, {_p})
+		set slot 0 of {_p} to a barrier named wolfoGetText("ITEM.COSM_OFF", {_p})
 		set {_effect} to colored {wolfo::cosmetic::%{_p}%::1::name}
 		set {_particle} to colored {wolfo::cosmetic::%{_p}%::2::name}
 		if {wolfo::cosmetic::%{_p}%::2} is not set:
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
+			send join wolfoGetText("PREFIX.GENERAL"), wolfoGetText("MESSAGE.COSMETICS.ON1", {_p}), {_effect} and wolfoGetText("MESSAGE.COSMETICS.ON2", {_p}) to {_p}
 		else:
-			send join wolfoGetText("PREFIX.GENERAL", 1), wolfoGetText("MESSAGE.COSMETICS.ON1", 2, {_p}), {_effect}, "&fen ", {_particle} and wolfoGetText("MESSAGE.COSMETICS.ON2", 2, {_p}) to {_p}
+			send join wolfoGetText("PREFIX.GENERAL"), wolfoGetText("MESSAGE.COSMETICS.ON1", {_p}), {_effect}, "&fen ", {_particle} and wolfoGetText("MESSAGE.COSMETICS.ON2", {_p}) to {_p}
 	else if {_type} is 4:
 		clear {wolfo::cosmetic::%{_p}%::active}
 		stopEffect "wolfo-%{_p}%"
-		set slot 0 of {_p} to a enchanted book named wolfoGetText("ITEM.COSM", 2, {_p})
-		send join wolfoGetText("PREFIX.GENERAL", 1) and wolfoGetText("MESSAGE.COSMETICS.STOP", 2, {_p}) to {_p}
+		set slot 0 of {_p} to a enchanted book named wolfoGetText("ITEM.COSM", {_p})
+		send join wolfoGetText("PREFIX.GENERAL") and wolfoGetText("MESSAGE.COSMETICS.STOP", {_p}) to {_p}

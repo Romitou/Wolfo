@@ -1,28 +1,28 @@
 # Wolfo
 
-🌐 Would you like to read this document in English? Please visit [this link](https://github.com/Romitou/Wolfo/blob/master/README_EN.md).
+🌐 Vous souhaitez lire ce document en français ? Suivez [ce lien](https://github.com/Romitou/Wolfo/blob/master/README_FR.md).
 
-L'idée a été trouvée par Xamez qui le développe avec Romitou.
-Ce script recrée une véritable partie d'un loup-garou directement dans Minecraft, avec de nombreuses fonctionnalités (notamment cosmétiques) !
+The idea was found by Xamez who is developing it with Romitou.
+This script recreates a real part of a werewolf directly in Minecraft, with a lot of features (especially cosmetic)!
 
-**Visitez notre [Discord](https://discord.gg/37nvkpk) pour recevoir de l'aide plus rapidement et suivre le développement.**
+**Visit our [Discord](https://discord.gg/37nvkpk) to get help faster and follow the development.**
 
 ## Installation
 
-Pour installer Wolfo, vous devez extraire l'archive que vous avez téléchargé, où vous trouverez à l'intérieur un dossier appelé `Wolfo-XXX-alpha`. Ouvez-le puis copiez le dossier `Wolfo`. Rendez-vous dans votre dossier `Skript` puis `scripts` et collez le dossier à l'intérieur. L'emplacement de Wolfo doit être : `/plugins/Skript/scripts/Wolfo`.
+To install Wolfo, you need to extract the archive you downloaded, where you will find inside a folder called `Wolfo-XXX-alpha`. Open it and copy the `Wolfo` folder. Go to your `Skript` folder then `scripts` and paste the folder inside. Wolfo's location should be: `/plugins/Skript/scripts/Wolfo`.
 
-## Dépendances
+## Dependencies
 
-- Skript (pour le jeu - *testé avec* **2.5-alpha2**);
+- Skript (for the game - *tested with* **2.5-alpha2**) ;
 
-- skript-yaml (pour la configuration - *testé avec* **1.3.2**);
+- skript-yaml (for the config - *tested with* **1.3.2**) ;
 
-- TuSKe (pour l'interface graphique - *testé avec* **1.8.3**);
+- TuSKe (for the GUI - *tested with* **1.8.3**) ;
 
-- SkDragon (pour les cosmétiques - *testé avec* **0.16**);
+- SkDragon (for the cosmetics - *tested with* **0.16**) ;
 
-- SkBee (pour le tableau de bord et NBT - *testé avec* **1.0.1**).
+- SkBee (for the scoreboard & NBT - *tested with* **1.0.1**).
 
-## Contribuer à Woflo
+## Contribute to Woflo
 
-Veuillez visiter [ce lien](https://github.com/Romitou/Wolfo/blob/master/CONTRIBUTING.md).
+Please visit [this link](https://github.com/Romitou/Wolfo/blob/master/CONTRIBUTING.md).
