@@ -13,15 +13,15 @@ Pour installer Wolfo, vous devez extraire l'archive que vous avez téléchargé,
 
 ## Dépendances
 
-- Skript (pour le jeu - *testé avec* **2.5-alpha2**);
+- Skript (pour le jeu - *testé avec* **2.5.1**);
 
 - skript-yaml (pour la configuration - *testé avec* **1.3.2**);
 
 - TuSKe (pour l'interface graphique - *testé avec* **1.8.3**);
 
-- SkDragon (pour les cosmétiques - *testé avec* **0.16**);
+- SkDragon (pour les cosmétiques - *testé avec* **0.17**);
 
-- SkBee (pour le tableau de bord et NBT - *testé avec* **1.0.1**).
+- SkBee (pour le tableau de bord et NBT - *testé avec* **1.8.3**).
 
 ## Contribuer à Woflo
 
